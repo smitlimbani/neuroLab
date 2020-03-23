@@ -24,7 +24,7 @@ public class Test {
     private String name;
 
     @Column(nullable = false)
-    private Integer rate;
+    private Double rate;
 
     @Column(nullable = false)
     private String testCategory;
@@ -69,11 +69,11 @@ public class Test {
         this.name = name;
     }
 
-    public Integer getRate() {
+    public Double getRate() {
         return rate;
     }
 
-    public void setRate(Integer rate) {
+    public void setRate(Double rate) {
         this.rate = rate;
     }
 

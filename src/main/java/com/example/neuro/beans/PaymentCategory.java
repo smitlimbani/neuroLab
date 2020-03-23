@@ -21,7 +21,7 @@ public class PaymentCategory {
     @Column(unique = true, nullable = false)
     private String code;
 
-    private Integer discountPercentage;
+    private Double discountPercentage;
 
     public Integer getId() {
         return id;
@@ -47,11 +47,11 @@ public class PaymentCategory {
         this.code = code;
     }
 
-    public Integer getDiscountPercentage() {
+    public Double getDiscountPercentage() {
         return discountPercentage;
     }
 
-    public void setDiscountPercentage(Integer discountPercentage) {
+    public void setDiscountPercentage(Double discountPercentage) {
         this.discountPercentage = discountPercentage;
     }
 

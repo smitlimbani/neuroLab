@@ -52,8 +52,8 @@ public class Master {
     private Integer GANGIGM = 0;
 
 
-    private Integer totalAmount;
-    private Integer remainingAmount;
+    private Double totalAmount;
+    private Double remainingAmount;
     @Column(nullable = false)
     private Character isValid ='Y';
     @Column(nullable = false)
@@ -200,19 +200,19 @@ public class Master {
         this.paymentCategory = paymentCategory;
     }
 
-    public Integer getTotalAmount() {
+    public Double getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Integer totalAmount) {
+    public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
     }
 
-    public Integer getRemainingAmount() {
+    public Double getRemainingAmount() {
         return remainingAmount;
     }
 
-    public void setRemainingAmount(Integer remainingAmount) {
+    public void setRemainingAmount(Double remainingAmount) {
         this.remainingAmount = remainingAmount;
     }
 

@@ -4,6 +4,7 @@ package com.example.neuro.beans;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.function.DoubleUnaryOperator;
 
 @Entity
 @Table
@@ -19,7 +20,7 @@ public class Payment {
     @JsonIgnoreProperties(value = {"payments","hibernateLazyInitializer"},allowSetters = true)
     private Master master;
 
-    private Integer amount;
+    private Double amount;
 
     private String details;
 
@@ -39,11 +40,11 @@ public class Payment {
         this.master = master;
     }
 
-    public Integer getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
