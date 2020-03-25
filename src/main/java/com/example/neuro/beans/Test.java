@@ -28,8 +28,8 @@ public class Test {
     private Double rate;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private TestCategoryEnum testCategoryEnum;
+//    @Column(nullable = false)
+    private TestCategoryEnum testCategory;
 
     @Column(nullable = false)
     private Integer groupSize;
@@ -79,12 +79,12 @@ public class Test {
         this.rate = rate;
     }
 
-    public TestCategoryEnum getTestCategoryEnum() {
-        return testCategoryEnum;
+    public TestCategoryEnum getTestCategory() {
+        return testCategory;
     }
 
-    public void setTestCategoryEnum(TestCategoryEnum testCategoryEnum) {
-        this.testCategoryEnum = testCategoryEnum;
+    public void setTestCategory(TestCategoryEnum testCategory) {
+        this.testCategory = testCategory;
     }
 
     public Integer getGroupSize() {
@@ -119,7 +119,7 @@ public class Test {
                 ", code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", rate=" + rate +
-                ", testCategory='" + testCategoryEnum + '\'' +
+                ", testCategory='" + testCategory + '\'' +
                 ", groupSize=" + groupSize +
                 ", lockedCounter=" + lockedCounter +
                 ", isActive=" + isActive +

@@ -3,7 +3,8 @@
 
 
 
-
 Remaining :
 - Linked is FK of ULID
-- enum in some fields
+- IDS name, Insert in master table
+- transaction date in payment table
+- validity list insertion multiple times(UK)

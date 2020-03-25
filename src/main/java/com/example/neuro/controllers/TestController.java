@@ -9,7 +9,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("vial/")
+@RequestMapping("test/")
 public class TestController {
     @Autowired
     TestRepository testRepository;
