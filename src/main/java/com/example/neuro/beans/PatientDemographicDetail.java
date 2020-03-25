@@ -1,9 +1,9 @@
 package com.example.neuro.beans;
 
+import com.example.neuro.utils.SexEnum;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import javax.validation.constraintvalidation.SupportedValidationTarget;
 import java.util.Set;
 
 
@@ -26,7 +26,9 @@ public class PatientDemographicDetail {
     private String firstName;
     private String lastName;
     private Integer age;
-    private String sex;
+
+    @Enumerated(EnumType.STRING)
+    private SexEnum sex;
 
     private String emailId;
     private String contactNo;
@@ -80,11 +82,11 @@ public class PatientDemographicDetail {
         this.age = age;
     }
 
-    public String getSex() {
+    public SexEnum getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public void setSex(SexEnum sex) {
         this.sex = sex;
     }
 

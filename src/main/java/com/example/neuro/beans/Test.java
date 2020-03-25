@@ -1,5 +1,6 @@
 package com.example.neuro.beans;
 
+import com.example.neuro.utils.TestCategoryEnum;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -15,7 +16,7 @@ public class Test {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "test", fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = {"test", "hibernateLazyInitializer"}, allowSetters = true)
-    private Set<Vail> vails;
+    private Set<Vial> vials;
 
     @Column(unique = true,nullable = false)
     private String code;
@@ -26,8 +27,9 @@ public class Test {
     @Column(nullable = false)
     private Double rate;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String testCategory;
+    private TestCategoryEnum testCategoryEnum;
 
     @Column(nullable = false)
     private Integer groupSize;
@@ -37,12 +39,12 @@ public class Test {
     @Column(nullable = false)
     private boolean isActive;
 
-    public Set<Vail> getVails() {
-        return vails;
+    public Set<Vial> getVials() {
+        return vials;
     }
 
-    public void setVails(Set<Vail> vails) {
-        this.vails = vails;
+    public void setVials(Set<Vial> vials) {
+        this.vials = vials;
     }
 
     public Integer getId() {
@@ -77,12 +79,12 @@ public class Test {
         this.rate = rate;
     }
 
-    public String getTestCategory() {
-        return testCategory;
+    public TestCategoryEnum getTestCategoryEnum() {
+        return testCategoryEnum;
     }
 
-    public void setTestCategory(String testCategory) {
-        this.testCategory = testCategory;
+    public void setTestCategoryEnum(TestCategoryEnum testCategoryEnum) {
+        this.testCategoryEnum = testCategoryEnum;
     }
 
     public Integer getGroupSize() {
@@ -113,11 +115,11 @@ public class Test {
     public String toString() {
         return "Test{" +
                 "id=" + id +
-                ", vails=" + vails +
+                ", vails=" + vials +
                 ", code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", rate=" + rate +
-                ", testCategory='" + testCategory + '\'' +
+                ", testCategory='" + testCategoryEnum + '\'' +
                 ", groupSize=" + groupSize +
                 ", lockedCounter=" + lockedCounter +
                 ", isActive=" + isActive +

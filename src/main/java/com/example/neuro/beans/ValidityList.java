@@ -18,5 +18,27 @@ public class ValidityList {
     @JsonIgnoreProperties(value = {"validityList", "hibernateLazyInitializer"}, allowSetters = true)
     private Sample sample;
 
+    public Integer getId() {
+        return id;
+    }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Sample getSample() {
+        return sample;
+    }
+
+    public void setSample(Sample sample) {
+        this.sample = sample;
+    }
+
+    @Override
+    public String toString() {
+        return "ValidityList{" +
+                "id=" + id +
+                ", sample=" + sample +
+                '}';
+    }
 }

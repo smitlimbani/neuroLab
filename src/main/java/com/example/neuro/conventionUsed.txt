@@ -1,0 +1,8 @@
+- CamelCase for any attribute
+- controller name : {className}Contoller
+- repositories name : {className}Repository
+- {className in lower}/getAll : to get all the elements of that class
+- {className in lower}/getOne?id=1 : to get that class with id=1
+- {className in lower}/insert? :actual object and dependant ids to insert an object in that class
+- id name : {all caps character used in className}Id i.e PatientDemographicDetail = pDDId
+- {fieldName}Enum

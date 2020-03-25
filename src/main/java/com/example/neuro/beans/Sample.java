@@ -26,8 +26,9 @@ public class Sample {
 
     @Column(unique = true, nullable = false)
     private String sampleId;
+
     @Column(nullable = false)
-    private Date recDate;
+    private Date recDate = new Date();
 
     public Integer getId() {
         return id;

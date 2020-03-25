@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Entity
 @Table
-public class Vail {
+public class Vial {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,12 +16,12 @@ public class Vail {
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "masterId")
-    @JsonIgnoreProperties(value = {"vails","hibernateLazyInitializer"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"vials","hibernateLazyInitializer"},allowSetters = true)
     private Master master;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "testId")
-    @JsonIgnoreProperties(value = {"vails","hibernateLazyInitializer"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"vials","hibernateLazyInitializer"},allowSetters = true)
     private Test test;
 
     @Column(unique = true,nullable = false)
@@ -31,7 +31,7 @@ public class Vail {
     private String fileName;
     private Date reportingDate;
     @Column(nullable = false)
-    private Date creationDate;
+    private Date creationDate = new Date();
     private Date testingDate;
     private String remark;
     private String result;
@@ -126,7 +126,7 @@ public class Vail {
 
     @Override
     public String toString() {
-        return "Vail{" +
+        return "Vial{" +
                 "id=" + id +
                 ", master=" + master +
                 ", test=" + test +

@@ -1,5 +1,7 @@
 package com.example.neuro.beans;
 
+import com.example.neuro.utils.IsValidEnum;
+import com.example.neuro.utils.SampleTypeEnum;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -36,7 +38,7 @@ public class Master {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "master", fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = {"master", "hibernateLazyInitializer"}, allowSetters = true)
-    private Set<Vail> vails;
+    private Set<Vial> vials;
 
     @Column(unique = true)
     private String ULID;
@@ -54,28 +56,31 @@ public class Master {
 
     private Double totalAmount;
     private Double remainingAmount;
+
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Character isValid ='Y';
+    private IsValidEnum isValid = IsValidEnum.Y;
+
     @Column(nullable = false)
     private Integer status = 0;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String sampleType;
+    private SampleTypeEnum sampleType;
 
     private String linked = "0";
     private String drName;
 
     @Column(nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
-    private Date reqDate;
+    private Date reqDate = new Date();
 
-    public Set<Vail> getVails() {
-        return vails;
+    public Set<Vial> getVials() {
+        return vials;
     }
 
-    public void setVails(Set<Vail> vails) {
-        this.vails = vails;
+    public void setVials(Set<Vial> vials) {
+        this.vials = vials;
     }
 
     public Set<Payment> getPayments() {
@@ -216,11 +221,11 @@ public class Master {
         this.remainingAmount = remainingAmount;
     }
 
-    public Character getIsValid() {
+    public IsValidEnum getIsValid() {
         return isValid;
     }
 
-    public void setIsValid(Character isValid) {
+    public void setIsValid(IsValidEnum isValid) {
         this.isValid = isValid;
     }
 
@@ -232,11 +237,11 @@ public class Master {
         this.status = status;
     }
 
-    public String getSampleType() {
+    public SampleTypeEnum getSampleType() {
         return sampleType;
     }
 
-    public void setSampleType(String sampleType) {
+    public void setSampleType(SampleTypeEnum sampleType) {
         this.sampleType = sampleType;
     }
 
@@ -280,7 +285,7 @@ public class Master {
                 ", paymentCategory=" + paymentCategory +
                 ", samples=" + samples +
                 ", payments=" + payments +
-                ", vails=" + vails +
+                ", vails=" + vials +
                 ", ULID='" + ULID + '\'' +
                 ", nNo='" + nNo + '\'' +
                 ", ANCA=" + ANCA +

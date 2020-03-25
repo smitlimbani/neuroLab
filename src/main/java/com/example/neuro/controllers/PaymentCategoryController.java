@@ -29,5 +29,4 @@ public class PaymentCategoryController {
     public PaymentCategory addPaymentCategory(@Valid @RequestBody PaymentCategory paymentCategory){
         return paymentCategoryRepository.save(paymentCategory);
     }
-
 }
