@@ -1,5 +1,7 @@
 package com.example.neuro.service;
 
+import com.example.neuro.beans.Master;
+import com.example.neuro.beans.Sample;
 import com.example.neuro.beans.ValidityList;
 import com.example.neuro.repositories.SampleRepository;
 import com.example.neuro.repositories.ValidityListRepository;
@@ -25,5 +27,15 @@ public class ValidityListService {
         ValidityList validityList = new ValidityList();
         validityList.setSample(sampleRepository.getOne(sId));
         return validityListRepository.save(validityList);
+    }
+    public ValidityList updateValidityListRest(ValidityList validityList) {
+        return validityListRepository.save(validityList);
+    }
+
+    public void deleteValidityListRest(Integer id){
+        Sample sample= validityListRepository.getOne(id).getSample();
+        sample.setValidityList(null);
+        sampleRepository.save(sample);
+        validityListRepository.deleteById(id);
     }
 }

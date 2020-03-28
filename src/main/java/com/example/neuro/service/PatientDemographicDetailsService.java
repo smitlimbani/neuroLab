@@ -22,4 +22,7 @@ public class PatientDemographicDetailsService {
     public PatientDemographicDetail addPatientDemographicDetailRest(PatientDemographicDetail patientDemographicDetail) {
         return patientDemographicDetailRepository.save(patientDemographicDetail);
     }
+    public PatientDemographicDetail updatePatientDemographicDetailRest(PatientDemographicDetail patientDemographicDetail) {
+        return patientDemographicDetailRepository.save(patientDemographicDetail);
+    }
 }

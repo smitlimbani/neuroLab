@@ -15,6 +15,15 @@ public class Variable {
 
     private Integer iCount;
     private Integer xCount;
+    private Integer year;
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
 
     public Integer getId() {
         return id;
@@ -46,6 +55,7 @@ public class Variable {
                 "id=" + id +
                 ", iCount=" + iCount +
                 ", xCount=" + xCount +
+                ", year=" + year +
                 '}';
     }
 

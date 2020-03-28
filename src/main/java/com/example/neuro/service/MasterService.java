@@ -30,4 +30,9 @@ public class MasterService {
         master.setPatientDemographicDetail(patientDemographicDetailRepository.getOne(pId));
         return masterRepository.save(master);
     }
+
+    public Master updateMasterRest(Master master) {
+        return masterRepository.save(master);
+    }
+
 }

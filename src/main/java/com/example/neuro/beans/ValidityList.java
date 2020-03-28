@@ -14,7 +14,7 @@ public class ValidityList {
     @Column(unique = true, nullable = false)
     private Integer id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "sampleId")
     @JsonIgnoreProperties(value = {"validityList", "hibernateLazyInitializer"}, allowSetters = true)
     private Sample sample;

@@ -19,7 +19,11 @@ public class TestService {
         return testRepository.getOne(id);
     }
 
-    public Test addTestRest(@Valid @RequestBody Test test) {
+    public Test addTestRest( Test test) {
+        return testRepository.save(test);
+    }
+
+    public Test updateTestRest(Test test) {
         return testRepository.save(test);
     }
 }

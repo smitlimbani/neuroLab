@@ -29,4 +29,7 @@ public class VialService {
         vial.setTest(testRepository.getOne(tId));
         return vialRepository.save(vial);
     }
+    public Vial updateVialRest(Vial vial) {
+        return vialRepository.save(vial);
+    }
 }

@@ -20,7 +20,7 @@ public class Sample {
     @JsonIgnoreProperties(value = {"samples", "hibernateLazyInitializer"}, allowSetters = true)
     private Master master;
 
-    @OneToOne(mappedBy = "sample")
+    @OneToOne(mappedBy = "sample", cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = {"sample", "hibernateLazyInitializer"}, allowSetters = true)
     private ValidityList validityList;
 
@@ -29,6 +29,14 @@ public class Sample {
 
     @Column(nullable = false)
     private Date recDate = new Date();
+
+    public ValidityList getValidityList() {
+        return validityList;
+    }
+
+    public void setValidityList(ValidityList validityList) {
+        this.validityList = validityList;
+    }
 
     public Integer getId() {
         return id;

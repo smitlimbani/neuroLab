@@ -23,4 +23,8 @@ public class GeneratedSampleService {
         return generatedSampleRepository.save(generatedSample);
     }
 
+    public GeneratedSample updateGeneratedSampleRest(GeneratedSample generatedSample ){
+        return generatedSampleRepository.save(generatedSample);
+    }
+
 }

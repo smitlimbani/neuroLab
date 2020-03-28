@@ -25,4 +25,7 @@ public class PaymentService {
         payment.setMaster(masterRepository.getOne(mId));
         return paymentRepository.save(payment);
     }
+    public Payment updatePaymentRest(Payment payment) {
+        return paymentRepository.save(payment);
+    }
 }

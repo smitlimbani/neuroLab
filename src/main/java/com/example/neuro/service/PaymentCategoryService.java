@@ -24,4 +24,7 @@ public class PaymentCategoryService {
     public PaymentCategory addPaymentCategoryRest(PaymentCategory paymentCategory) {
         return paymentCategoryRepository.save(paymentCategory);
     }
+    public PaymentCategory updatePaymentCategoryRest(PaymentCategory paymentCategory) {
+        return paymentCategoryRepository.save(paymentCategory);
+    }
 }
