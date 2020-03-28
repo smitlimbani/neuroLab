@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PatientDemographicDetailRepository extends JpaRepository<PatientDemographicDetail, Integer> {
+    PatientDemographicDetail findByUHID(String uhid);
 }

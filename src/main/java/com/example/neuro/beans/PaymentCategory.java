@@ -1,12 +1,13 @@
 package com.example.neuro.beans;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table
+@JsonRootName("PaymentCategory")
 public class PaymentCategory {
 
     @Id
@@ -63,5 +64,8 @@ public class PaymentCategory {
                 ", code='" + code + '\'' +
                 ", discountPercentage=" + discountPercentage +
                 '}';
+    }
+
+    public PaymentCategory() {
     }
 }

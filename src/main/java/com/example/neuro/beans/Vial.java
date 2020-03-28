@@ -1,30 +1,31 @@
 package com.example.neuro.beans;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table
+@JsonRootName("Vial")
 public class Vial {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private Integer id;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "masterId")
-    @JsonIgnoreProperties(value = {"vials","hibernateLazyInitializer"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"vials", "hibernateLazyInitializer"}, allowSetters = true)
     private Master master;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "testId")
-    @JsonIgnoreProperties(value = {"vials","hibernateLazyInitializer"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"vials", "hibernateLazyInitializer"}, allowSetters = true)
     private Test test;
 
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private String VLID;
     @Column(nullable = false)
     private Integer serialNo;
@@ -139,5 +140,8 @@ public class Vial {
                 ", remark='" + remark + '\'' +
                 ", result='" + result + '\'' +
                 '}';
+    }
+
+    public Vial() {
     }
 }

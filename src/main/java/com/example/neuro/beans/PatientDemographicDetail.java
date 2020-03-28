@@ -2,25 +2,26 @@ package com.example.neuro.beans;
 
 import com.example.neuro.utils.SexEnum;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 import javax.persistence.*;
 import java.util.Set;
 
 
 @Entity
-@Table
+@JsonRootName("PatientDemographicDetail")
 public class PatientDemographicDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private Integer id;
 
     @Column(unique = true)
     private String UHID;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "patientDemographicDetail", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"patientDemographicDetail","hibernateLazyInitializer"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"patientDemographicDetail", "hibernateLazyInitializer"}, allowSetters = true)
     private Set<Master> masters;
 
     private String firstName;
@@ -128,5 +129,8 @@ public class PatientDemographicDetail {
                 ", contactNo='" + contactNo + '\'' +
                 ", hospitalName='" + hospitalName + '\'' +
                 '}';
+    }
+
+    public PatientDemographicDetail() {
     }
 }

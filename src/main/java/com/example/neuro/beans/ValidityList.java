@@ -1,16 +1,17 @@
 package com.example.neuro.beans;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 import javax.persistence.*;
 
 @Entity
-@Table
+@JsonRootName("ValidityList")
 public class ValidityList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private Integer id;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -40,5 +41,8 @@ public class ValidityList {
                 "id=" + id +
                 ", sample=" + sample +
                 '}';
+    }
+
+    public ValidityList() {
     }
 }

@@ -1,15 +1,13 @@
 package com.example.neuro.beans;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
-@JsonRootName("Sample")
-public class Sample {
+@JsonRootName("GeneratedSample")
+public class GeneratedSample {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
@@ -17,18 +15,11 @@ public class Sample {
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "masterId")
-    @JsonIgnoreProperties(value = {"samples", "hibernateLazyInitializer"}, allowSetters = true)
+    @JsonIgnoreProperties(value = {"generatedSamples", "hibernateLazyInitializer"}, allowSetters = true)
     private Master master;
 
-    @OneToOne(mappedBy = "sample")
-    @JsonIgnoreProperties(value = {"sample", "hibernateLazyInitializer"}, allowSetters = true)
-    private ValidityList validityList;
-
     @Column(unique = true, nullable = false)
-    private String sampleId;
-
-    @Column(nullable = false)
-    private Date recDate = new Date();
+    private Integer generatedSampleId;
 
     public Integer getId() {
         return id;
@@ -46,32 +37,23 @@ public class Sample {
         this.master = master;
     }
 
-    public String getSampleId() {
-        return sampleId;
+    public Integer getGeneratedSampleId() {
+        return generatedSampleId;
     }
 
-    public void setSampleId(String sampleId) {
-        this.sampleId = sampleId;
-    }
-
-    public Date getRecDate() {
-        return recDate;
-    }
-
-    public void setRecDate(Date recDate) {
-        this.recDate = recDate;
+    public void setGeneratedSampleId(Integer generatedSampleId) {
+        this.generatedSampleId = generatedSampleId;
     }
 
     @Override
     public String toString() {
-        return "Sample{" +
+        return "GeneratedSample{" +
                 "id=" + id +
                 ", master=" + master +
-                ", sampleId='" + sampleId + '\'' +
-                ", recDate=" + recDate +
+                ", generatedSampleId=" + generatedSampleId +
                 '}';
     }
 
-    public Sample() {
+    public GeneratedSample() {
     }
 }

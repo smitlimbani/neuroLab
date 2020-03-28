@@ -2,22 +2,23 @@ package com.example.neuro.beans;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 import javax.persistence.*;
 import java.util.function.DoubleUnaryOperator;
 
 @Entity
-@Table
+@JsonRootName("Payment")
 public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private Integer id;
 
-    @ManyToOne(optional = false,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "masterId")
-    @JsonIgnoreProperties(value = {"payments","hibernateLazyInitializer"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"payments", "hibernateLazyInitializer"}, allowSetters = true)
     private Master master;
 
     private Double amount;
@@ -64,5 +65,8 @@ public class Payment {
                 ", amount=" + amount +
                 ", details='" + details + '\'' +
                 '}';
+    }
+
+    public Payment() {
     }
 }

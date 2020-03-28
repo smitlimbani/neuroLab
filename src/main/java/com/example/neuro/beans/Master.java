@@ -3,6 +3,7 @@ package com.example.neuro.beans;
 import com.example.neuro.utils.IsValidEnum;
 import com.example.neuro.utils.SampleTypeEnum;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -10,27 +11,31 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Table
+@JsonRootName("Master")
 public class Master {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private Integer id;
 
-    @ManyToOne(optional = false,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "patientDemographicDetailId")
-    @JsonIgnoreProperties(value = {"masters","hibernateLazyInitializer"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"masters", "hibernateLazyInitializer"}, allowSetters = true)
     private PatientDemographicDetail patientDemographicDetail;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "paymentCategoryId")
-    @JsonIgnoreProperties(value = {"masters","hibernateLazyInitializer"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"masters", "hibernateLazyInitializer"}, allowSetters = true)
     private PaymentCategory paymentCategory;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "master", fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = {"master", "hibernateLazyInitializer"}, allowSetters = true)
     private Set<Sample> samples;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "master", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = {"master", "hibernateLazyInitializer"}, allowSetters = true)
+    private Set<GeneratedSample> generatedSamples;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "master", fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = {"master", "hibernateLazyInitializer"}, allowSetters = true)
@@ -97,6 +102,14 @@ public class Master {
 
     public void setSamples(Set<Sample> samples) {
         this.samples = samples;
+    }
+
+    public Set<GeneratedSample> getGeneratedSamples() {
+        return generatedSamples;
+    }
+
+    public void setGeneratedSamples(Set<GeneratedSample> generatedSamples) {
+        this.generatedSamples = generatedSamples;
     }
 
     private boolean isActive = true;
@@ -277,6 +290,7 @@ public class Master {
         isActive = active;
     }
 
+
     @Override
     public String toString() {
         return "Master{" +
@@ -306,5 +320,8 @@ public class Master {
                 ", reqDate=" + reqDate +
                 ", isActive=" + isActive +
                 '}';
+    }
+
+    public Master() {
     }
 }

@@ -1,9 +1,7 @@
 package com.example.neuro.controllers;
 
 import com.example.neuro.beans.Payment;
-import com.example.neuro.repositories.MasterRepository;
-import com.example.neuro.repositories.PaymentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.neuro.service.PaymentService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -12,24 +10,21 @@ import java.util.List;
 @RestController
 @RequestMapping("payment/")
 public class PaymentController {
-    @Autowired
-    PaymentRepository paymentRepository;
-    @Autowired
-    MasterRepository masterRepository;
+
+    private PaymentService paymentService = new PaymentService();
 
     @GetMapping("/getAll")
-    public List<Payment> getPayments(){
-        return paymentRepository.findAll();
+    public List<Payment> getPayments() {
+        return paymentService.getPaymentsRest();
     }
 
     @GetMapping("/getOne")
-    public Payment getPayment(@RequestParam Integer id){
-        return paymentRepository.getOne(id);
+    public Payment getPayment(@RequestParam Integer id) {
+        return paymentService.getPaymentRest(id);
     }
 
     @PostMapping("/insert")
-    public Payment addPayment(@Valid @RequestBody Payment payment,@RequestParam Integer mId){
-        payment.setMaster(masterRepository.getOne(mId));
-        return paymentRepository.save(payment);
+    public Payment addPayment(@Valid @RequestBody Payment payment, @RequestParam Integer mId) {
+        return paymentService.addPaymentRest(payment, mId);
     }
 }

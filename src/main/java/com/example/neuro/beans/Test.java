@@ -2,33 +2,33 @@ package com.example.neuro.beans;
 
 import com.example.neuro.utils.TestCategoryEnum;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table
+@JsonRootName("Test")
 public class Test {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private Integer id;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "test", fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = {"test", "hibernateLazyInitializer"}, allowSetters = true)
     private Set<Vial> vials;
 
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private String code;
 
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private String name;
 
     @Column(nullable = false)
     private Double rate;
 
     @Enumerated(EnumType.STRING)
-//    @Column(nullable = false)
     private TestCategoryEnum testCategory;
 
     @Column(nullable = false)
@@ -124,5 +124,8 @@ public class Test {
                 ", lockedCounter=" + lockedCounter +
                 ", isActive=" + isActive +
                 '}';
+    }
+
+    public Test() {
     }
 }

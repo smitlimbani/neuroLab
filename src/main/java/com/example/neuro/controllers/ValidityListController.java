@@ -1,36 +1,30 @@
 package com.example.neuro.controllers;
 
 import com.example.neuro.beans.ValidityList;
-import com.example.neuro.repositories.SampleRepository;
-import com.example.neuro.repositories.ValidityListRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.neuro.service.ValidityListService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("validitylist/")
+@RequestMapping("validityList/")
 public class ValidityListController {
-    @Autowired
-    ValidityListRepository validityListRepository;
-    @Autowired
-    SampleRepository sampleRepository;
+
+    private ValidityListService validityListService = new ValidityListService();
 
     @GetMapping("/getAll")
-    public List<ValidityList> getValidityLists(){
-        return validityListRepository.findAll();
+    public List<ValidityList> getValidityLists() {
+        return validityListService.getValidityListsRest();
     }
 
     @GetMapping("/getOne")
-    public ValidityList getValidityList(@RequestParam Integer id){
-        return validityListRepository.getOne(id);
+    public ValidityList getValidityList(@RequestParam Integer id) {
+        return validityListService.getValidityListRest(id);
     }
 
     @PostMapping("/insert")
-    public ValidityList addValidityList(@Valid @RequestParam Integer sId){
-        ValidityList validityList = new ValidityList();
-        validityList.setSample(sampleRepository.getOne(sId));
-        return validityListRepository.save(validityList);
+    public ValidityList addValidityList(@Valid @RequestParam Integer sId) {
+        return validityListService.addValidityListRest(sId);
     }
 }
