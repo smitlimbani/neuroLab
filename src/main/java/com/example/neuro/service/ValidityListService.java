@@ -33,9 +33,9 @@ public class ValidityListService {
     }
 
     public void deleteValidityListRest(Integer id){
-        Sample sample= validityListRepository.getOne(id).getSample();
-        sample.setValidityList(null);
-        sampleRepository.save(sample);
+//        Sample sample= validityListRepository.getOne(id).getSample();
+//        sample.setValidityList(null);
+//        sampleRepository.save(sample);
         validityListRepository.deleteById(id);
     }
 }

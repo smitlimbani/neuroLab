@@ -27,4 +27,10 @@ public class ValidityListController {
     public ValidityList addValidityList(@Valid @RequestParam Integer sId) {
         return validityListService.addValidityListRest(sId);
     }
+    //extra
+    @PostMapping("/delete")
+    public boolean test(@RequestParam Integer id){
+        validityListService.deleteValidityListRest(id);
+        return true;
+    }
 }

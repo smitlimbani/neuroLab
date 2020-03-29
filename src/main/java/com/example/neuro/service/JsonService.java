@@ -19,7 +19,6 @@ public class JsonService<T> {
     }
 
     public List<T> fromJsonList(String jsonString, String key) throws JsonProcessingException {
-        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         JsonNode node = mapper.readTree(jsonString);
         String str = node.get(key).toString();
         List<T> objects = mapper.readValue(str, new TypeReference<List<T>>() {});
@@ -27,7 +26,6 @@ public class JsonService<T> {
     }
 
     public Object fromJson(String jsonString, String key, java.lang.Class classRef) throws JsonProcessingException {
-        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         JsonNode node = mapper.readTree(jsonString);
         String str = node.get(key).toString();
         return mapper.readValue(str, classRef);
