@@ -26,7 +26,12 @@ public class SampleController {
     }
 
     @PostMapping("/insert")
-    public Sample addSample(@Valid @RequestBody Sample sample, @RequestParam Integer mId) {
-        return sampleService.addSampleRest(sample, mId);
+    public Sample addSample(@Valid @RequestBody Sample sample) {
+        return sampleService.addSampleRest(sample);
     }
+
+//    @PostMapping("/insert")
+//    public Sample addSample(@Valid @RequestBody Sample sample, @RequestParam Integer mId) {
+//        return sampleService.addSampleRest(sample, mId);
+//    }
 }

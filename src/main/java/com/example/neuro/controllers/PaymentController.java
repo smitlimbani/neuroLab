@@ -26,7 +26,13 @@ public class PaymentController {
     }
 
     @PostMapping("/insert")
-    public Payment addPayment(@Valid @RequestBody Payment payment, @RequestParam Integer mId) {
-        return paymentService.addPaymentRest(payment, mId);
+    public Payment addPayment(@Valid @RequestBody Payment payment) {
+        return paymentService.addPaymentRest(payment);
     }
+
+//    @PostMapping("/insert")
+//    public Payment addPayment(@Valid @RequestBody Payment payment, @RequestParam Integer mId) {
+//        return paymentService.addPaymentRest(payment, mId);
+//    }
+
 }

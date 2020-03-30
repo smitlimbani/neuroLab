@@ -28,4 +28,8 @@ public class PaymentCategoryService {
     public PaymentCategory updatePaymentCategoryRest(PaymentCategory paymentCategory) {
         return paymentCategoryRepository.save(paymentCategory);
     }
+
+    public PaymentCategory getPaymentCategoryByCodeRest(String code){
+        return paymentCategoryRepository.findByCode(code);
+    }
 }

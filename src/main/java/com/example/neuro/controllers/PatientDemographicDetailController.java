@@ -1,7 +1,7 @@
 package com.example.neuro.controllers;
 
 import com.example.neuro.beans.PatientDemographicDetail;
-import com.example.neuro.service.PatientDemographicDetailsService;
+import com.example.neuro.service.PatientDemographicDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,20 +13,20 @@ import java.util.List;
 public class PatientDemographicDetailController {
 
     @Autowired
-    private PatientDemographicDetailsService patientDemographicDetailsService;
+    private PatientDemographicDetailService patientDemographicDetailService;
 
     @GetMapping("/getAll")
     public List<PatientDemographicDetail> getPatientDemographicDetails() {
-        return patientDemographicDetailsService.getPatientDemographicDetailsRest();
+        return patientDemographicDetailService.getPatientDemographicDetailsRest();
     }
 
     @GetMapping("/getOne")
     public PatientDemographicDetail getPatientDemographicDetail(@RequestParam Integer id) {
-        return patientDemographicDetailsService.getPatientDemographicDetailRest(id);
+        return patientDemographicDetailService.getPatientDemographicDetailRest(id);
     }
 
     @PostMapping("/insert")
     public PatientDemographicDetail addPatientDemographicDetail(@Valid @RequestBody PatientDemographicDetail patientDemographicDetail) {
-        return patientDemographicDetailsService.addPatientDemographicDetailRest(patientDemographicDetail);
+        return patientDemographicDetailService.addPatientDemographicDetailRest(patientDemographicDetail);
     }
 }

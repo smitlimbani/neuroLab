@@ -16,7 +16,7 @@ public class ValidityListService {
     @Autowired
     ValidityListRepository validityListRepository;
     @Autowired
-    private SampleRepository sampleRepository;
+    SampleService sampleService;
 
     public List<ValidityList> getValidityListsRest() {
         return validityListRepository.findAll();
@@ -28,9 +28,10 @@ public class ValidityListService {
 
     public ValidityList addValidityListRest(Integer sId) {
         ValidityList validityList = new ValidityList();
-        validityList.setSample(sampleRepository.getOne(sId));
+        validityList.setSample(sampleService.getSampleRest(sId));
         return validityListRepository.save(validityList);
     }
+
     public ValidityList updateValidityListRest(ValidityList validityList) {
         return validityListRepository.save(validityList);
     }
@@ -41,8 +42,9 @@ public class ValidityListService {
 
 
     public void deleteValidityListRest(Integer id){
-//        Sample sample= validityListRepository.getOne(id).getSample();
-//        sample.setValidityList(null);
+        Sample sample= validityListRepository.getOne(id).getSample();
+        sample.setValidityList(null);
+        sampleService.addSampleRest(sample); //will this work? it was like below line before!
 //        sampleRepository.save(sample);
         validityListRepository.deleteById(id);
     }

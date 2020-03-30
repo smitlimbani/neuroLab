@@ -12,8 +12,6 @@ import java.util.List;
 public class PaymentService {
     @Autowired
     private PaymentRepository paymentRepository;
-    @Autowired
-    private MasterRepository masterRepository;
 
     public List<Payment> getPaymentsRest() {
         return paymentRepository.findAll();
@@ -23,11 +21,14 @@ public class PaymentService {
         return paymentRepository.getOne(id);
     }
 
-    public Payment addPaymentRest(Payment payment, Integer mId) {
-        payment.setMaster(masterRepository.getOne(mId));
+    public Payment addPaymentRest(Payment payment) {
         return paymentRepository.save(payment);
     }
-    public Payment updatePaymentRest(Payment payment) {
-        return paymentRepository.save(payment);
-    }
+
+    public Payment updatePaymentRest(Payment payment) {return paymentRepository.save(payment); }
+
+    //    public Payment addPaymentRest(Payment payment, Integer mId) {
+//        payment.setMaster(masterRepository.getOne(mId));
+//        return paymentRepository.save(payment);
+//    }
 }

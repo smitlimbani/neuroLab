@@ -17,7 +17,7 @@ public class MasterController {
 
     @GetMapping("/getAll")
     public List<Master> getMasters() {
-        return (new MasterService()).getMastersRest();
+        return masterService.getMastersRest();
     }
 
     @GetMapping("/getOne")
@@ -26,8 +26,13 @@ public class MasterController {
     }
 
     @PostMapping("/insert")
-    public Master addMaster(@Valid @RequestBody Master master, @RequestParam Integer pCatId, @RequestParam Integer pId) {
-        return masterService.addMasterRest(master, pCatId, pId);
+    public Master addMaster(@Valid @RequestBody Master master) {
+        return masterService.addMasterRest(master);
     }
+
+//    @PostMapping("/insert")
+//    public Master addMaster(@Valid @RequestBody Master master, @RequestParam Integer pCId, @RequestParam Integer pDDId) {
+//        return masterService.addMasterRest(master, pCId, pDDId);
+//    }
 
 }

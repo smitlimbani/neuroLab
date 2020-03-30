@@ -28,8 +28,13 @@ public class VialController {
     }
 
     @PostMapping("/insert")
-    public Vial addVial(@Valid @RequestBody Vial vial, @RequestParam Integer mId, @RequestParam Integer tId) {
-        return vialService.addVialRest(vial, mId, tId);
+    public Vial addVial(@Valid @RequestBody Vial vial) {
+        return vialService.addVialRest(vial);
     }
+
+//    @PostMapping("/insert")
+//    public Vial addVial(@Valid @RequestBody Vial vial, @RequestParam Integer mId, @RequestParam Integer tId) {
+//        return vialService.addVialRest(vial, mId, tId);
+//    }
 
 }

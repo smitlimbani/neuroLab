@@ -13,8 +13,6 @@ public class SampleService {
 
     @Autowired
     private SampleRepository sampleRepository;
-    @Autowired
-    private MasterRepository masterRepository;
 
     public List<Sample> getSamplesRest() {
         return sampleRepository.findAll();
@@ -24,11 +22,12 @@ public class SampleService {
         return sampleRepository.getOne(id);
     }
 
-    public Sample addSampleRest(Sample sample, Integer mId) {
-        sample.setMaster(masterRepository.getOne(mId));
-        return sampleRepository.save(sample);
-    }
     public Sample addSampleRest(Sample sample) {
         return sampleRepository.save(sample);
     }
+    
+//    public Sample addSampleRest(Sample sample, Integer mId) {
+//        sample.setMaster(masterRepository.getOne(mId));
+//        return sampleRepository.save(sample);
+//    }
 }

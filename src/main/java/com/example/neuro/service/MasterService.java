@@ -14,10 +14,6 @@ public class MasterService {
 
     @Autowired
     private MasterRepository masterRepository;
-    @Autowired
-    private PaymentCategoryRepository paymentCategoryRepository;
-    @Autowired
-    private PatientDemographicDetailRepository patientDemographicDetailRepository;
 
     public List<Master> getMastersRest() {
         return masterRepository.findAll();
@@ -27,9 +23,13 @@ public class MasterService {
         return masterRepository.getOne(id);
     }
 
-    public Master addMasterRest(Master master, Integer pCatId, Integer pId) {
-        master.setPaymentCategory(paymentCategoryRepository.getOne(pCatId));
-        master.setPatientDemographicDetail(patientDemographicDetailRepository.getOne(pId));
+//    public Master addMasterRest(Master master, Integer pCatId, Integer pId) {
+//        master.setPaymentCategory(paymentCategoryRepository.getOne(pCatId));
+//        master.setPatientDemographicDetail(patientDemographicDetailRepository.getOne(pId));
+//        return masterRepository.save(master);
+//    }
+
+    public Master addMasterRest(Master master) {
         return masterRepository.save(master);
     }
 

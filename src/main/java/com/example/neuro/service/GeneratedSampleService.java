@@ -13,17 +13,20 @@ public class GeneratedSampleService {
 
     @Autowired
     private GeneratedSampleRepository generatedSampleRepository;
-    @Autowired
-    private MasterRepository masterRepository;
 
     public List<GeneratedSample> getGeneratedSamplesRest(){return generatedSampleRepository.findAll();}
 
     public GeneratedSample getGeneratedSampleRest(Integer id){return generatedSampleRepository.getOne(id);}
 
-    public GeneratedSample addGeneratedSampleRest(GeneratedSample generatedSample, Integer mId ){
-        generatedSample.setMaster(masterRepository.getOne(mId));
+//    public GeneratedSample addGeneratedSampleRest(GeneratedSample generatedSample, Integer mId ){
+//        generatedSample.setMaster(masterRepository.getOne(mId));
+//        return generatedSampleRepository.save(generatedSample);
+//    }
+
+    public GeneratedSample addGeneratedSampleRest(GeneratedSample generatedSample){
         return generatedSampleRepository.save(generatedSample);
     }
+
 
     public GeneratedSample updateGeneratedSampleRest(GeneratedSample generatedSample ){
         return generatedSampleRepository.save(generatedSample);

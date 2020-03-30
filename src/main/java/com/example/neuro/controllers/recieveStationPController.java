@@ -12,8 +12,11 @@ public class recieveStationPController {
     @Autowired
     ReceiveStationPService receiveStationPService;
 
-    @GetMapping("/nextULIDNo")
-    public String nextULIDNo(){
-        return receiveStationPService.getXULIDRest();
+    @GetMapping("/getNextXULID")
+    public String getNextXULID(){
+        return receiveStationPService.getNextXULIDRest();
     }
+
+    @GetMapping("/getNextIULID")
+    public String getNextIULID() { return receiveStationPService.getNextIULIDRest(); }
 }

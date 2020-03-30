@@ -13,10 +13,6 @@ import java.util.List;
 public class VialService {
     @Autowired
     VialRepository vialRepository;
-    @Autowired
-    MasterRepository masterRepository;
-    @Autowired
-    TestRepository testRepository;
 
     public List<Vial> getVialsRest() {
         return vialRepository.findAll();
@@ -26,11 +22,15 @@ public class VialService {
         return vialRepository.getOne(id);
     }
 
-    public Vial addVialRest(Vial vial, Integer mId, Integer tId) {
-        vial.setMaster(masterRepository.getOne(mId));
-        vial.setTest(testRepository.getOne(tId));
+    public Vial addVialRest(Vial vial) {
         return vialRepository.save(vial);
     }
+
+//    public Vial addVialRest(Vial vial, Integer mId, Integer tId) {
+//        vial.setMaster(masterRepository.getOne(mId));
+//        vial.setTest(testRepository.getOne(tId));
+//        return vialRepository.save(vial);
+//    }
     public Vial updateVialRest(Vial vial) {
         return vialRepository.save(vial);
     }
