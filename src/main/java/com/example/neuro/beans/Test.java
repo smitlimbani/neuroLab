@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @JsonRootName("Test")
@@ -17,7 +17,7 @@ public class Test {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "test", fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = {"test", "hibernateLazyInitializer"}, allowSetters = true)
-    private Set<Vial> vials;
+    private List<Vial> vials;
 
     @Column(unique = true, nullable = false)
     private String code;
@@ -39,11 +39,11 @@ public class Test {
     @Column(nullable = false)
     private boolean isActive;
 
-    public Set<Vial> getVials() {
+    public List<Vial> getVials() {
         return vials;
     }
 
-    public void setVials(Set<Vial> vials) {
+    public void setVials(List<Vial> vials) {
         this.vials = vials;
     }
 

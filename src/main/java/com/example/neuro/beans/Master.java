@@ -9,6 +9,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -32,19 +33,19 @@ public class Master implements Comparable{
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "master", fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = {"master", "hibernateLazyInitializer"}, allowSetters = true)
-    private Set<Sample> samples;
+    private List<Sample> samples;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "master", fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = {"master", "hibernateLazyInitializer"}, allowSetters = true)
-    private Set<GeneratedSample> generatedSamples;
+    private List<GeneratedSample> generatedSamples;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "master", fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = {"master", "hibernateLazyInitializer"}, allowSetters = true)
-    private Set<Payment> payments;
+    private List<Payment> payments;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "master", fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = {"master", "hibernateLazyInitializer"}, allowSetters = true)
-    private Set<Vial> vials;
+    private List<Vial> vials;
 
     @Column(unique = true)
     private String ULID;
@@ -83,35 +84,35 @@ public class Master implements Comparable{
     @CreatedDate
     private Date reqDate = new Date();
 
-    public Set<Vial> getVials() {
+    public List<Vial> getVials() {
         return vials;
     }
 
-    public void setVials(Set<Vial> vials) {
+    public void setVials(List<Vial> vials) {
         this.vials = vials;
     }
 
-    public Set<Payment> getPayments() {
+    public List<Payment> getPayments() {
         return payments;
     }
 
-    public void setPayments(Set<Payment> payments) {
+    public void setPayments(List<Payment> payments) {
         this.payments = payments;
     }
 
-    public Set<Sample> getSamples() {
+    public List<Sample> getSamples() {
         return samples;
     }
 
-    public void setSamples(Set<Sample> samples) {
+    public void setSamples(List<Sample> samples) {
         this.samples = samples;
     }
 
-    public Set<GeneratedSample> getGeneratedSamples() {
+    public List<GeneratedSample> getGeneratedSamples() {
         return generatedSamples;
     }
 
-    public void setGeneratedSamples(Set<GeneratedSample> generatedSamples) {
+    public void setGeneratedSamples(List<GeneratedSample> generatedSamples) {
         this.generatedSamples = generatedSamples;
     }
 

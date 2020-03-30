@@ -15,9 +15,6 @@ public class ReceivingStationController {
     @Autowired
     ReceivingStationService receivingStationService;
 
-    @Autowired
-    MasterRepository masterRepository;
-
     @GetMapping("/getUnprocessedSampleList")
     public String getUnprocessedSampleList() throws JsonProcessingException {
         return receivingStationService.getUnprocessedSampleList();

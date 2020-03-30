@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("test/")
 public class recieveStationPController {
+    //spelling hoti hai recEIve.
     @Autowired
     ReceiveStationPService receiveStationPService;
 

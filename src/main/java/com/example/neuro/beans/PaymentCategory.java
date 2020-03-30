@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,7 +18,7 @@ public class PaymentCategory {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "paymentCategory", fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = {"paymentCategory", "hibernateLazyInitializer"}, allowSetters = true)
-    private Set<Master> masters;
+    private List<Master> masters;
 
     @Column(unique = true, nullable = false)
     private String code;
@@ -32,11 +33,11 @@ public class PaymentCategory {
         this.id = id;
     }
 
-    public Set<Master> getMasters() {
+    public List<Master> getMasters() {
         return masters;
     }
 
-    public void setMasters(Set<Master> masters) {
+    public void setMasters(List<Master> masters) {
         this.masters = masters;
     }
 

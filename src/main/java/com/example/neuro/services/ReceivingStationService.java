@@ -1,6 +1,8 @@
 package com.example.neuro.services;
 
 import com.example.neuro.beans.Master;
+import com.example.neuro.beans.Sample;
+import com.example.neuro.beans.ValidityList;
 import com.example.neuro.repositories.MasterRepository;
 import com.example.neuro.utils.IsValidEnum;
 import com.example.neuro.utils.StatusEnum;
@@ -17,6 +19,8 @@ public class ReceivingStationService {
     JsonService jsonService;
     @Autowired
     MasterService masterService;
+    @Autowired
+    ValidityListService validityListService;
 
     /*Below function is for generating the sample list of samples that are active, valid(fully or partially)
     and are unprocessed ie. in RECEIVED and NOT_RECEIVED state only. Once we retrieve the required master objects
@@ -30,13 +34,16 @@ public class ReceivingStationService {
         return jsonService.toJson(masters,"masters");
     }
 
-//    public String confirmNotReceiveSample(String jsonString) throws JsonProcessingException {
-//        Integer id = (Integer) jsonService.fromJson(jsonString,"masterId", Integer.class);
-//        Master master =masterService.getMasterRest(id);
-//        master.setIsValid(IsValidEnum.N);
-//        masterService.updateMasterRest(master);
-//
-//    }
+    public String confirmSampleNotReceived(String jsonString) throws JsonProcessingException {
+        Integer id = (Integer) jsonService.fromJson(jsonString,"masterId", Integer.class);
+        Master master =masterService.getMasterRest(id);
+        master.setIsValid(IsValidEnum.N);
+        masterService.updateMasterRest(master);
+        List<Sample> sampleList= master.getSamples();
+        for(Sample x: sampleList)
+            validityListService.addValidityListRest(x.getId());
+        return "ok";// what to return here.
+    }
 
 
 }
