@@ -297,9 +297,6 @@ public class Master {
                 "id=" + id +
                 ", patientDemographicDetail=" + patientDemographicDetail +
                 ", paymentCategory=" + paymentCategory +
-                ", samples=" + samples +
-                ", payments=" + payments +
-                ", vails=" + vials +
                 ", ULID='" + ULID + '\'' +
                 ", nNo='" + nNo + '\'' +
                 ", ANCA=" + ANCA +

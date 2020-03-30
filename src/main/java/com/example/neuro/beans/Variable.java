@@ -8,22 +8,16 @@ import javax.persistence.*;
 @JsonRootName("Variable")
 public class Variable {
 
+    public Variable() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Integer id;
 
-    private Integer iCount;
-    private Integer xCount;
-    private Integer year;
-
-    public Integer getYear() {
-        return year;
-    }
-
-    public void setYear(Integer year) {
-        this.year = year;
-    }
+    private String varName;
+    private String varVal;
 
     public Integer getId() {
         return id;
@@ -33,32 +27,28 @@ public class Variable {
         this.id = id;
     }
 
-    public Integer getICount() {
-        return iCount;
+    public String getVarName() {
+        return varName;
     }
 
-    public void setICount(Integer iCount) {
-        this.iCount = iCount;
+    public void setVarName(String varName) {
+        this.varName = varName;
     }
 
-    public Integer getXCount() {
-        return xCount;
+    public String getVarVal() {
+        return varVal;
     }
 
-    public void setXCount(Integer xCount) {
-        this.xCount = xCount;
+    public void setVarVal(String varVal) {
+        this.varVal = varVal;
     }
 
     @Override
     public String toString() {
         return "Variable{" +
                 "id=" + id +
-                ", iCount=" + iCount +
-                ", xCount=" + xCount +
-                ", year=" + year +
+                ", varName='" + varName + '\'' +
+                ", varVal='" + varVal + '\'' +
                 '}';
-    }
-
-    public Variable() {
     }
 }

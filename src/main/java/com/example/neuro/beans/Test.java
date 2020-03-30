@@ -115,7 +115,6 @@ public class Test {
     public String toString() {
         return "Test{" +
                 "id=" + id +
-                ", vails=" + vials +
                 ", code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", rate=" + rate +

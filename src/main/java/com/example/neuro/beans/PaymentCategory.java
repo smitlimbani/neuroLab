@@ -60,7 +60,6 @@ public class PaymentCategory {
     public String toString() {
         return "PaymentCategory{" +
                 "id=" + id +
-                ", master=" + masters +
                 ", code='" + code + '\'' +
                 ", discountPercentage=" + discountPercentage +
                 '}';

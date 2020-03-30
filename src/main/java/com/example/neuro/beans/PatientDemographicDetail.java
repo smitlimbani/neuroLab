@@ -120,7 +120,6 @@ public class PatientDemographicDetail {
         return "PatientDemographicDetail{" +
                 "id=" + id +
                 ", UHID='" + UHID + '\'' +
-                ", master=" + masters +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
