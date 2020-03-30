@@ -24,6 +24,8 @@ public class PaymentService {
         return paymentRepository.save(payment);
     }
 
+    public List<Payment> addPaymentsRest(List<Payment> payments){return paymentRepository.saveAll(payments);}
+
     public Payment updatePaymentRest(Payment payment) {return paymentRepository.save(payment); }
 
     //    public Payment addPaymentRest(Payment payment, Integer mId) {

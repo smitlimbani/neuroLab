@@ -1,10 +1,9 @@
 package com.example.neuro.controllers;
 
 import com.example.neuro.services.ReceiveStationPService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("test/")
@@ -14,10 +13,20 @@ public class recieveStationPController {
     ReceiveStationPService receiveStationPService;
 
     @GetMapping("/getNextXULID")
-    public String getNextXULID(){
-        return receiveStationPService.getNextXULIDRest();
+    public String getNextXULID(@RequestParam String sampleType){
+        return receiveStationPService.getNextXULIDRest(sampleType);
     }
 
     @GetMapping("/getNextIULID")
-    public String getNextIULID() { return receiveStationPService.getNextIULIDRest(); }
+    public String getNextIULID(@RequestParam String sampleType) { return receiveStationPService.getNextIULIDRest(sampleType); }
+
+    @PostMapping("/storeXPatientDetail")
+    public String storeXPatientDetail(@RequestBody String jsonString) throws JsonProcessingException {
+        return receiveStationPService.storeXPatientDetailRest(jsonString);
+    }
+
+    @GetMapping("/test")
+    public String test(){
+        return receiveStationPService.incCounter("iCount");
+    }
 }
