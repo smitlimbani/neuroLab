@@ -2,6 +2,7 @@ package com.example.neuro.beans;
 
 import com.example.neuro.utils.IsValidEnum;
 import com.example.neuro.utils.SampleTypeEnum;
+import com.example.neuro.utils.StatusEnum;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import org.springframework.data.annotation.CreatedDate;
@@ -12,7 +13,7 @@ import java.util.Set;
 
 @Entity
 @JsonRootName("Master")
-public class Master {
+public class Master implements Comparable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,16 +59,18 @@ public class Master {
     private Integer GANGIGG = 0;
     private Integer GANGIGM = 0;
 
-
     private Double totalAmount;
     private Double remainingAmount;
+
+    private boolean isActive = true;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private IsValidEnum isValid = IsValidEnum.Y;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Integer status = 0;
+    private StatusEnum status = StatusEnum.NOT_RECEIVED;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -111,8 +114,6 @@ public class Master {
     public void setGeneratedSamples(Set<GeneratedSample> generatedSamples) {
         this.generatedSamples = generatedSamples;
     }
-
-    private boolean isActive = true;
 
     public Integer getId() {
         return id;
@@ -242,11 +243,11 @@ public class Master {
         this.isValid = isValid;
     }
 
-    public Integer getStatus() {
+    public StatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(StatusEnum status) {
         this.status = status;
     }
 
@@ -320,5 +321,12 @@ public class Master {
     }
 
     public Master() {
+    }
+
+    @Override
+    public int compareTo(Object B) {
+        String a= this.getPatientDemographicDetail().getUHID();
+        String b= ((Master)B).getPatientDemographicDetail().getUHID();
+        return a.compareTo(b);
     }
 }

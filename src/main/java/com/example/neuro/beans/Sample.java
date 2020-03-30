@@ -27,7 +27,7 @@ public class Sample {
     @Column(unique = true, nullable = false)
     private String sampleId;
 
-    @Column(nullable = false)
+    @Column
     private Date recDate = new Date();
 
     public ValidityList getValidityList() {

@@ -38,11 +38,10 @@ public class ValidityListService {
         return validityListRepository.findAll(Sort.by(Sort.Direction.ASC,"sample.master.id"));
     }
 
-
     public void deleteValidityListRest(Integer id){
         Sample sample= validityListRepository.getOne(id).getSample();
         sample.setValidityList(null);
-        sampleService.addSampleRest(sample); //will this work? it was like below line before!
+        sampleService.updateSampleRest(sample); //changed it to update
 //        sampleRepository.save(sample);
         validityListRepository.deleteById(id);
     }

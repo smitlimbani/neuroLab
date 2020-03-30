@@ -2,6 +2,8 @@ package com.example.neuro.services;
 
 import com.example.neuro.beans.Master;
 import com.example.neuro.repositories.MasterRepository;
+import com.example.neuro.utils.IsValidEnum;
+import com.example.neuro.utils.StatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,10 @@ public class MasterService {
 
     public Master updateMasterRest(Master master) {
         return masterRepository.save(master);
+    }
+
+    public List<Master> findByIsActiveTrueAndIsValidNotAndStatusInRest(IsValidEnum isValidEnum, List<StatusEnum> list){
+        return masterRepository.findByIsActiveTrueAndIsValidNotAndStatusIn(isValidEnum,list);
     }
 
 }

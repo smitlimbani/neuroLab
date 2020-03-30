@@ -25,6 +25,10 @@ public class SampleService {
         return sampleRepository.save(sample);
     }
 
+    public Sample updateSampleRest(Sample sample) {
+        return sampleRepository.save(sample);
+    }
+
 //    public Sample addSampleRest(Sample sample, Integer mId) {
 //        sample.setMaster(masterRepository.getOne(mId));
 //        return sampleRepository.save(sample);

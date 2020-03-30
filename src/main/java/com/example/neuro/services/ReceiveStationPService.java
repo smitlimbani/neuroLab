@@ -21,11 +21,11 @@ public class ReceiveStationPService {
     MasterService masterService;
 
     public String getNextXULIDRest(){
-        return "XU"+variableService.getVarVal("year")+"/"+String.format("%05d",1+Integer.parseInt(variableService.getVarVal("iCount")));
+        return "XU"+variableService.getVarValRest("year")+"/"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("iCount")));
     }
 
     public String getNextIULIDRest(){
-        return "AU"+variableService.getVarVal("year")+"/"+String.format("%05d",1+Integer.parseInt(variableService.getVarVal("xCount")));
+        return "AU"+variableService.getVarValRest("year")+"/"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("xCount")));
     }
 
     public void storeXPatientDetailRest(String jsonString) throws JsonProcessingException {

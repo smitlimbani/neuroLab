@@ -21,5 +21,5 @@ public class VariableService {
 
     public Variable updateVariableRest(Variable variable){return variableRepository.save(variable);}
 
-    public String getVarVal(String varName){ return variableRepository.findByVarName(varName).getVarVal();}
+    public String getVarValRest(String varName){ return variableRepository.findByVarName(varName).getVarVal();}
 }
