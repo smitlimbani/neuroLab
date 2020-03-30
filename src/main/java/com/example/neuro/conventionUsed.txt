@@ -6,3 +6,4 @@
 - {className in lower}/insert? :actual object and dependant ids to insert an object in that class
 - id name : {all caps character used in className}Id i.e PatientDemographicDetail = pDDId
 - {fieldName} Enum
+- method name in controller for api is same used in service layer with suffix "Rest"

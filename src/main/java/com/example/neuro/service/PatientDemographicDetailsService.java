@@ -3,9 +3,11 @@ package com.example.neuro.service;
 import com.example.neuro.beans.PatientDemographicDetail;
 import com.example.neuro.repositories.PatientDemographicDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class PatientDemographicDetailsService {
 
     @Autowired

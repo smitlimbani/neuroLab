@@ -2,6 +2,7 @@ package com.example.neuro.controllers;
 
 import com.example.neuro.beans.PatientDemographicDetail;
 import com.example.neuro.service.PatientDemographicDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -11,7 +12,8 @@ import java.util.List;
 @RequestMapping("patientDemographicDetail/")
 public class PatientDemographicDetailController {
 
-    private PatientDemographicDetailsService patientDemographicDetailsService = new PatientDemographicDetailsService();
+    @Autowired
+    private PatientDemographicDetailsService patientDemographicDetailsService;
 
     @GetMapping("/getAll")
     public List<PatientDemographicDetail> getPatientDemographicDetails() {

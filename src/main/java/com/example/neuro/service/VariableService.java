@@ -3,9 +3,11 @@ package com.example.neuro.service;
 import com.example.neuro.beans.Variable;
 import com.example.neuro.repositories.VariableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class VariableService {
 
     @Autowired

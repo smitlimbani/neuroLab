@@ -5,9 +5,11 @@ import com.example.neuro.repositories.MasterRepository;
 import com.example.neuro.repositories.PatientDemographicDetailRepository;
 import com.example.neuro.repositories.PaymentCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class MasterService {
 
     @Autowired

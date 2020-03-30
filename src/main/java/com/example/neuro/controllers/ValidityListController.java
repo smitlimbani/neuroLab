@@ -2,6 +2,7 @@ package com.example.neuro.controllers;
 
 import com.example.neuro.beans.ValidityList;
 import com.example.neuro.service.ValidityListService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -11,7 +12,9 @@ import java.util.List;
 @RequestMapping("validityList/")
 public class ValidityListController {
 
-    private ValidityListService validityListService = new ValidityListService();
+//    private ValidityListService validityListService = new ValidityListService();
+    @Autowired
+    private ValidityListService validityListService;
 
     @GetMapping("/getAll")
     public List<ValidityList> getValidityLists() {
@@ -27,6 +30,12 @@ public class ValidityListController {
     public ValidityList addValidityList(@Valid @RequestParam Integer sId) {
         return validityListService.addValidityListRest(sId);
     }
+
+    @GetMapping("/getAllOrderByULID")
+    public List<ValidityList> getValidityListsOrderByULID(){
+        return validityListService.getValidityListsOrderByULIDRest();
+    }
+
     //extra
     @PostMapping("/delete")
     public boolean test(@RequestParam Integer id){

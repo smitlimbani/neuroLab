@@ -2,6 +2,7 @@ package com.example.neuro.controllers;
 
 import com.example.neuro.beans.Master;
 import com.example.neuro.service.MasterService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -11,7 +12,8 @@ import java.util.List;
 @RequestMapping("master/")
 public class MasterController {
 
-    private MasterService masterService = new MasterService();
+    @Autowired
+    private MasterService masterService;
 
     @GetMapping("/getAll")
     public List<Master> getMasters() {

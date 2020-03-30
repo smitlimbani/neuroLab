@@ -2,6 +2,7 @@ package com.example.neuro.controllers;
 
 import com.example.neuro.beans.PaymentCategory;
 import com.example.neuro.service.PaymentCategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -11,7 +12,8 @@ import java.util.List;
 @RequestMapping("paymentCategory/")
 public class PaymentCategoryController {
 
-    private PaymentCategoryService paymentCategoryService = new PaymentCategoryService();
+    @Autowired
+    private PaymentCategoryService paymentCategoryService;
 
     @GetMapping("/getAll")
     public List<PaymentCategory> getPaymentCategories() {

@@ -1,13 +1,14 @@
 package com.example.neuro.service;
 
-import com.example.neuro.beans.Payment;
+
 import com.example.neuro.beans.PaymentCategory;
-import com.example.neuro.controllers.PaymentCategoryController;
 import com.example.neuro.repositories.PaymentCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class PaymentCategoryService {
 
     @Autowired

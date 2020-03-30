@@ -6,12 +6,15 @@ import com.example.neuro.beans.ValidityList;
 import com.example.neuro.repositories.SampleRepository;
 import com.example.neuro.repositories.ValidityListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ValidityListService {
     @Autowired
-    private ValidityListRepository validityListRepository;
+    ValidityListRepository validityListRepository;
     @Autowired
     private SampleRepository sampleRepository;
 
@@ -31,6 +34,11 @@ public class ValidityListService {
     public ValidityList updateValidityListRest(ValidityList validityList) {
         return validityListRepository.save(validityList);
     }
+
+    public List<ValidityList> getValidityListsOrderByULIDRest(){
+        return validityListRepository.findAll(Sort.by(Sort.Direction.ASC,"sample.master.id"));
+    }
+
 
     public void deleteValidityListRest(Integer id){
 //        Sample sample= validityListRepository.getOne(id).getSample();
