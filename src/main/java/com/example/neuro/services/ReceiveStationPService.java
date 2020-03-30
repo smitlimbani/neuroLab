@@ -1,9 +1,7 @@
-package com.example.neuro.service;
+package com.example.neuro.services;
 
 import com.example.neuro.beans.Master;
 import com.example.neuro.beans.PatientDemographicDetail;
-import com.example.neuro.beans.Payment;
-import com.example.neuro.beans.PaymentCategory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

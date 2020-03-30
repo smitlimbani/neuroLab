@@ -1,9 +1,7 @@
-package com.example.neuro.service;
+package com.example.neuro.services;
 
 import com.example.neuro.beans.Master;
 import com.example.neuro.repositories.MasterRepository;
-import com.example.neuro.repositories.PatientDemographicDetailRepository;
-import com.example.neuro.repositories.PaymentCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

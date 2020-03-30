@@ -1,7 +1,7 @@
 package com.example.neuro.controllers;
 
 import com.example.neuro.beans.Payment;
-import com.example.neuro.service.PaymentService;
+import com.example.neuro.services.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

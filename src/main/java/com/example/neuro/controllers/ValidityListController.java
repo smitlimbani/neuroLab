@@ -1,7 +1,7 @@
 package com.example.neuro.controllers;
 
 import com.example.neuro.beans.ValidityList;
-import com.example.neuro.service.ValidityListService;
+import com.example.neuro.services.ValidityListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

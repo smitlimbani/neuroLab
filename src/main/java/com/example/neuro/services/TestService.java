@@ -1,11 +1,9 @@
-package com.example.neuro.service;
+package com.example.neuro.services;
 
 import com.example.neuro.beans.Test;
 import com.example.neuro.repositories.TestRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Service

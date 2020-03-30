@@ -1,4 +1,4 @@
-package com.example.neuro.service;
+package com.example.neuro.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

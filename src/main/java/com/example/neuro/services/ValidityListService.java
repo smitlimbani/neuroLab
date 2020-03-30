@@ -1,9 +1,7 @@
-package com.example.neuro.service;
+package com.example.neuro.services;
 
-import com.example.neuro.beans.Master;
 import com.example.neuro.beans.Sample;
 import com.example.neuro.beans.ValidityList;
-import com.example.neuro.repositories.SampleRepository;
 import com.example.neuro.repositories.ValidityListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;

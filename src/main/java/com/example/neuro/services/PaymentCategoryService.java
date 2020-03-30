@@ -1,4 +1,4 @@
-package com.example.neuro.service;
+package com.example.neuro.services;
 
 
 import com.example.neuro.beans.PaymentCategory;

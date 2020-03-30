@@ -1,7 +1,7 @@
 package com.example.neuro.controllers;
 
 import com.example.neuro.beans.PatientDemographicDetail;
-import com.example.neuro.service.PatientDemographicDetailService;
+import com.example.neuro.services.PatientDemographicDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
