@@ -31,6 +31,8 @@ public class SampleService {
         return sampleRepository.save(sample);
     }
 
+    public Sample findBySampleIdRest(String sampleId){return sampleRepository.findBySampleId(sampleId);}
+
 //    public Sample addSampleRest(Sample sample, Integer mId) {
 //        sample.setMaster(masterRepository.getOne(mId));
 //        return sampleRepository.save(sample);

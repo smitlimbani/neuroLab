@@ -42,6 +42,21 @@ public class ReceivingStationController {
         return receivingStationService.linkSamplesRest(jsonString);
     }
 
+    @PostMapping("/mergeSamples")
+    public String mergeSamples(@RequestBody String jsonString)throws JsonProcessingException{
+        return receivingStationService.mergeSamplesRest(jsonString);
+    }
+
+    @PostMapping("/getPatientDetail")
+    public String getPatientDetail(@RequestBody String jsonString)throws JsonProcessingException{
+        return receivingStationService.getPatientDetailRest(jsonString);
+    }
+
+    @PostMapping("/confirmInvalidReceiving")
+    public String confirmInvalidReceiving(@RequestBody String jsonString)throws JsonProcessingException{
+        return receivingStationService.confirmInvalidReceivingRest(jsonString);
+    }
+
     @PostMapping("/test")
     public String jsonServiceTestFunc(@RequestBody @Valid String jsonString) throws JsonProcessingException {
         List<Master> masters = (new JsonService<Master>()).fromJsonList(jsonString, "masters", Master.class);
@@ -51,11 +66,11 @@ public class ReceivingStationController {
         return "ok";
     }
 
-    @GetMapping("/getList")
-    public String getJsonList() throws JsonProcessingException {
-        List<Master> list = masterService.getMastersRest();
-        ObjectMapper mapper = new ObjectMapper();
-        String jsonStringy = mapper.writerWithDefaultPrettyPrinter().withRootName("masters").writeValueAsString(list);
-        return jsonStringy;
-    }
+//    @GetMapping("/getList")
+//    public String getJsonList() throws JsonProcessingException {
+//        List<Master> list = masterService.getMastersRest();
+//        ObjectMapper mapper = new ObjectMapper();
+//        String jsonStringy = mapper.writerWithDefaultPrettyPrinter().withRootName("masters").writeValueAsString(list);
+//        return jsonStringy;
+//    }
 }
