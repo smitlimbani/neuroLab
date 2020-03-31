@@ -30,6 +30,11 @@ public class MasterController {
         return masterService.addMasterRest(master);
     }
 
+    @GetMapping("/getMasterByULID")
+    public Master getMasterByUlid(String ulid){
+        return masterService.getMasterByULIDRest(ulid);
+    }
+
 //    @PostMapping("/insert")
 //    public Master addMaster(@Valid @RequestBody Master master, @RequestParam Integer pCId, @RequestParam Integer pDDId) {
 //        return masterService.addMasterRest(master, pCId, pDDId);

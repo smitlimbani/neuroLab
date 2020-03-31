@@ -5,13 +5,11 @@ import com.example.neuro.utils.SampleTypeEnum;
 import com.example.neuro.utils.StatusEnum;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.sun.istack.Nullable;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @JsonRootName("Master")
@@ -38,7 +36,7 @@ public class Master implements Comparable{
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "master", fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = {"master", "hibernateLazyInitializer"}, allowSetters = true)
-    private List<GeneratedSample> generatedSamples;
+    private List<ExternalSample> externalSamples;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "master", fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = {"master", "hibernateLazyInitializer"}, allowSetters = true)
@@ -108,12 +106,12 @@ public class Master implements Comparable{
         this.samples = samples;
     }
 
-    public List<GeneratedSample> getGeneratedSamples() {
-        return generatedSamples;
+    public List<ExternalSample> getExternalSamples() {
+        return externalSamples;
     }
 
-    public void setGeneratedSamples(List<GeneratedSample> generatedSamples) {
-        this.generatedSamples = generatedSamples;
+    public void setExternalSamples(List<ExternalSample> externalSamples) {
+        this.externalSamples = externalSamples;
     }
 
     public Integer getId() {

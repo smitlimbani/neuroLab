@@ -1,10 +1,16 @@
 package com.example.neuro.services;
 
 import com.example.neuro.beans.*;
+import com.example.neuro.repositories.MasterRepository;
+import com.example.neuro.utils.IsValidEnum;
+import com.example.neuro.utils.StatusEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -22,6 +28,12 @@ public class ReceiveStationPService {
     PaymentService paymentService;
     @Autowired
     SampleService sampleService;
+    @Autowired
+    ExternalSampleService externalSampleService;
+    @Autowired
+    JsonService jsonService;
+    @Autowired
+    MasterRepository masterRepository;
 
     public String getNextXULIDRest(String sampleType){
         return sampleType+"XU"+variableService.getVarValRest("year")+"/"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("iCount")));
@@ -31,18 +43,29 @@ public class ReceiveStationPService {
         return sampleType+"AU"+variableService.getVarValRest("year")+"/"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("xCount")));
     }
 
-    public String incCounter(String counterName){
-        Variable variable = variableService.getVariableByVarNameRest(counterName);
-        System.out.println(variable);
-        Integer no = 1+Integer.parseInt(variable.getVarVal());
-        System.out.println("value");
-        variable.setVarVal(no.toString());
-        variableService.updateVariableRest(variable);
-        return variable.getVarVal();
+    @Transactional
+    public String mapExternal(String ulid, String uhid, String sampleId){
+        //test it
+        Master master = masterService.getMasterByULIDRest(ulid);
+        master.getPatientDemographicDetail().setUHID(uhid);
+        ExternalSample externalSample = new ExternalSample();
+        externalSample.setExternalSampleId(sampleId);
+        externalSample.setMaster(master);
+        externalSampleService.addExternalSampleRest(externalSample);
+        return "ok";
     }
 
+    public String test() throws JsonProcessingException {
+        List<StatusEnum> list= new LinkedList<>();
 
+        list.add(StatusEnum.NOT_RECEIVED);
+        list.add(StatusEnum.RECEIVED);
+        List<Master> masters= masterRepository.findByIsActiveTrueAndIsValidNotAndStatusIn(IsValidEnum.N,list,Sort.by(Sort.Direction.ASC,"patientDemographicDetail.UHID"));
 
+        return jsonService.toJson(masters,"masters");
+    }
+
+    @Transactional
     public String storeXPatientDetailRest(String jsonString) throws JsonProcessingException {
 
         /*
@@ -68,7 +91,7 @@ public class ReceiveStationPService {
         master = masterService.addMasterRest(master);
 
         //Increment xCount as it is assigned
-        incCounter("xCount");
+        variableService.incrementCounterRest("xCount");
 
         //Add payment details of that transaction
         List<Payment> payments = (new JsonService<Payment>()).fromJsonList(jsonString,"payments", Payment.class);

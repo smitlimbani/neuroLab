@@ -1,13 +1,14 @@
 package com.example.neuro.services;
 
 import com.example.neuro.beans.Master;
-import com.example.neuro.beans.PatientDemographicDetail;
 import com.example.neuro.beans.Sample;
 import com.example.neuro.utils.IsValidEnum;
 import com.example.neuro.utils.StatusEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.Date;
@@ -49,9 +50,9 @@ public class ReceivingStationService {
 
         list.add(StatusEnum.NOT_RECEIVED);
         list.add(StatusEnum.RECEIVED);
-        List<Master> masters= masterService.findByIsActiveTrueAndIsValidNotAndStatusInRest(IsValidEnum.N,list);
-        Collections.sort(masters);//list is sorted on the basis of master.patientDemographicDetail.uhid
-
+//        List<Master> masters= masterService.findByIsActiveTrueAndIsValidNotAndStatusInRest(IsValidEnum.N,list);
+//        Collections.sort(masters);//list is sorted on the basis of master.patientDemographicDetail.uhid
+        List<Master> masters= masterService.findByIsActiveTrueAndIsValidNotAndStatusInRest(IsValidEnum.N,list,Sort.by(Sort.Direction.ASC,"patientDemographicDetail.UHID"));
         return jsonService.toJson(masters,"masters");
     }
 
@@ -62,6 +63,7 @@ public class ReceivingStationService {
     request:        "mId":pk of master obj
     response:       ok
      */
+    @Transactional
     public String confirmSampleNotReceivedRest(String jsonString) throws JsonProcessingException {
         Integer mId = (Integer) jsonService.fromJson(jsonString,"mId", Integer.class);
 
@@ -83,6 +85,7 @@ public class ReceivingStationService {
                     "ulid": ulid of sample2
     response:       "master":master object of sample1 required for generating sticker.
      */
+    @Transactional
     public String linkSamplesRest(String jsonString) throws JsonProcessingException {
         Integer mId= (Integer)jsonService.fromJson(jsonString, "mId", Integer.class);
         String ulid = (String) jsonService.fromJson(jsonString, "ulid", String.class);
@@ -111,6 +114,7 @@ public class ReceivingStationService {
                     "mId2":masterId of sample2
     response:       "master": merged master obj
      */
+    @Transactional
     public String mergeSamplesRest(String jsonString) throws JsonProcessingException {
         Master master1= masterService.getMasterRest((Integer) jsonService.fromJson(jsonString,"mId1", Integer.class));
         Master master2=masterService.getMasterRest ((Integer) jsonService.fromJson(jsonString, "mId2", Integer.class));

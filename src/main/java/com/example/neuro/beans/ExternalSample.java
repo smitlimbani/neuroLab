@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @JsonRootName("GeneratedSample")
-public class GeneratedSample {
+public class ExternalSample {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
@@ -15,11 +15,19 @@ public class GeneratedSample {
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "masterId")
-    @JsonIgnoreProperties(value = {"generatedSamples", "hibernateLazyInitializer"}, allowSetters = true)
+    @JsonIgnoreProperties(value = {"externalSamples", "hibernateLazyInitializer"}, allowSetters = true)
     private Master master;
 
     @Column(unique = true, nullable = false)
-    private Integer generatedSampleId;
+    private String ExternalSampleId;
+
+    public String getExternalSampleId() {
+        return ExternalSampleId;
+    }
+
+    public void setExternalSampleId(String externalSampleId) {
+        ExternalSampleId = externalSampleId;
+    }
 
     public Integer getId() {
         return id;
@@ -37,23 +45,14 @@ public class GeneratedSample {
         this.master = master;
     }
 
-    public Integer getGeneratedSampleId() {
-        return generatedSampleId;
-    }
-
-    public void setGeneratedSampleId(Integer generatedSampleId) {
-        this.generatedSampleId = generatedSampleId;
-    }
-
     @Override
     public String toString() {
-        return "GeneratedSample{" +
+        return "ExternalSample{" +
                 "id=" + id +
-                ", master=" + master +
-                ", generatedSampleId=" + generatedSampleId +
+                ", ExternalSampleId=" + ExternalSampleId +
                 '}';
     }
 
-    public GeneratedSample() {
+    public ExternalSample() {
     }
 }

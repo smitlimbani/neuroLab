@@ -5,6 +5,7 @@ import com.example.neuro.repositories.MasterRepository;
 import com.example.neuro.utils.IsValidEnum;
 import com.example.neuro.utils.StatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,25 +38,31 @@ public class MasterService {
         return masterRepository.save(master);
     }
 
-    public List<Master> findByIsActiveTrueAndIsValidNotAndStatusInRest(IsValidEnum isValidEnum, List<StatusEnum> list){
-        return masterRepository.findByIsActiveTrueAndIsValidNotAndStatusIn(isValidEnum,list);
+//    public List<Master> findByIsActiveTrueAndIsValidNotAndStatusInRest(IsValidEnum isValidEnum, List<StatusEnum> list){
+//        return masterRepository.findByIsActiveTrueAndIsValidNotAndStatusIn(isValidEnum,list);
+//    }
+    public List<Master> findByIsActiveTrueAndIsValidNotAndStatusInRest(IsValidEnum isValidEnum, List<StatusEnum> list, Sort sort){
+        return masterRepository.findByIsActiveTrueAndIsValidNotAndStatusIn(isValidEnum,list,sort);
     }
 
+    public Master getMasterByULIDRest(String ulid){
+        return masterRepository.findByULID(ulid);
+    }
 
-    public boolean doesULIDExistBoolean(String ULID){
-        if (masterRepository.getByULID(ULID) != null) {
+    public boolean doesULIDExistBooleanRest(String ulid){
+        if (masterRepository.getByULID(ulid) != null) {
             return true;
         }
         return false;
     }
-    public Master doesULIDExist(String ULID){
+    public Master doesULIDExistRest(String ulid){
         //function return pdd and master table details if ULID exist o/w NULL
-        Master master =  masterRepository.findByULID(ULID);
+        Master master =  masterRepository.findByULID(ulid);
         if (master == null) {
             return null;
         }
         master.setPaymentCategory(null);
-        master.setGeneratedSamples(null);
+        master.setExternalSamples(null);
         master.setPayments(null);
         master.setVials(null);
         master.setSamples(null);

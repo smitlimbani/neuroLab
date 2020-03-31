@@ -1,8 +1,5 @@
 package com.example.neuro.controllers;
 
-import com.example.neuro.beans.Master;
-import com.example.neuro.beans.Payment;
-import com.example.neuro.services.JsonService;
 import com.example.neuro.services.MasterService;
 import com.example.neuro.services.ReceiveStationPService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -35,7 +32,7 @@ public class recieveStationPController {
     }
 
     @GetMapping("/test")
-    public Master test(@RequestParam String ulid){
-        return masterService.doesULIDExist(ulid);
+    public String test() throws JsonProcessingException {
+        return receiveStationPService.test();
     }
 }
