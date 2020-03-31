@@ -1,9 +1,15 @@
 package com.example.neuro.controllers;
 
+import com.example.neuro.beans.Master;
+import com.example.neuro.beans.Payment;
+import com.example.neuro.services.JsonService;
+import com.example.neuro.services.MasterService;
 import com.example.neuro.services.ReceiveStationPService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("test/")
@@ -11,6 +17,9 @@ public class recieveStationPController {
     //spelling hoti hai recEIve.
     @Autowired
     ReceiveStationPService receiveStationPService;
+    @Autowired
+    MasterService masterService;
+
 
     @GetMapping("/getNextXULID")
     public String getNextXULID(@RequestParam String sampleType){
@@ -26,7 +35,7 @@ public class recieveStationPController {
     }
 
     @GetMapping("/test")
-    public String test(){
-        return receiveStationPService.incCounter("iCount");
+    public Master test(@RequestParam String ulid){
+        return masterService.doesULIDExist(ulid);
     }
 }

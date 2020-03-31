@@ -41,4 +41,24 @@ public class MasterService {
         return masterRepository.findByIsActiveTrueAndIsValidNotAndStatusIn(isValidEnum,list);
     }
 
+
+    public boolean doesULIDExistBoolean(String ULID){
+        if (masterRepository.getByULID(ULID) != null) {
+            return true;
+        }
+        return false;
+    }
+    public Master doesULIDExist(String ULID){
+        //function return pdd and master table details if ULID exist o/w NULL
+        Master master =  masterRepository.findByULID(ULID);
+        if (master == null) {
+            return null;
+        }
+        master.setPaymentCategory(null);
+        master.setGeneratedSamples(null);
+        master.setPayments(null);
+        master.setVials(null);
+        master.setSamples(null);
+        return master;
+    }
 }

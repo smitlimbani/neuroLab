@@ -15,8 +15,6 @@ public class ReceiveStationPService {
     @Autowired
     PatientDemographicDetailService patientDemographicDetailsService;
     @Autowired
-    JsonService jsonService;
-    @Autowired
     PaymentCategoryService paymentCategoryService;
     @Autowired
     MasterService masterService;
@@ -43,8 +41,12 @@ public class ReceiveStationPService {
         return variable.getVarVal();
     }
 
+
+
     public String storeXPatientDetailRest(String jsonString) throws JsonProcessingException {
+
         /*
+        Submitting External Patient Details
         remaining amount will be pre-populated from front end;
         jsonString = {
             "patientDemographicDetail" : {...},
@@ -54,24 +56,35 @@ public class ReceiveStationPService {
             "samples" : [{},{}...]
         }
         */
-        PatientDemographicDetail patientDemographicDetail = (PatientDemographicDetail) jsonService.fromJson(jsonString,"patientDemographicDetail", PatientDemographicDetail.class);
+        //add patient demoGraphic Details
+        PatientDemographicDetail patientDemographicDetail = (PatientDemographicDetail) (new JsonService()).fromJson(jsonString,"patientDemographicDetail", PatientDemographicDetail.class);
         patientDemographicDetail = patientDemographicDetailsService.addPatientDemographicDetailRest(patientDemographicDetail);
 
-        Master master = (Master) jsonService.fromJson(jsonString,"master",Master.class);
-        String paymentCategoryCode = (String) jsonService.fromJson(jsonString,"paymentCategoryCode",String.class);
+        //add Master entry, before that set PDD and PaymentCategory
+        Master master = (Master) (new JsonService()).fromJson(jsonString,"master",Master.class);
+        String paymentCategoryCode = (String) (new JsonService()).fromJson(jsonString,"paymentCategoryCode",String.class);
         master.setPaymentCategory(paymentCategoryService.getPaymentCategoryByCodeRest(paymentCategoryCode));
         master.setPatientDemographicDetail(patientDemographicDetail);
         master = masterService.addMasterRest(master);
 
-        incCounter("xCounter");
+        //Increment xCount as it is assigned
+        incCounter("xCount");
 
-        List<Payment> payments = (List<Payment>)jsonService.fromJsonList(jsonString,"payments");
+        //Add payment details of that transaction
+        List<Payment> payments = (new JsonService<Payment>()).fromJsonList(jsonString,"payments");
+        System.out.println(payments);
+        System.out.println(payments.getClass());
+        System.out.println(payments.get(1).getClass());
+        System.out.println(payments.get(0).getDetails());
+        payments.get(0).setDetails("abc");
+        System.out.println(payments.get(0).getDetails());
         for(Payment payment : payments){
             payment.setMaster(master);
         }
         payments = paymentService.addPaymentsRest(payments);
 
-        List<Sample> samples = (List<Sample>)jsonService.fromJsonList(jsonString,"samples");
+        //Adding received all the samples
+        List<Sample> samples = (List<Sample>)(new JsonService<Sample>()).fromJsonList(jsonString,"samples");
         for(Sample sample : samples){
             sample.setMaster(master);
         }

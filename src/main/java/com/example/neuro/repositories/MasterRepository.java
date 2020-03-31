@@ -11,6 +11,10 @@ import java.util.List;
 
 @Repository
 public interface MasterRepository extends JpaRepository<Master, Integer> {
+
     Master findByULID(String ulid);
+
     List<Master> findByIsActiveTrueAndIsValidNotAndStatusIn(IsValidEnum isValidEnum, Collection<StatusEnum> statusEnums);
+
+    Master getByULID(String ulid);
 }
