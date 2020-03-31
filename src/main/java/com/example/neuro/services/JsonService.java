@@ -5,11 +5,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.type.CollectionType;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class JsonService<T> {
@@ -20,12 +20,24 @@ public class JsonService<T> {
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
     }
 
-    public List<T> fromJsonList(String jsonString, String key) throws JsonProcessingException {
+    public List<T> fromJsonList(String jsonString, String key, Class<T> tClass) throws JsonProcessingException {
         JsonNode node = mapper.readTree(jsonString);
         String str = node.get(key).toString();
-        List<T> objects = mapper.readValue(str, new TypeReference<List<T>>() {});
+        CollectionType listType = mapper.getTypeFactory().constructCollectionType(ArrayList.class, tClass);
+        List<T> objects= mapper.readValue(str, listType);
+        System.out.println(objects.getClass());
         return objects;
     }
+
+//    public List<T> fromJsonList(String jsonString, String key) throws JsonProcessingException {
+//        JsonNode node = mapper.readTree(jsonString);
+//        ObjectNode objectNode = mapper.convertValue(node, ObjectNode.class);
+//        Map<String,String> hashMap2 = mapper.convertValue(node, HashMap.class);
+//        List<T> objects = mapper.readValue(hashMap2.get(key).toString(), new TypeReference<List<T>>() {});
+//        System.out.println(objects.get(0));
+//        return objects;
+//    }
+
 
     public Object fromJson(String jsonString, String key, java.lang.Class classRef) throws JsonProcessingException {
         JsonNode node = mapper.readTree(jsonString);

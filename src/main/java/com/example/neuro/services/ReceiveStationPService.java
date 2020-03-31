@@ -71,7 +71,7 @@ public class ReceiveStationPService {
         incCounter("xCount");
 
         //Add payment details of that transaction
-        List<Payment> payments = (new JsonService<Payment>()).fromJsonList(jsonString,"payments");
+        List<Payment> payments = (new JsonService<Payment>()).fromJsonList(jsonString,"payments", Payment.class);
         System.out.println(payments);
         System.out.println(payments.getClass());
         System.out.println(payments.get(1).getClass());
@@ -84,7 +84,7 @@ public class ReceiveStationPService {
         payments = paymentService.addPaymentsRest(payments);
 
         //Adding received all the samples
-        List<Sample> samples = (List<Sample>)(new JsonService<Sample>()).fromJsonList(jsonString,"samples");
+        List<Sample> samples = (List<Sample>)(new JsonService<Sample>()).fromJsonList(jsonString,"samples", Sample.class);
         for(Sample sample : samples){
             sample.setMaster(master);
         }

@@ -5,6 +5,7 @@ import com.example.neuro.utils.SampleTypeEnum;
 import com.example.neuro.utils.StatusEnum;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.sun.istack.Nullable;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -47,7 +48,6 @@ public class Master implements Comparable{
     @JsonIgnoreProperties(value = {"master", "hibernateLazyInitializer"}, allowSetters = true)
     private List<Vial> vials;
 
-    @Column(unique = true)
     private String ULID;
     private String nNo;
 
