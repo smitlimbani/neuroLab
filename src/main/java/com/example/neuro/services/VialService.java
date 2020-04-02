@@ -39,6 +39,12 @@ public class VialService {
         return vialRepository.save(vial);
     }
 
+    public String updateVialsRest(List<Vial> vials) {
+        for (Vial vial: vials)
+            updateVialRest(vial);
+        return "ok";
+    }
+
     public List<Vial> getVialsByIdsRest(List<Integer> ids){
         return vialRepository.findAllByIdIn(ids);
     }

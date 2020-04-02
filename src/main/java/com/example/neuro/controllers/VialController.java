@@ -33,9 +33,15 @@ public class VialController {
     }
 
     @PostMapping("/updateVial")
-    public Vial  updateVial(@RequestBody @Valid Vial vial) throws JsonProcessingException {
+    public Vial  updateVial(@RequestBody @Valid Vial vial) {
         return vialService.updateVialRest(vial);
     }
+
+    @PostMapping("/updateVials")
+    public String  updateVialsRest(@RequestBody @Valid List<Vial> vials) {
+        return vialService.updateVialsRest(vials);
+    }
+
 
 //    @PostMapping("/updateVials")
 //    public String updateVials(@RequestBody @Valid String jsonString) throws JsonProcessingException {
