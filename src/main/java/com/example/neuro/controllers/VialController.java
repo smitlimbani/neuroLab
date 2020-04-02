@@ -3,6 +3,7 @@ package com.example.neuro.controllers;
 
 import com.example.neuro.beans.Vial;
 import com.example.neuro.services.VialService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +31,16 @@ public class VialController {
     public Vial addVial(@Valid @RequestBody Vial vial) {
         return vialService.addVialRest(vial);
     }
+
+    @PostMapping("/updateVial")
+    public Vial  updateVial(@RequestBody @Valid Vial vial) throws JsonProcessingException {
+        return vialService.updateVialRest(vial);
+    }
+
+//    @PostMapping("/updateVials")
+//    public String updateVials(@RequestBody @Valid String jsonString) throws JsonProcessingException {
+//        return vialService.updateVialsRest(jsonString);
+//    }
 
 //    @PostMapping("/insert")
 //    public Vial addVial(@Valid @RequestBody Vial vial, @RequestParam Integer mId, @RequestParam Integer tId) {

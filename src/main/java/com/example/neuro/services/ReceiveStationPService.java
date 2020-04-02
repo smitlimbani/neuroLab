@@ -147,7 +147,7 @@ public class ReceiveStationPService {
     }
 
     @Transactional
-    public List<Vial> seperateSampleRest(Master master){
+    public List<Vial> separateSampleRest(Master master){
         /*
         Input : Master object with updated test flag,status,isValid
         */

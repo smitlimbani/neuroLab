@@ -38,9 +38,9 @@ public class recieveStationPController {
         return receiveStationPService.storeXPatientDetailRest(jsonString);
     }
 
-    @PostMapping("/seperateSample")
-    public List<Vial> seperateSample(@RequestBody Master master) throws JsonProcessingException {
-        return receiveStationPService.seperateSampleRest(master);
+    @PostMapping("/separateSample")
+    public List<Vial> separateSample(@RequestBody Master master) throws JsonProcessingException {
+        return receiveStationPService.separateSampleRest(master);
     }
 
     @GetMapping("/test")

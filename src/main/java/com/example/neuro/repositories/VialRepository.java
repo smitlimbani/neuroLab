@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface VialRepository extends JpaRepository<Vial, Integer> {
     List<Vial> findAllByIdIn(Collection<Integer> ids);
+    Vial findByVLID(String VLID);
 }

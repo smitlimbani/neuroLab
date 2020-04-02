@@ -25,7 +25,7 @@ public class VialService {
         return vialRepository.save(vial);
     }
 
-//    public Vial addVialRest(Vial vial, Integer mId, Integer tId) {
+    //    public Vial addVialRest(Vial vial, Integer mId, Integer tId) {
 //        vial.setMaster(masterRepository.getOne(mId));
 //        vial.setTest(testRepository.getOne(tId));
 //        return vialRepository.save(vial);
@@ -36,5 +36,9 @@ public class VialService {
 
     public List<Vial> getVialsByIdsRest(List<Integer> ids){
         return vialRepository.findAllByIdIn(ids);
+    }
+
+    public Vial findByVLIDRest(String VLID){
+        return vialRepository.findByVLID(VLID);
     }
 }

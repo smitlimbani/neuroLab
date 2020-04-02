@@ -19,15 +19,15 @@ import java.util.List;
 public class ReceivingStationService {
 
     @Autowired
-    JsonService jsonService;
+    private JsonService jsonService;
     @Autowired
-    MasterService masterService;
+    private MasterService masterService;
     @Autowired
-    ValidityListService validityListService;
+    private ValidityListService validityListService;
     @Autowired
-    VariableService variableService;
+    private VariableService variableService;
     @Autowired
-    SampleService sampleService;
+    private SampleService sampleService;
 
     public String getNextXULIDRest(String sampleType){
         return sampleType+"XU"+variableService.getVarValRest("year")+"/"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("iCount")));

@@ -9,3 +9,12 @@ Remaining :
 - transaction date in payment table
 - validity list insertion multiple times(UK)
 
+
+1	0	0	0	0	0	0	0
+1	1	1	1	0	1	1	0
+0	0	0	1	1	0	0	0
+1	0	0	0	0	0	0	0
+0	1	1	0	1	0	0	0
+1	0	0	0	0	0	0	0
+
+
