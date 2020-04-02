@@ -31,6 +31,11 @@ public class VialService {
 //        return vialRepository.save(vial);
 //    }
     public Vial updateVialRest(Vial vial) {
+        Vial vialDB= vialRepository.getOne(vial.getId());
+
+        vial.setMaster(vialDB.getMaster());
+        vial.setTest(vialDB.getTest());
+
         return vialRepository.save(vial);
     }
 

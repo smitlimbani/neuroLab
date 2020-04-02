@@ -25,6 +25,7 @@ public class PatientDemographicDetailService {
         return patientDemographicDetailRepository.save(patientDemographicDetail);
     }
     public PatientDemographicDetail updatePatientDemographicDetailRest(PatientDemographicDetail patientDemographicDetail) {
+        patientDemographicDetail.setMasters(patientDemographicDetailRepository.getOne(patientDemographicDetail.getId()).getMasters());
         return patientDemographicDetailRepository.save(patientDemographicDetail);
     }
 }

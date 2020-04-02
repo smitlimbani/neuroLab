@@ -35,6 +35,15 @@ public class MasterService {
     }
 
     public Master updateMasterRest(Master master) {
+        Master masterDB= masterRepository.getOne(master.getId());
+
+        master.setPatientDemographicDetail(masterDB.getPatientDemographicDetail());
+        master.setPaymentCategory(masterDB.getPaymentCategory());
+        master.setPayments(masterDB.getPayments());
+        master.setExternalSamples(masterDB.getExternalSamples());
+        master.setSamples(masterDB.getSamples());
+        master.setVials(masterDB.getVials());
+
         return masterRepository.save(master);
     }
 

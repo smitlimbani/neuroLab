@@ -4,6 +4,7 @@ import com.example.neuro.beans.Master;
 import com.example.neuro.beans.Sample;
 import com.example.neuro.utils.IsValidEnum;
 import com.example.neuro.utils.StatusEnum;
+import com.example.neuro.utils.TestStatusEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -30,11 +31,11 @@ public class ReceivingStationService {
     private SampleService sampleService;
 
     public String getNextXULIDRest(String sampleType){
-        return sampleType+"XU"+variableService.getVarValRest("year")+"/"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("iCount")));
+        return sampleType+"XU"+variableService.getVarValRest("year")+"/"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("xCount")));
     }
 
     public String getNextIULIDRest(String sampleType){
-        return sampleType+"AU"+variableService.getVarValRest("year")+"/"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("xCount")));
+        return sampleType+"AU"+variableService.getVarValRest("year")+"/"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("iCount")));
     }
 
 
@@ -93,7 +94,7 @@ public class ReceivingStationService {
         Master master= masterService.getMasterRest(mId);
         //Ulid is generated for the linked sample and required fields are updated
         master.setULID(this.getNextIULIDRest(master.getSampleType()+""));
-        variableService.incrementCounterRest("iCount");
+        variableService.incrementCounterRest("iCount", 1+Integer.parseInt(variableService.getVarValRest("iCount")));
         master.setLinked(ulid);
         master.setStatus(StatusEnum.RECEIVED);
         masterService.updateMasterRest(master);
@@ -128,22 +129,37 @@ public class ReceivingStationService {
 
         master2.setActive(false);
 
-        //uncomment this!
-//        master1.setANA(master1.getANA()|master2.getANA());
-//        master1.setANCA(master1.getANCA() | master2.getANCA());
-//        master1.setGANGIGG(master1.getGANGIGG()| master2.getGANGIGG());
-//        master1.setGANGIGM(master1.getGANGIGM()| master2.getGANGIGM());
-//        master1.setMOG(master1.getMOG()| master1.getMOG());
-//        master1.setMYU(master1.getMYU()| master2.getMYU());
-//        master1.setNMDA(master1.getNMDA()|master2.getNMDA());
-//        master1.setPANA(master1.getPANA()| master2.getPANA());
-//        master1.setRemainingAmount(master1.getRemainingAmount()+ master2.getRemainingAmount());
-//        master1.setTotalAmount(master1.getTotalAmount()+ master2.getTotalAmount());
+        master1.setANA(selectTestStatus(master1.getANA(), master2.getANA()));
+        master1.setANCA(selectTestStatus(master1.getANCA(), master2.getANCA()));
+        master1.setGANGIGG(selectTestStatus(master1.getGANGIGG(), master2.getGANGIGG()));
+        master1.setGANGIGM(selectTestStatus(master1.getGANGIGM(),master2.getGANGIGM()));
+        master1.setMOG(selectTestStatus(master1.getMOG(),master2.getMOG()));
+        master1.setMYU(selectTestStatus(master1.getMYU(),master2.getMYU()));
+        master1.setNMDA(selectTestStatus(master1.getNMDA(),master2.getNMDA()));
+        master1.setPANA(selectTestStatus(master1.getPANA(), master2.getPANA()));
+
+        master1.setRemainingAmount(master1.getRemainingAmount()+ master2.getRemainingAmount());
+        master1.setTotalAmount(master1.getTotalAmount()+ master2.getTotalAmount());
 
         masterService.updateMasterRest(master1);
         masterService.updateMasterRest(master2);
 
         return jsonService.toJson(master1, "master");
+    }
+
+    /*Here it is expected that the status will be only RAISED and NOT_RAISED because the samples are only
+    in  RECEIVED and NOT_RECEIVED state.
+     */
+    public TestStatusEnum selectTestStatus(TestStatusEnum A, TestStatusEnum B){
+        if(A.equals(B)) {
+            System.out.println(A+" "+ B);
+            return A;
+        }
+        else
+        {
+            System.out.println(A+" "+ B+ "set to raised");
+            return TestStatusEnum.RAISED;
+        }
     }
 
 
@@ -176,6 +192,9 @@ public class ReceivingStationService {
     public String confirmInvalidReceivingRest(String jsonString) throws JsonProcessingException{
         Sample sample= sampleService.findBySampleIdRest((String) jsonService.fromJson(jsonString,"sampleId", String.class));
         String ulid = (String) jsonService.fromJson(jsonString,"ulid", String.class);
+
+        //set iCount
+        variableService.incrementCounterRest("iCount", Integer.parseInt(ulid.substring(6)));
 
         //update sample and master
         Master master = sample.getMaster();

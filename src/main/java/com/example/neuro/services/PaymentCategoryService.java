@@ -26,6 +26,7 @@ public class PaymentCategoryService {
         return paymentCategoryRepository.save(paymentCategory);
     }
     public PaymentCategory updatePaymentCategoryRest(PaymentCategory paymentCategory) {
+        paymentCategory.setMasters(paymentCategoryRepository.getOne(paymentCategory.getId()).getMasters());
         return paymentCategoryRepository.save(paymentCategory);
     }
 

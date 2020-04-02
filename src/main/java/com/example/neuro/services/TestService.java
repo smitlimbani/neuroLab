@@ -35,6 +35,7 @@ public class TestService {
     }
 
     public Test updateTestRest(Test test) {
+        test.setVials(testRepository.getOne(test.getId()).getVials());
         return testRepository.save(test);
     }
 

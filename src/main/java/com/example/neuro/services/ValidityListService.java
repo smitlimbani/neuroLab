@@ -31,6 +31,7 @@ public class ValidityListService {
     }
 
     public ValidityList updateValidityListRest(ValidityList validityList) {
+        validityList.setSample(validityListRepository.getOne(validityList.getId()).getSample());
         return validityListRepository.save(validityList);
     }
 

@@ -28,6 +28,7 @@ public class ExternalSampleService {
 
 
     public ExternalSample updateExternalSampleRest(ExternalSample externalSample){
+        externalSample.setMaster(externalSampleRepository.getOne(externalSample.getId()).getMaster());
         return externalSampleRepository.save(externalSample);
     }
 

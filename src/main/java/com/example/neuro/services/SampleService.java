@@ -29,6 +29,11 @@ public class SampleService {
     public List<Sample> addSamplesRest(List<Sample> samples){return sampleRepository.saveAll(samples);}
 
     public Sample updateSampleRest(Sample sample) {
+        Sample sampleDB= sampleRepository.getOne(sample.getId());
+
+        sample.setMaster(sampleDB.getMaster());
+        sample.setValidityList(sampleDB.getValidityList());
+
         return sampleRepository.save(sample);
     }
 

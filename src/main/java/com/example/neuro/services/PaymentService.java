@@ -26,7 +26,9 @@ public class PaymentService {
 
     public List<Payment> addPaymentsRest(List<Payment> payments){return paymentRepository.saveAll(payments);}
 
-    public Payment updatePaymentRest(Payment payment) {return paymentRepository.save(payment); }
+    public Payment updatePaymentRest(Payment payment) {
+        payment.setMaster(paymentRepository.getOne(payment.getId()).getMaster());
+        return paymentRepository.save(payment); }
 
     //    public Payment addPaymentRest(Payment payment, Integer mId) {
 //        payment.setMaster(masterRepository.getOne(mId));

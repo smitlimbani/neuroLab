@@ -43,11 +43,11 @@ public class ReceiveStationPService {
     ValidityListService validityListService;
 
     public String getNextXULIDRest(String sampleType){
-        return sampleType+"XU"+variableService.getVarValRest("year")+"/"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("iCount")));
+        return sampleType+"XU"+variableService.getVarValRest("year")+"/"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("xCount")));
     }
 
     public String getNextIULIDRest(String sampleType){
-        return sampleType+"AU"+variableService.getVarValRest("year")+"/"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("xCount")));
+        return sampleType+"AU"+variableService.getVarValRest("year")+"/"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("iCount")));
     }
 
     @Transactional
@@ -128,7 +128,8 @@ public class ReceiveStationPService {
         master = masterService.addMasterRest(master);
 
         //Increment xCount as it is assigned
-        variableService.incrementCounterRest("xCount");
+//        variableService.incrementCounterRest("xCount");
+        variableService.incrementCounterRest("xCount", 1+Integer.parseInt(variableService.getVarValRest("xCount")));
 
         //Add payment details of that transaction
         List<Payment> payments = (new JsonService<Payment>()).fromJsonList(jsonString,"payments", Payment.class);
