@@ -27,7 +27,6 @@ public class Vial {
 
     @Column(unique = true, nullable = false)
     private String VLID;
-    @Column(nullable = false)
     private Integer serialNo;
     private String fileName;
     private Date reportingDate;

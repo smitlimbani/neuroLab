@@ -3,6 +3,7 @@ package com.example.neuro.beans;
 import com.example.neuro.utils.IsValidEnum;
 import com.example.neuro.utils.SampleTypeEnum;
 import com.example.neuro.utils.StatusEnum;
+import com.example.neuro.utils.TestStatusEnum;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import org.springframework.data.annotation.CreatedDate;
@@ -49,14 +50,30 @@ public class Master implements Comparable{
     private String ULID;
     private String nNo;
 
-    private Integer ANCA = 0;
-    private Integer MOG = 0;
-    private Integer NMDA = 0;
-    private Integer ANA = 0;
-    private Integer PANA = 0;
-    private Integer MYU = 0;
-    private Integer GANGIGG = 0;
-    private Integer GANGIGM = 0;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TestStatusEnum ANCA = TestStatusEnum.NOT_RAISED;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TestStatusEnum MOG = TestStatusEnum.NOT_RAISED;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TestStatusEnum NMDA = TestStatusEnum.NOT_RAISED;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TestStatusEnum ANA = TestStatusEnum.NOT_RAISED;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TestStatusEnum PANA = TestStatusEnum.NOT_RAISED;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TestStatusEnum MYU = TestStatusEnum.NOT_RAISED;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TestStatusEnum GANGIGG = TestStatusEnum.NOT_RAISED;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TestStatusEnum GANGIGM = TestStatusEnum.NOT_RAISED;
 
     private Double totalAmount;
     private Double remainingAmount;
@@ -146,67 +163,67 @@ public class Master implements Comparable{
         this.nNo = nNo;
     }
 
-    public Integer getANCA() {
+    public TestStatusEnum getANCA() {
         return ANCA;
     }
 
-    public void setANCA(Integer ANCA) {
+    public void setANCA(TestStatusEnum ANCA) {
         this.ANCA = ANCA;
     }
 
-    public Integer getMOG() {
+    public TestStatusEnum getMOG() {
         return MOG;
     }
 
-    public void setMOG(Integer MOG) {
+    public void setMOG(TestStatusEnum MOG) {
         this.MOG = MOG;
     }
 
-    public Integer getNMDA() {
+    public TestStatusEnum getNMDA() {
         return NMDA;
     }
 
-    public void setNMDA(Integer NMDA) {
+    public void setNMDA(TestStatusEnum NMDA) {
         this.NMDA = NMDA;
     }
 
-    public Integer getANA() {
+    public TestStatusEnum getANA() {
         return ANA;
     }
 
-    public void setANA(Integer ANA) {
+    public void setANA(TestStatusEnum ANA) {
         this.ANA = ANA;
     }
 
-    public Integer getPANA() {
+    public TestStatusEnum getPANA() {
         return PANA;
     }
 
-    public void setPANA(Integer PANA) {
+    public void setPANA(TestStatusEnum PANA) {
         this.PANA = PANA;
     }
 
-    public Integer getMYU() {
+    public TestStatusEnum getMYU() {
         return MYU;
     }
 
-    public void setMYU(Integer MYU) {
+    public void setMYU(TestStatusEnum MYU) {
         this.MYU = MYU;
     }
 
-    public Integer getGANGIGG() {
+    public TestStatusEnum getGANGIGG() {
         return GANGIGG;
     }
 
-    public void setGANGIGG(Integer GANGIGG) {
+    public void setGANGIGG(TestStatusEnum GANGIGG) {
         this.GANGIGG = GANGIGG;
     }
 
-    public Integer getGANGIGM() {
+    public TestStatusEnum getGANGIGM() {
         return GANGIGM;
     }
 
-    public void setGANGIGM(Integer GANGIGM) {
+    public void setGANGIGM(TestStatusEnum GANGIGM) {
         this.GANGIGM = GANGIGM;
     }
 

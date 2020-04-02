@@ -1,5 +1,6 @@
 package com.example.neuro.services;
 
+import com.example.neuro.beans.Master;
 import com.example.neuro.beans.Sample;
 import com.example.neuro.repositories.SampleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ public class SampleService {
     }
 
     public Sample findBySampleIdRest(String sampleId){return sampleRepository.findBySampleId(sampleId);}
+
+    public List<Sample> findByMasterRest(Master master){ return sampleRepository.findByMaster(master);}
 
 //    public Sample addSampleRest(Sample sample, Integer mId) {
 //        sample.setMaster(masterRepository.getOne(mId));

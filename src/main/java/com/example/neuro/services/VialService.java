@@ -5,6 +5,7 @@ import com.example.neuro.repositories.VialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @Service
@@ -31,5 +32,9 @@ public class VialService {
 //    }
     public Vial updateVialRest(Vial vial) {
         return vialRepository.save(vial);
+    }
+
+    public List<Vial> getVialsByIdsRest(List<Integer> ids){
+        return vialRepository.findAllByIdIn(ids);
     }
 }

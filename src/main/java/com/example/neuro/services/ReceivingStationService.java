@@ -128,16 +128,17 @@ public class ReceivingStationService {
 
         master2.setActive(false);
 
-        master1.setANA(master1.getANA()|master2.getANA());
-        master1.setANCA(master1.getANCA() | master2.getANCA());
-        master1.setGANGIGG(master1.getGANGIGG()| master2.getGANGIGG());
-        master1.setGANGIGM(master1.getGANGIGM()| master2.getGANGIGM());
-        master1.setMOG(master1.getMOG()| master1.getMOG());
-        master1.setMYU(master1.getMYU()| master2.getMYU());
-        master1.setNMDA(master1.getNMDA()|master2.getNMDA());
-        master1.setPANA(master1.getPANA()| master2.getPANA());
-        master1.setRemainingAmount(master1.getRemainingAmount()+ master2.getRemainingAmount());
-        master1.setTotalAmount(master1.getTotalAmount()+ master2.getTotalAmount());
+        //uncomment this!
+//        master1.setANA(master1.getANA()|master2.getANA());
+//        master1.setANCA(master1.getANCA() | master2.getANCA());
+//        master1.setGANGIGG(master1.getGANGIGG()| master2.getGANGIGG());
+//        master1.setGANGIGM(master1.getGANGIGM()| master2.getGANGIGM());
+//        master1.setMOG(master1.getMOG()| master1.getMOG());
+//        master1.setMYU(master1.getMYU()| master2.getMYU());
+//        master1.setNMDA(master1.getNMDA()|master2.getNMDA());
+//        master1.setPANA(master1.getPANA()| master2.getPANA());
+//        master1.setRemainingAmount(master1.getRemainingAmount()+ master2.getRemainingAmount());
+//        master1.setTotalAmount(master1.getTotalAmount()+ master2.getTotalAmount());
 
         masterService.updateMasterRest(master1);
         masterService.updateMasterRest(master2);

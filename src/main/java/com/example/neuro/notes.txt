@@ -1,6 +1,6 @@
 - default value is assgined to property directly as setting columnDefinition is vendor dependent
 - we won't allow null in ULID of master table as we are assigning it initially
-
+- you can't just update particular fields,it must have all remaining fields
 
 
 Remaining :

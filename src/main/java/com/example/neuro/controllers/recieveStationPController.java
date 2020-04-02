@@ -1,11 +1,16 @@
 package com.example.neuro.controllers;
 
+import com.example.neuro.beans.Master;
+import com.example.neuro.beans.Vial;
 import com.example.neuro.services.MasterService;
 import com.example.neuro.services.ReceiveStationPService;
+import com.example.neuro.services.VialService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -16,6 +21,8 @@ public class recieveStationPController {
     ReceiveStationPService receiveStationPService;
     @Autowired
     MasterService masterService;
+    @Autowired
+    VialService vialService;
 
 
     @GetMapping("/getNextXULID")
@@ -31,8 +38,16 @@ public class recieveStationPController {
         return receiveStationPService.storeXPatientDetailRest(jsonString);
     }
 
+    @PostMapping("/seperateSample")
+    public List<Vial> seperateSample(@RequestBody Master master) throws JsonProcessingException {
+        return receiveStationPService.seperateSampleRest(master);
+    }
+
     @GetMapping("/test")
-    public String test() throws JsonProcessingException {
-        return receiveStationPService.test();
+    public List<Vial> test() throws JsonProcessingException {
+        List<Integer> ids = new LinkedList<>();
+        ids.add(2);
+        ids.add(3);
+        return vialService.getVialsByIdsRest(ids);
     }
 }
