@@ -4,12 +4,14 @@ import com.example.neuro.utils.IsValidEnum;
 import com.example.neuro.utils.SampleTypeEnum;
 import com.example.neuro.utils.StatusEnum;
 import com.example.neuro.utils.TestStatusEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -97,7 +99,7 @@ public class Master implements Comparable{
 
     @Column(nullable = false, updatable = false)
     @CreatedDate
-    private Date reqDate = new Date();
+    private Date reqDate = Date.valueOf(LocalDate.now());
 
     public List<Vial> getVials() {
         return vials;

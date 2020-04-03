@@ -25,12 +25,10 @@ public class VariableService {
 
     public Variable getVariableByVarNameRest(String varName){return variableRepository.findByVarName(varName);}
 
-    public String incrementCounterRest(String counterName, Integer count){
+    public String incrementCounterRest(String counterName, Integer counterVal){
         Variable variable = variableRepository.findByVarName(counterName);
-//        System.out.println(variable);
-//        Integer no = 1+Integer.parseInt(variable.getVarVal());
-//        System.out.println("value");
-        variable.setVarVal(count.toString());
+        System.out.println(variable);
+        variable.setVarVal(counterVal.toString());
         variableRepository.save(variable);
         return variable.getVarVal();
     }

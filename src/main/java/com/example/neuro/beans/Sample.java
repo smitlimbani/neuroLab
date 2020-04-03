@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @JsonRootName("Sample")
@@ -28,7 +29,7 @@ public class Sample {
     private String sampleId;
 
     @Column
-    private Date recDate = new Date();
+    private Date recDate = Date.valueOf(LocalDate.now());
 
     public ValidityList getValidityList() {
         return validityList;

@@ -1,18 +1,12 @@
 package com.example.neuro.controllers;
 
 import com.example.neuro.beans.Master;
-import com.example.neuro.repositories.MasterRepository;
-import com.example.neuro.services.JsonService;
-import com.example.neuro.services.MasterService;
-import com.example.neuro.services.ReceivingStationService;
-import com.example.neuro.services.VariableService;
+import com.example.neuro.services.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -25,6 +19,26 @@ public class ReceivingStationController {
     VariableService variableService;
     @Autowired
     MasterService masterService;
+    @Autowired
+    VialService vialService;
+
+    @GetMapping("/getNextXULID")
+    public String getNextXULID(@RequestParam String sampleType){
+        return receivingStationService.getNextXULIDRest(sampleType);
+    }
+
+    @GetMapping("/getNextIULID")
+    public String getNextIULID(@RequestParam String sampleType) { return receivingStationService.getNextIULIDRest(sampleType); }
+
+    @GetMapping("/mapExternal")
+    public String mapExternal(@RequestParam String ulid,@RequestParam String uhid,@RequestParam String sampleId){
+        return receivingStationService.mapExternalRest(ulid,uhid,sampleId);
+    }
+
+    @PostMapping("/storeXPatientDetail")
+    public String storeXPatientDetail(@RequestBody String jsonString) throws JsonProcessingException {
+        return receivingStationService.storeXPatientDetailRest(jsonString);
+    }
 
     @GetMapping("/getUnprocessedSampleList")
     public String getUnprocessedSampleList() throws JsonProcessingException {

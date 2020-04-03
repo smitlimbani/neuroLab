@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import javax.persistence.*;
-import java.util.function.DoubleUnaryOperator;
+import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @JsonRootName("Payment")
@@ -24,6 +25,17 @@ public class Payment {
     private Double amount;
 
     private String details;
+
+
+    private Date transactionDate= Date.valueOf(LocalDate.now());
+
+    public Date getTransactionDate() {
+        return transactionDate;
+    }
+
+    public void setTransactionDate(Date transactionDate) {
+        this.transactionDate = transactionDate;
+    }
 
     public Integer getId() {
         return id;
@@ -64,6 +76,7 @@ public class Payment {
                 ", master=" + master +
                 ", amount=" + amount +
                 ", details='" + details + '\'' +
+                ", transactionDate=" + transactionDate +
                 '}';
     }
 

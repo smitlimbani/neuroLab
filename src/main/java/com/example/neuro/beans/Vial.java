@@ -2,9 +2,11 @@ package com.example.neuro.beans;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @JsonRootName("Vial")
@@ -30,8 +32,10 @@ public class Vial {
     private Integer serialNo;
     private String fileName;
     private Date reportingDate;
+
     @Column(nullable = false)
-    private Date creationDate = new Date();
+    private Date creationDate = Date.valueOf(LocalDate.now());
+
     private Date testingDate;
     private String remark;
     private String result;

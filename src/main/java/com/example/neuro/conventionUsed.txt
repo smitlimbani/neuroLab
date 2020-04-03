@@ -6,4 +6,6 @@
 - {className in lower}/insert? :actual object and dependant ids to insert an object in that class
 - id name : {all caps character used in className}Id i.e PatientDemographicDetail = pDDId
 - {fieldName} Enum
-- method name in controller for api is same used in service layer with suffix "Rest"
+- method name in controller for api is same used in service layer with suffix "Rest" and in path path
+- java.sql.Date is used with default format yyyy-MM-dd, Use this format throughout application
+- no field updation in sub-object while returning from front end to backend

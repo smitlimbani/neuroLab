@@ -1,11 +1,14 @@
 package com.example.neuro.services;
 
+import com.example.neuro.beans.Test;
 import com.example.neuro.beans.Vial;
 import com.example.neuro.repositories.VialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -30,6 +33,7 @@ public class VialService {
 //        vial.setTest(testRepository.getOne(tId));
 //        return vialRepository.save(vial);
 //    }
+    @Transactional
     public Vial updateVialRest(Vial vial) {
         Vial vialDB= vialRepository.getOne(vial.getId());
 
@@ -39,14 +43,15 @@ public class VialService {
         return vialRepository.save(vial);
     }
 
+    @Transactional
     public String updateVialsRest(List<Vial> vials) {
         for (Vial vial: vials)
             updateVialRest(vial);
         return "ok";
     }
 
-    public List<Vial> getVialsByIdsRest(List<Integer> ids){
-        return vialRepository.findAllByIdIn(ids);
+    public List<Vial> getVialsByTestAndTestingDateOrderBySerialNoRest(Test test, Date creationDate){
+        return vialRepository.findByTestAndTestingDateOrderBySerialNo(test,creationDate);
     }
 
     public Vial findByVLIDRest(String VLID){

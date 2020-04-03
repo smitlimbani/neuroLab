@@ -1,7 +1,6 @@
 package com.example.neuro.services;
 
-import com.example.neuro.beans.Master;
-import com.example.neuro.beans.Sample;
+import com.example.neuro.beans.*;
 import com.example.neuro.utils.IsValidEnum;
 import com.example.neuro.utils.StatusEnum;
 import com.example.neuro.utils.TestStatusEnum;
@@ -11,8 +10,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Collections;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,6 +29,18 @@ public class ReceivingStationService {
     private VariableService variableService;
     @Autowired
     private SampleService sampleService;
+    @Autowired
+    PatientDemographicDetailService patientDemographicDetailsService;
+    @Autowired
+    PaymentCategoryService paymentCategoryService;
+    @Autowired
+    PaymentService paymentService;
+    @Autowired
+    ExternalSampleService externalSampleService;
+    @Autowired
+    TestService testService;
+    @Autowired
+    VialService vialService;
 
     public String getNextXULIDRest(String sampleType){
         return sampleType+"XU"+variableService.getVarValRest("year")+"/"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("xCount")));
@@ -37,6 +49,101 @@ public class ReceivingStationService {
     public String getNextIULIDRest(String sampleType){
         return sampleType+"AU"+variableService.getVarValRest("year")+"/"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("iCount")));
     }
+
+
+    /*
+    Function to map UHID and sampleId of existing external patient
+    Function will insert entr data into externalSample table where we store actual sampleId of external patient
+     */
+    @Transactional
+    public String mapExternalRest(String ulid, String uhid, String sampleId){
+        //test it
+        Master master = masterService.getMasterByULIDRest(ulid);
+        master.getPatientDemographicDetail().setUHID(uhid);
+        ExternalSample externalSample = new ExternalSample();
+        externalSample.setExternalSampleId(sampleId);
+        externalSample.setMaster(master);
+        externalSampleService.addExternalSampleRest(externalSample);
+        return "ok";
+    }
+
+    @Transactional
+    public String storeXPatientDetailRest(String jsonString) throws JsonProcessingException {
+
+        /*
+        Submitting External Patient Details
+        remaining amount will be pre-populated from front end;
+        jsonString = {
+            "patientDemographicDetail" : {...},
+            "paymentCategoryCode" : "ABP100",
+            "master" : {...},
+            "payments" : [{},{}...],
+            "samples" : [{},{}...]
+        }
+
+        {
+            "patientDemographicDetail":{
+                "uhid" : "UHID143",
+                "firstName" : "Vaibhav",
+                "lastName" : "Dodiya",
+                "sex" : "MALE"
+            },
+            "paymentCategoryCode" : "ABP100",
+            "master" : {
+                "ulid" : "CXU2040/00003",
+                "nNo" : "n123456",
+                "sampleType" : "S",
+                "ANCA" : "RAISED",
+                "ANA": "RAISED"
+            },
+            "payments" : [{
+                "amount" : "1000",
+                "details" : "from CXU2020/00001"
+            },
+            {
+                "amount" : "200",
+                "details" : "from CXU2020/00001"
+            }],
+            "samples" : [
+                {
+                    "sampleId" : "sid1"
+                }
+            ]
+        }
+        */
+        //add patient demoGraphic Details
+        PatientDemographicDetail patientDemographicDetail = (PatientDemographicDetail) (new JsonService()).fromJson(jsonString,"patientDemographicDetail", PatientDemographicDetail.class);
+        patientDemographicDetail = patientDemographicDetailsService.addPatientDemographicDetailRest(patientDemographicDetail);
+
+        //add Master entry, before that set PDD and PaymentCategory
+        Master master = (Master) (new JsonService()).fromJson(jsonString,"master",Master.class);
+        String paymentCategoryCode = (String) (new JsonService()).fromJson(jsonString,"paymentCategoryCode",String.class);
+        master.setPaymentCategory(paymentCategoryService.getPaymentCategoryByCodeRest(paymentCategoryCode));
+        master.setPatientDemographicDetail(patientDemographicDetail);
+        master = masterService.addMasterRest(master);
+
+        String ulid = master.getULID();
+
+        //Increment xCount as it is assigned
+        variableService.incrementCounterRest("xCount",Integer.parseInt(ulid.substring(ulid.length()-5)));
+
+        //Add payment details of that transaction
+        List<Payment> payments = (new JsonService<Payment>()).fromJsonList(jsonString,"payments", Payment.class);
+        for(Payment payment : payments){
+            payment.setMaster(master);
+        }
+        payments = paymentService.addPaymentsRest(payments);
+
+        //Adding received all the samples
+        List<Sample> samples = (List<Sample>)(new JsonService<Sample>()).fromJsonList(jsonString,"samples", Sample.class);
+        for(Sample sample : samples){
+            sample.setMaster(master);
+        }
+        samples = sampleService.addSamplesRest(samples);
+        return "ok";
+    }
+
+
 
 
 
@@ -93,8 +200,9 @@ public class ReceivingStationService {
 
         Master master= masterService.getMasterRest(mId);
         //Ulid is generated for the linked sample and required fields are updated
-        master.setULID(this.getNextIULIDRest(master.getSampleType()+""));
-        variableService.incrementCounterRest("iCount", 1+Integer.parseInt(variableService.getVarValRest("iCount")));
+        String ulidNext = this.getNextIULIDRest(master.getSampleType()+"");
+        master.setULID(ulidNext);
+        variableService.incrementCounterRest("iCount",1+Integer.parseInt(ulidNext.substring(ulid.length()-5)));
         master.setLinked(ulid);
         master.setStatus(StatusEnum.RECEIVED);
         masterService.updateMasterRest(master);
@@ -152,12 +260,12 @@ public class ReceivingStationService {
      */
     public TestStatusEnum selectTestStatus(TestStatusEnum A, TestStatusEnum B){
         if(A.equals(B)) {
-            System.out.println(A+" "+ B);
+//            System.out.println(A+" "+ B);
             return A;
         }
         else
         {
-            System.out.println(A+" "+ B+ "set to raised");
+//            System.out.println(A+" "+ B+ "set to raised");
             return TestStatusEnum.RAISED;
         }
     }
@@ -187,18 +295,17 @@ public class ReceivingStationService {
                     "ulid":ulid that to be set for the sample
     response:       "ok"
      */
-    //=================================ULID COUNTER HAS TO BE INCREMENTED BY 'X' VALUE================================
 
     public String confirmInvalidReceivingRest(String jsonString) throws JsonProcessingException{
         Sample sample= sampleService.findBySampleIdRest((String) jsonService.fromJson(jsonString,"sampleId", String.class));
         String ulid = (String) jsonService.fromJson(jsonString,"ulid", String.class);
 
         //set iCount
-        variableService.incrementCounterRest("iCount", Integer.parseInt(ulid.substring(6)));
+        variableService.incrementCounterRest("iCount", Integer.parseInt(ulid.substring(ulid.length()-5)));
 
         //update sample and master
         Master master = sample.getMaster();
-        sample.setRecDate(new Date());
+        sample.setRecDate(Date.valueOf(LocalDate.now()));
         master.setULID(ulid);
         master.setIsValid(IsValidEnum.N);
         sampleService.updateSampleRest(sample);

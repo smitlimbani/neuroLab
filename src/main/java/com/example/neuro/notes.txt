@@ -8,6 +8,7 @@ Remaining :
 - IDS name, Insert in master table
 - transaction date in payment table
 - validity list insertion multiple times(UK)
+- date formation while serialization from jsonService
 
 
 1	0	0	0	0	0	0	0

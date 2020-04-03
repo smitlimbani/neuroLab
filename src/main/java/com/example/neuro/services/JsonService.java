@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -18,6 +19,7 @@ public class JsonService<T> {
     private ObjectMapper mapper = new ObjectMapper();
     public JsonService(){
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        mapper.setDateFormat(new SimpleDateFormat("dd-MM-yyyy"));
     }
 
     public List<T> fromJsonList(String jsonString, String key, Class<T> tClass) throws JsonProcessingException {
