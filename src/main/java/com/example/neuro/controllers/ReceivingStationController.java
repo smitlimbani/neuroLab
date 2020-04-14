@@ -77,7 +77,6 @@ public class ReceivingStationController {
 
     @GetMapping("/getLinkingULIDList")
     public List<String> getLinkingULIDList(@RequestParam String uhid, @RequestParam String sampleType) throws JsonProcessingException {
-        System.out.println("controller: "+ uhid+ sampleType);
         return receivingStationService.getLinkingULIDListRest(uhid, sampleType);
     }
 

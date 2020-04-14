@@ -337,10 +337,10 @@ public class ReceivingStationService {
 
     @Transactional
     public List<String> getLinkingULIDListRest(String uhid, String sampleType){
-        System.out.println("service: "+ uhid+ sampleType);
-        System.out.println(sampleType.equals("S")? SampleTypeEnum.S: SampleTypeEnum.C);
+//        System.out.println("service: "+ uhid+ sampleType);
+//        System.out.println(sampleType.equals("S")? SampleTypeEnum.S: SampleTypeEnum.C);
         List<Master> masters = masterService.findBySampleTypeAndPatientDemographicDetail_UHID(sampleType.equals("S")? SampleTypeEnum.S: SampleTypeEnum.C, uhid);
-        System.out.println(masters.toString());
+//        System.out.println(masters.toString());
         List<String> ulids= new ArrayList<>();
         for(Master master: masters){
             ulids.add(master.getULID());
