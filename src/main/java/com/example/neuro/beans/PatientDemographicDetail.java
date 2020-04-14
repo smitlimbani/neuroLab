@@ -23,8 +23,9 @@ public class PatientDemographicDetail {
     @JsonIgnoreProperties(value = {"patientDemographicDetail", "hibernateLazyInitializer"}, allowSetters = true)
     private List<Master> masters;
 
-    private String firstName;
-    private String lastName;
+//    private String firstName;
+//    private String lastName;
+    private String name;
     private Integer age;
 
     @Enumerated(EnumType.STRING)
@@ -32,7 +33,16 @@ public class PatientDemographicDetail {
 
     private String emailId;
     private String contactNo;
+    private String address;
     private String hospitalName;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public Integer getId() {
         return id;
@@ -58,20 +68,29 @@ public class PatientDemographicDetail {
         this.UHID = UHID;
     }
 
-    public String getFirstName() {
-        return firstName;
+//    public String getFirstName() {
+//        return firstName;
+//    }
+//
+//    public void setFirstName(String firstName) {
+//        this.firstName = firstName;
+//    }
+//
+//    public String getLastName() {
+//        return lastName;
+//    }
+//
+//    public void setLastName(String lastName) {
+//        this.lastName = lastName;
+//    }
+
+
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getAge() {
@@ -114,17 +133,33 @@ public class PatientDemographicDetail {
         this.hospitalName = hospitalName;
     }
 
+//    @Override
+//    public String toString() {
+//        return "PatientDemographicDetail{" +
+//                "id=" + id +
+//                ", UHID='" + UHID + '\'' +
+//                ", firstName='" + firstName + '\'' +
+//                ", lastName='" + lastName + '\'' +
+//                ", age=" + age +
+//                ", sex='" + sex + '\'' +
+//                ", emailId='" + emailId + '\'' +
+//                ", contactNo='" + contactNo + '\'' +
+//                ", hospitalName='" + hospitalName + '\'' +
+//                '}';
+//    }
+
+
     @Override
     public String toString() {
         return "PatientDemographicDetail{" +
                 "id=" + id +
                 ", UHID='" + UHID + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", name='" + name + '\'' +
                 ", age=" + age +
-                ", sex='" + sex + '\'' +
+                ", sex=" + sex +
                 ", emailId='" + emailId + '\'' +
                 ", contactNo='" + contactNo + '\'' +
+                ", address='" + address + '\'' +
                 ", hospitalName='" + hospitalName + '\'' +
                 '}';
     }

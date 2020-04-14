@@ -13,9 +13,9 @@ public class ExternalSample {
     @Column(unique = true, nullable = false)
     private Integer id;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "masterId")
-    @JsonIgnoreProperties(value = {"externalSamples", "hibernateLazyInitializer"}, allowSetters = true)
+    @JsonIgnoreProperties(value = {"externalSample", "hibernateLazyInitializer"}, allowSetters = true)
     private Master master;
 
     @Column(unique = true, nullable = false)

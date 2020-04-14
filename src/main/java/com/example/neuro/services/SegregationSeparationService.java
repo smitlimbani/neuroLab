@@ -172,7 +172,7 @@ public class SegregationSeparationService {
             vial.getMaster().setVials(null);
             vial.getMaster().setPayments(null);
             vial.getMaster().setPaymentCategory(null);
-            vial.getMaster().setExternalSamples(null);
+            vial.getMaster().setExternalSample(null);
         }
         return vials;
     }
@@ -189,7 +189,7 @@ public class SegregationSeparationService {
         vial.getMaster().setPayments(null);
         vial.getMaster().setVials(null);
         vial.getMaster().setSamples(null);
-        vial.getMaster().setExternalSamples(null);
+        vial.getMaster().setExternalSample(null);
         vial.getMaster().setPaymentCategory(null);
 
         return jsonService.toJson(vial, "vial");

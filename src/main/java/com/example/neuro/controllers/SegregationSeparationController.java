@@ -34,7 +34,7 @@ public class SegregationSeparationController {
         return segregationSeparationService.updateLockedCounterRest(code,lockedCounter,vials);
     }
 
-    @PostMapping("/getCurrentTestList")
+    @PostMapping("/mvn")
     public List<Vial> getCurrentTestList(@RequestBody @Valid String jsonString) throws JsonProcessingException {
         return segregationSeparationService.getCurrentTestListRest(jsonString);
     }

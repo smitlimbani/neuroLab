@@ -36,10 +36,8 @@ public class ValidityListController {
         return validityListService.getValidityListsOrderByULIDRest();
     }
 
-    //extra
-    @PostMapping("/delete")
+    @GetMapping("/delete")
     public boolean test(@RequestParam Integer id){
-        validityListService.deleteValidityListRest(id);
-        return true;
+        return validityListService.deleteValidityListRest(id);
     }
 }

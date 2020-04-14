@@ -41,12 +41,12 @@ public class ReceivingStationController {
     }
 
     @GetMapping("/getUnprocessedSampleList")
-    public String getUnprocessedSampleList() throws JsonProcessingException {
+    public List<Master> getUnprocessedSampleList() {
         return receivingStationService.getUnprocessedSampleListRest();
     }
 
     @PostMapping("/confirmSampleNotReceived")
-    public String confirmSampleNotReceived(@RequestBody String jsonString)throws JsonProcessingException{
+    public boolean confirmSampleNotReceived(@RequestBody String jsonString)throws JsonProcessingException{
         return receivingStationService.confirmSampleNotReceivedRest(jsonString);
     }
 

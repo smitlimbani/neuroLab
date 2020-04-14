@@ -1,16 +1,17 @@
 - default value is assgined to property directly as setting columnDefinition is vendor dependent
-- we won't allow null in ULID of master table as we are assigning it initially
+- we will allow null in ULID of master table as we are assigning only when confirming
 - you can't just update particular fields,it must have all remaining fields
-
 
 Remaining :
 - Linked is FK of ULID
 - IDS name, Insert in master table
-- transaction date in payment table
 - validity list insertion multiple times(UK)
-- date formation while serialization from jsonService
-
-
+- (Testing)Remark added and based on that two methods modified
+    -> confirmSampleNotReceivedRest
+- (Testing)Master to ExternalSample relation changed from 1:m to 1:1
+    -> storeXPatient method changed;
+    ->
+- Updated beans, added two fields into PDD
 1	0	0	0	0	0	0	0
 1	1	1	1	0	1	1	0
 0	0	0	1	1	0	0	0

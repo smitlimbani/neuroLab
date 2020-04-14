@@ -62,15 +62,15 @@ public class ReceiveStationPService {
         return "ok";
     }
 
-    public String test() throws JsonProcessingException {
-        List<StatusEnum> list= new LinkedList<>();
-
-        list.add(StatusEnum.NOT_RECEIVED);
-        list.add(StatusEnum.RECEIVED);
-        List<Master> masters= masterRepository.findByIsActiveTrueAndIsValidNotAndStatusIn(IsValidEnum.N,list,Sort.by(Sort.Direction.ASC,"patientDemographicDetail.UHID"));
-
-        return jsonService.toJson(masters,"masters");
-    }
+//    public String test() throws JsonProcessingException {
+//        List<StatusEnum> list= new LinkedList<>();
+//
+//        list.add(StatusEnum.NOT_RECEIVED);
+//        list.add(StatusEnum.RECEIVED);
+//        List<Master> masters= masterRepository.findByIsActiveTrueAndIsValidNotAndStatusIn(IsValidEnum.N,list,Sort.by(Sort.Direction.ASC,"patientDemographicDetail.UHID"));
+//
+//        return jsonService.toJson(masters,"masters");
+//    }
 
     @Transactional
     public String storeXPatientDetailRest(String jsonString) throws JsonProcessingException {

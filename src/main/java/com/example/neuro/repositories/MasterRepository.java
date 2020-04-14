@@ -17,7 +17,7 @@ public interface MasterRepository extends JpaRepository<Master, Integer> {
 
     List<Master> findByIsActiveTrueAndIsValidNotAndStatusIn(IsValidEnum isValidEnum, Collection<StatusEnum> statusEnums);
 
-    List<Master> findByIsActiveTrueAndIsValidNotAndStatusIn(IsValidEnum isValidEnum, Collection<StatusEnum> statusEnums, Sort sort);
+    List<Master> findByIsActiveTrueAndIsValidNotAndPatientDemographicDetail_UHIDNotLikeAndStatusIn(IsValidEnum isValidEnum,String uhid, Collection<StatusEnum> statusEnums, Sort sort);
 
     Master getByULID(String ulid);
 }

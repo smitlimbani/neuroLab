@@ -1,6 +1,7 @@
 package com.example.neuro.controllers;
 
 import com.example.neuro.beans.Master;
+import com.example.neuro.repositories.MasterRepository;
 import com.example.neuro.services.MasterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,8 @@ public class MasterController {
 
     @Autowired
     private MasterService masterService;
+    @Autowired
+    private MasterRepository masterRepository;
 
     @GetMapping("/getAll")
     public List<Master> getMasters() {
@@ -39,5 +42,4 @@ public class MasterController {
 //    public Master addMaster(@Valid @RequestBody Master master, @RequestParam Integer pCId, @RequestParam Integer pDDId) {
 //        return masterService.addMasterRest(master, pCId, pDDId);
 //    }
-
 }

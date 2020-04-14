@@ -6,6 +6,7 @@ import com.example.neuro.repositories.ValidityListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,14 +37,22 @@ public class ValidityListService {
     }
 
     public List<ValidityList> getValidityListsOrderByULIDRest(){
-        return validityListRepository.findAll(Sort.by(Sort.Direction.ASC,"sample.master.id"));
+        List<ValidityList> validityLists =  validityListRepository.findAll(Sort.by(Sort.Direction.ASC,"sample.master.id"));
+        for(ValidityList validityList : validityLists){
+            validityList.getSample().getMaster().setVials(null);
+            validityList.getSample().getMaster().setPayments(null);
+            validityList.getSample().getMaster().setPaymentCategory(null);
+        }
+        return validityLists;
     }
 
-    public void deleteValidityListRest(Integer id){
+    @Transactional
+    public boolean deleteValidityListRest(Integer id){
         Sample sample= validityListRepository.getOne(id).getSample();
         sample.setValidityList(null);
         sampleService.updateSampleRest(sample); //changed it to update
 //        sampleRepository.save(sample);
         validityListRepository.deleteById(id);
+        return true;
     }
 }

@@ -2,6 +2,8 @@ package com.example.neuro.controllers;
 
 import com.example.neuro.beans.Master;
 import com.example.neuro.beans.Vial;
+import com.example.neuro.repositories.MasterRepository;
+import com.example.neuro.repositories.VariableRepository;
 import com.example.neuro.services.JsonService;
 import com.example.neuro.services.MasterService;
 import com.example.neuro.services.ReceiveStationPService;
@@ -27,6 +29,10 @@ public class recieveStationPController {
     VialService vialService;
     @Autowired
     JsonService jsonService;
+    @Autowired
+    MasterRepository masterRepository;
+    @Autowired
+    VariableRepository variableRepository;
 
     @GetMapping("/getNextXULID")
     public String getNextXULID(@RequestParam String sampleType){
@@ -51,11 +57,12 @@ public class recieveStationPController {
         return receiveStationPService.separateSampleRest(master);
     }
 
-    @GetMapping("/test")
-    public String test() throws JsonProcessingException {
-        Master master = masterService.getMasterRest(1);
-        System.out.println(master);
-        return jsonService.toJson(master,"master");
-
+    @PostMapping("/test")
+    public boolean test(@RequestBody String jsonStr) throws JsonProcessingException {
+        System.out.println(jsonStr);
+        System.out.print((Integer) jsonService.fromJson(jsonStr,"mId1",Integer.class));
+        System.out.print((Integer) jsonService.fromJson(jsonStr,"mId2",Integer.class));
+        return true;
+//        return jsonService.toJson(master,"master");
     }
 }

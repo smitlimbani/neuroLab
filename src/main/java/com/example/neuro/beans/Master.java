@@ -4,7 +4,6 @@ import com.example.neuro.utils.IsValidEnum;
 import com.example.neuro.utils.SampleTypeEnum;
 import com.example.neuro.utils.StatusEnum;
 import com.example.neuro.utils.TestStatusEnum;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import org.springframework.data.annotation.CreatedDate;
@@ -37,9 +36,9 @@ public class Master implements Comparable{
     @JsonIgnoreProperties(value = {"master", "hibernateLazyInitializer"}, allowSetters = true)
     private List<Sample> samples;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "master", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "master", fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = {"master", "hibernateLazyInitializer"}, allowSetters = true)
-    private List<ExternalSample> externalSamples;
+    private ExternalSample externalSample;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "master", fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = {"master", "hibernateLazyInitializer"}, allowSetters = true)
@@ -86,6 +85,8 @@ public class Master implements Comparable{
     @Column(nullable = false)
     private IsValidEnum isValid = IsValidEnum.Y;
 
+    private String remark="ok";
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private StatusEnum status = StatusEnum.NOT_RECEIVED;
@@ -100,6 +101,14 @@ public class Master implements Comparable{
     @Column(nullable = false, updatable = false)
     @CreatedDate
     private Date reqDate = Date.valueOf(LocalDate.now());
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public List<Vial> getVials() {
         return vials;
@@ -125,12 +134,12 @@ public class Master implements Comparable{
         this.samples = samples;
     }
 
-    public List<ExternalSample> getExternalSamples() {
-        return externalSamples;
+    public ExternalSample getExternalSample() {
+        return externalSample;
     }
 
-    public void setExternalSamples(List<ExternalSample> externalSamples) {
-        this.externalSamples = externalSamples;
+    public void setExternalSample(ExternalSample externalSample) {
+        this.externalSample = externalSample;
     }
 
     public Integer getId() {
@@ -329,12 +338,14 @@ public class Master implements Comparable{
                 ", totalAmount=" + totalAmount +
                 ", remainingAmount=" + remainingAmount +
                 ", isValid=" + isValid +
+                ", remark=" + remark+
                 ", status=" + status +
                 ", sampleType='" + sampleType + '\'' +
                 ", linked='" + linked + '\'' +
                 ", drName='" + drName + '\'' +
                 ", reqDate=" + reqDate +
                 ", isActive=" + isActive +
+                ", externalSample=" + externalSample +
                 '}';
     }
 

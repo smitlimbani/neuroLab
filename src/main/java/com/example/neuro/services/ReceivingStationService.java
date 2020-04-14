@@ -54,6 +54,7 @@ public class ReceivingStationService {
     /*
     Function to map UHID and sampleId of existing external patient
     Function will insert entr data into externalSample table where we store actual sampleId of external patient
+    Ulid and uhid are already verified at FE
      */
     @Transactional
     public String mapExternalRest(String ulid, String uhid, String sampleId){
@@ -104,11 +105,10 @@ public class ReceivingStationService {
                 "amount" : "200",
                 "details" : "from CXU2020/00001"
             }],
-            "samples" : [
+            "sample" :
                 {
                     "sampleId" : "sid1"
                 }
-            ]
         }
         */
         //add patient demoGraphic Details
@@ -135,11 +135,9 @@ public class ReceivingStationService {
         payments = paymentService.addPaymentsRest(payments);
 
         //Adding received all the samples
-        List<Sample> samples = (List<Sample>)(new JsonService<Sample>()).fromJsonList(jsonString,"samples", Sample.class);
-        for(Sample sample : samples){
-            sample.setMaster(master);
-        }
-        samples = sampleService.addSamplesRest(samples);
+        Sample sample = (Sample)(new JsonService()).fromJsonList(jsonString,"sample", Sample.class);
+        sample.setMaster(master);
+        sample = sampleService.addSampleRest(sample);
         return "ok";
     }
 
@@ -153,15 +151,17 @@ public class ReceivingStationService {
     Request-    Nothing
     Response-   "masters":list of masters
     */
-    public String getUnprocessedSampleListRest() throws JsonProcessingException {
+    public List<Master> getUnprocessedSampleListRest() {
         List<StatusEnum> list= new LinkedList<>();
 
         list.add(StatusEnum.NOT_RECEIVED);
         list.add(StatusEnum.RECEIVED);
+        String notPrefix = "X%";
 //        List<Master> masters= masterService.findByIsActiveTrueAndIsValidNotAndStatusInRest(IsValidEnum.N,list);
 //        Collections.sort(masters);//list is sorted on the basis of master.patientDemographicDetail.uhid
-        List<Master> masters= masterService.findByIsActiveTrueAndIsValidNotAndStatusInRest(IsValidEnum.N,list,Sort.by(Sort.Direction.ASC,"patientDemographicDetail.UHID"));
-        return jsonService.toJson(masters,"masters");
+        List<Master> masters= masterService.findByIsActiveTrueAndIsValidNotAndPatientDemographicDetail_UHIDNotLikeAndStatusInRest(IsValidEnum.N,notPrefix,list,Sort.by(Sort.Direction.ASC,"patientDemographicDetail.UHID"));
+//        return jsonService.toJson(masters,"masters");
+        return masters;
     }
 
 
@@ -172,17 +172,17 @@ public class ReceivingStationService {
     response:       ok
      */
     @Transactional
-    public String confirmSampleNotReceivedRest(String jsonString) throws JsonProcessingException {
+    public boolean confirmSampleNotReceivedRest(String jsonString) throws JsonProcessingException {
         Integer mId = (Integer) jsonService.fromJson(jsonString,"mId", Integer.class);
 
         Master master =masterService.getMasterRest(mId);
         master.setIsValid(IsValidEnum.N);
+        master.setRemark("Not Received");
         masterService.updateMasterRest(master);
         List<Sample> sampleList= master.getSamples();
         for(Sample sample: sampleList)
             validityListService.addValidityListRest(sample.getId());
-
-        return "ok";
+        return true;
     }
 
 
@@ -292,6 +292,7 @@ public class ReceivingStationService {
     are updated in master and sample object. Entry is also made in the validity list.
     prerequisite:   the ulid that is sent should be valid.
     request:        "sampleId":scanned sampleId of invalid sample
+                    "remark" : remark why it is marked inValid
                     "ulid":ulid that to be set for the sample
     response:       "ok"
      */
@@ -299,7 +300,7 @@ public class ReceivingStationService {
     public String confirmInvalidReceivingRest(String jsonString) throws JsonProcessingException{
         Sample sample= sampleService.findBySampleIdRest((String) jsonService.fromJson(jsonString,"sampleId", String.class));
         String ulid = (String) jsonService.fromJson(jsonString,"ulid", String.class);
-
+        String remark = (String) jsonService.fromJson(jsonString,"remark", String.class);
         //set iCount
         variableService.incrementCounterRest("iCount", Integer.parseInt(ulid.substring(ulid.length()-5)));
 
@@ -308,6 +309,7 @@ public class ReceivingStationService {
         sample.setRecDate(Date.valueOf(LocalDate.now()));
         master.setULID(ulid);
         master.setIsValid(IsValidEnum.N);
+        master.setRemark(remark);
         sampleService.updateSampleRest(sample);
         masterService.updateMasterRest(master);
 

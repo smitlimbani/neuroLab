@@ -40,7 +40,7 @@ public class MasterService {
         master.setPatientDemographicDetail(masterDB.getPatientDemographicDetail());
         master.setPaymentCategory(masterDB.getPaymentCategory());
         master.setPayments(masterDB.getPayments());
-        master.setExternalSamples(masterDB.getExternalSamples());
+        master.setExternalSample(masterDB.getExternalSample());
         master.setSamples(masterDB.getSamples());
         master.setVials(masterDB.getVials());
 
@@ -50,8 +50,9 @@ public class MasterService {
 //    public List<Master> findByIsActiveTrueAndIsValidNotAndStatusInRest(IsValidEnum isValidEnum, List<StatusEnum> list){
 //        return masterRepository.findByIsActiveTrueAndIsValidNotAndStatusIn(isValidEnum,list);
 //    }
-    public List<Master> findByIsActiveTrueAndIsValidNotAndStatusInRest(IsValidEnum isValidEnum, List<StatusEnum> list, Sort sort){
-        return masterRepository.findByIsActiveTrueAndIsValidNotAndStatusIn(isValidEnum,list,sort);
+    public List<Master> findByIsActiveTrueAndIsValidNotAndPatientDemographicDetail_UHIDNotLikeAndStatusInRest(IsValidEnum isValidEnum, String notPrefix,List<StatusEnum> list, Sort sort){
+//        return masterRepository.findByIsActiveTrueAndIsValidNotAndStatusIn(isValidEnum,list,sort);
+        return masterRepository.findByIsActiveTrueAndIsValidNotAndPatientDemographicDetail_UHIDNotLikeAndStatusIn(isValidEnum,notPrefix,list,sort);
     }
 
     public Master getMasterByULIDRest(String ulid){
@@ -71,7 +72,7 @@ public class MasterService {
             return null;
         }
         master.setPaymentCategory(null);
-        master.setExternalSamples(null);
+        master.setExternalSample(null);
         master.setPayments(null);
         master.setVials(null);
         master.setSamples(null);
