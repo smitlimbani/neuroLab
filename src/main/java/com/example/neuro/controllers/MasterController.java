@@ -38,6 +38,11 @@ public class MasterController {
         return masterService.getMasterByULIDRest(ulid);
     }
 
+    @GetMapping("/doesULIDExistBoolean")
+    public boolean doesULIDExistBoolean(String ulid){
+        return masterService.doesULIDExistBooleanRest(ulid);
+    }
+
 //    @PostMapping("/insert")
 //    public Master addMaster(@Valid @RequestBody Master master, @RequestParam Integer pCId, @RequestParam Integer pDDId) {
 //        return masterService.addMasterRest(master, pCId, pDDId);

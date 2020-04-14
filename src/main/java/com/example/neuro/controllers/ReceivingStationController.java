@@ -65,9 +65,20 @@ public class ReceivingStationController {
         return receivingStationService.getPatientDetailRest(jsonString);
     }
 
+    @PostMapping("/getPatientDetailByUHID")
+    public String getPatientDetailByUHID(@RequestBody String jsonString)throws JsonProcessingException{
+        return receivingStationService.getPatientDetailByUHIDRest(jsonString);
+    }
+
     @PostMapping("/confirmInvalidReceiving")
     public String confirmInvalidReceiving(@RequestBody String jsonString)throws JsonProcessingException{
         return receivingStationService.confirmInvalidReceivingRest(jsonString);
+    }
+
+    @GetMapping("/getLinkingULIDList")
+    public List<String> getLinkingULIDList(@RequestParam String uhid, @RequestParam String sampleType) throws JsonProcessingException {
+        System.out.println("controller: "+ uhid+ sampleType);
+        return receivingStationService.getLinkingULIDListRest(uhid, sampleType);
     }
 
     @PostMapping("/test")

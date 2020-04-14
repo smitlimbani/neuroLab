@@ -3,6 +3,7 @@ package com.example.neuro.services;
 import com.example.neuro.beans.Master;
 import com.example.neuro.repositories.MasterRepository;
 import com.example.neuro.utils.IsValidEnum;
+import com.example.neuro.utils.SampleTypeEnum;
 import com.example.neuro.utils.StatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -22,6 +23,10 @@ public class MasterService {
 
     public Master getMasterRest(Integer id) {
         return masterRepository.getOne(id);
+    }
+
+    public List<Master> findBySampleTypeAndPatientDemographicDetail_UHID(SampleTypeEnum sampleTypeEnum,String uhid){
+        return masterRepository.findBySampleTypeAndPatientDemographicDetail_UHID(sampleTypeEnum, uhid);
     }
 
 //    public Master addMasterRest(Master master, Integer pCatId, Integer pId) {
@@ -65,6 +70,7 @@ public class MasterService {
         }
         return false;
     }
+
     public Master doesULIDExistRest(String ulid){
         //function return pdd and master table details if ULID exist o/w NULL
         Master master =  masterRepository.findByULID(ulid);

@@ -2,6 +2,7 @@ package com.example.neuro.services;
 
 import com.example.neuro.beans.*;
 import com.example.neuro.utils.IsValidEnum;
+import com.example.neuro.utils.SampleTypeEnum;
 import com.example.neuro.utils.StatusEnum;
 import com.example.neuro.utils.TestStatusEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -276,6 +278,7 @@ public class ReceivingStationService {
     request:        "sampleId":scanned sampleId
     response:       "master": master object
      */
+    @Transactional
     public String getPatientDetailRest(String jsonString)throws JsonProcessingException {
         Master master=  sampleService.findBySampleIdRest((String)jsonService.fromJson(jsonString,"sampleId", String.class)).getMaster();
 
@@ -284,6 +287,19 @@ public class ReceivingStationService {
         master.setSamples(null);
 
         return jsonService.toJson(master, "master");
+    }
+
+    /*The below function is use retrieve details of a single patient
+  request:        "uhid":scanned uhid
+  response:       "pdd": pdd object
+   */
+    @Transactional
+    public String getPatientDetailByUHIDRest(String jsonString)throws JsonProcessingException {
+        PatientDemographicDetail patientDemographicDetail=  patientDemographicDetailsService.findByUHIDRest((String)jsonService.fromJson(jsonString,"uhid", String.class));
+
+        patientDemographicDetail.setMasters(null);
+
+        return jsonService.toJson(patientDemographicDetail, "pdd");
     }
 
 
@@ -296,7 +312,7 @@ public class ReceivingStationService {
                     "ulid":ulid that to be set for the sample
     response:       "ok"
      */
-
+    @Transactional
     public String confirmInvalidReceivingRest(String jsonString) throws JsonProcessingException{
         Sample sample= sampleService.findBySampleIdRest((String) jsonService.fromJson(jsonString,"sampleId", String.class));
         String ulid = (String) jsonService.fromJson(jsonString,"ulid", String.class);
@@ -317,5 +333,18 @@ public class ReceivingStationService {
         validityListService.addValidityListRest(sample.getId());
 
         return "ok";
+    }
+
+    @Transactional
+    public List<String> getLinkingULIDListRest(String uhid, String sampleType){
+        System.out.println("service: "+ uhid+ sampleType);
+        System.out.println(sampleType.equals("S")? SampleTypeEnum.S: SampleTypeEnum.C);
+        List<Master> masters = masterService.findBySampleTypeAndPatientDemographicDetail_UHID(sampleType.equals("S")? SampleTypeEnum.S: SampleTypeEnum.C, uhid);
+        System.out.println(masters.toString());
+        List<String> ulids= new ArrayList<>();
+        for(Master master: masters){
+            ulids.add(master.getULID());
+        }
+        return ulids;
     }
 }

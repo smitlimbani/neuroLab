@@ -28,4 +28,7 @@ public class PatientDemographicDetailService {
         patientDemographicDetail.setMasters(patientDemographicDetailRepository.getOne(patientDemographicDetail.getId()).getMasters());
         return patientDemographicDetailRepository.save(patientDemographicDetail);
     }
+    public PatientDemographicDetail findByUHIDRest(String uhid){
+        return patientDemographicDetailRepository.findByUHID(uhid);
+    }
 }
