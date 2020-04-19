@@ -279,8 +279,8 @@ public class ReceivingStationService {
     response:       "master": master object
      */
     @Transactional
-    public String getPatientDetailRest(String jsonString)throws JsonProcessingException {
-        Master master=  sampleService.findBySampleIdRest((String)jsonService.fromJson(jsonString,"sampleId", String.class)).getMaster();
+    public String getPatientDetailRest(String sampleId)throws JsonProcessingException {
+        Master master=  sampleService.findBySampleIdRest(sampleId).getMaster();
 
         master.setVials(null);
         master.setPayments(null);
@@ -294,8 +294,8 @@ public class ReceivingStationService {
   response:       "pdd": pdd object
    */
     @Transactional
-    public String getPatientDetailByUHIDRest(String jsonString)throws JsonProcessingException {
-        PatientDemographicDetail patientDemographicDetail=  patientDemographicDetailsService.findByUHIDRest((String)jsonService.fromJson(jsonString,"uhid", String.class));
+    public String getPatientDetailByUHIDRest(String uhid)throws JsonProcessingException {
+        PatientDemographicDetail patientDemographicDetail=  patientDemographicDetailsService.findByUHIDRest(uhid);
 
         patientDemographicDetail.setMasters(null);
 
@@ -336,7 +336,7 @@ public class ReceivingStationService {
     }
 
     @Transactional
-    public List<String> getLinkingULIDListRest(String uhid, String sampleType){
+    public String getLinkingULIDListRest(String uhid, String sampleType) throws JsonProcessingException {
 //        System.out.println("service: "+ uhid+ sampleType);
 //        System.out.println(sampleType.equals("S")? SampleTypeEnum.S: SampleTypeEnum.C);
         List<Master> masters = masterService.findBySampleTypeAndPatientDemographicDetail_UHID(sampleType.equals("S")? SampleTypeEnum.S: SampleTypeEnum.C, uhid);
@@ -345,6 +345,6 @@ public class ReceivingStationService {
         for(Master master: masters){
             ulids.add(master.getULID());
         }
-        return ulids;
+        return jsonService.toJson(ulids, "ulids");
     }
 }

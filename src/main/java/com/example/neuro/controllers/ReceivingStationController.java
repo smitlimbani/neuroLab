@@ -23,12 +23,14 @@ public class ReceivingStationController {
     VialService vialService;
 
     @GetMapping("/getNextXULID")
-    public String getNextXULID(@RequestParam String sampleType){
+    public String getNextXULID(@RequestParam String sampleType) throws JsonProcessingException {
         return receivingStationService.getNextXULIDRest(sampleType);
     }
 
     @GetMapping("/getNextIULID")
-    public String getNextIULID(@RequestParam String sampleType) { return receivingStationService.getNextIULIDRest(sampleType); }
+    public String getNextIULID(@RequestParam String sampleType) {
+        System.out.println(sampleType);
+        return receivingStationService.getNextIULIDRest(sampleType); }
 
     @GetMapping("/mapExternal")
     public String mapExternal(@RequestParam String ulid,@RequestParam String uhid,@RequestParam String sampleId){
@@ -60,14 +62,14 @@ public class ReceivingStationController {
         return receivingStationService.mergeSamplesRest(jsonString);
     }
 
-    @PostMapping("/getPatientDetail")
-    public String getPatientDetail(@RequestBody String jsonString)throws JsonProcessingException{
-        return receivingStationService.getPatientDetailRest(jsonString);
+    @GetMapping("/getPatientDetail")
+    public String getPatientDetail(@RequestParam String sampleId)throws JsonProcessingException{
+        return receivingStationService.getPatientDetailRest(sampleId);
     }
 
-    @PostMapping("/getPatientDetailByUHID")
-    public String getPatientDetailByUHID(@RequestBody String jsonString)throws JsonProcessingException{
-        return receivingStationService.getPatientDetailByUHIDRest(jsonString);
+    @GetMapping("/getPatientDetailByUHID")
+    public String getPatientDetailByUHID(@RequestParam String uhid)throws JsonProcessingException{
+        return receivingStationService.getPatientDetailByUHIDRest(uhid);
     }
 
     @PostMapping("/confirmInvalidReceiving")
@@ -76,7 +78,7 @@ public class ReceivingStationController {
     }
 
     @GetMapping("/getLinkingULIDList")
-    public List<String> getLinkingULIDList(@RequestParam String uhid, @RequestParam String sampleType) throws JsonProcessingException {
+    public String getLinkingULIDList(@RequestParam String uhid, @RequestParam String sampleType) throws JsonProcessingException {
         return receivingStationService.getLinkingULIDListRest(uhid, sampleType);
     }
 
