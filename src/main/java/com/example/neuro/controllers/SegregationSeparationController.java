@@ -39,8 +39,8 @@ public class SegregationSeparationController {
         return segregationSeparationService.getCurrentTestListRest(jsonString);
     }
 
-    @PostMapping("/getPatientDetailByVLID")
-    public String getPatientDetailByVLID(@RequestBody @Valid String jsonString) throws JsonProcessingException {
-        return segregationSeparationService.getPatientDetailByVLIDRest(jsonString);
+    @GetMapping("/getPatientDetailByVLID")
+    public Vial getPatientDetailByVLID(@RequestParam String vlid) throws JsonProcessingException {
+        return segregationSeparationService.getPatientDetailByVLIDRest(vlid);
     }
 }

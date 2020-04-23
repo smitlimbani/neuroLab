@@ -43,11 +43,13 @@ public class ReceiveStationPService {
     ValidityListService validityListService;
 
     public String getNextXULIDRest(String sampleType){
-        return sampleType+"XU"+variableService.getVarValRest("year")+"/"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("xCount")));
+        //change due to ulid format
+        return sampleType+":XU-"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("xCount")))+"/"+variableService.getVarValRest("year");
     }
 
     public String getNextIULIDRest(String sampleType){
-        return sampleType+"AU"+variableService.getVarValRest("year")+"/"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("iCount")));
+        //change due to ulid format
+        return sampleType+":AU-"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("iCount")))+"/"+variableService.getVarValRest("year");
     }
 
     @Transactional
@@ -74,7 +76,7 @@ public class ReceiveStationPService {
 
     @Transactional
     public String storeXPatientDetailRest(String jsonString) throws JsonProcessingException {
-
+    //change due to ulid format
         /*
         Submitting External Patient Details
         remaining amount will be pre-populated from front end;
@@ -130,7 +132,7 @@ public class ReceiveStationPService {
         String ulid = master.getULID();
 
         //Increment xCount as it is assigned
-        variableService.incrementCounterRest("xCount",1+Integer.parseInt(ulid.substring(ulid.length()-5)));
+        variableService.incrementCounterRest("xCount",1+Integer.parseInt(ulid.substring(5,10)));
 
         //Add payment details of that transaction
         List<Payment> payments = (new JsonService<Payment>()).fromJsonList(jsonString,"payments", Payment.class);

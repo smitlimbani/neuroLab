@@ -183,8 +183,9 @@ public class SegregationSeparationService {
      request:        "vlid":scanned vlid
      response:       "vial": vial object
       */
-    public String getPatientDetailByVLIDRest(String jsonString)throws JsonProcessingException {
-        Vial vial=  vialService.findByVLIDRest((String)jsonService.fromJson(jsonString,"vlid", String.class));
+    public Vial getPatientDetailByVLIDRest(String vlid)throws JsonProcessingException {
+//        Vial vial=  vialService.findByVLIDRest((String)jsonService.fromJson(jsonString,"vlid", String.class));
+        Vial vial=  vialService.findByVLIDRest(vlid);
 
         vial.getMaster().setPayments(null);
         vial.getMaster().setVials(null);
@@ -192,6 +193,6 @@ public class SegregationSeparationService {
         vial.getMaster().setExternalSample(null);
         vial.getMaster().setPaymentCategory(null);
 
-        return jsonService.toJson(vial, "vial");
+        return vial;
     }
 }

@@ -45,11 +45,13 @@ public class ReceivingStationService {
     VialService vialService;
 
     public String getNextXULIDRest(String sampleType){
-        return sampleType+"XU"+variableService.getVarValRest("year")+"/"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("xCount")));
+        //change due to ulid format
+        return sampleType+":XU-"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("xCount")))+"/"+variableService.getVarValRest("year");
     }
 
     public String getNextIULIDRest(String sampleType){
-        return sampleType+"AU"+variableService.getVarValRest("year")+"/"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("iCount")));
+        //change due to ulid format
+        return sampleType+":AU-"+String.format("%05d",1+Integer.parseInt(variableService.getVarValRest("iCount")))+"/"+variableService.getVarValRest("year");
     }
 
 
@@ -72,7 +74,7 @@ public class ReceivingStationService {
 
     @Transactional
     public String storeXPatientDetailRest(String jsonString) throws JsonProcessingException {
-
+        //change due to ulid format
         /*
         Submitting External Patient Details
         remaining amount will be pre-populated from front end;
@@ -109,7 +111,7 @@ public class ReceivingStationService {
             }],
             "sample" :
                 {
-                    "sampleId" : "sid1"
+                    "sampleId" :listgeneration "sid1"
                 }
         }
         */
@@ -127,7 +129,7 @@ public class ReceivingStationService {
         String ulid = master.getULID();
 
         //Increment xCount as it is assigned
-        variableService.incrementCounterRest("xCount",Integer.parseInt(ulid.substring(ulid.length()-5)));
+        variableService.incrementCounterRest("xCount",Integer.parseInt(ulid.substring(5,10)));
 
         //Add payment details of that transaction
         List<Payment> payments = (new JsonService<Payment>()).fromJsonList(jsonString,"payments", Payment.class);
@@ -197,6 +199,7 @@ public class ReceivingStationService {
      */
     @Transactional
     public String linkSamplesRest(String jsonString) throws JsonProcessingException {
+        //change due to ulid format
         Integer mId= (Integer)jsonService.fromJson(jsonString, "mId", Integer.class);
         String ulid = (String) jsonService.fromJson(jsonString, "ulid", String.class);
 
@@ -204,7 +207,7 @@ public class ReceivingStationService {
         //Ulid is generated for the linked sample and required fields are updated
         String ulidNext = this.getNextIULIDRest(master.getSampleType()+"");
         master.setULID(ulidNext);
-        variableService.incrementCounterRest("iCount",1+Integer.parseInt(ulidNext.substring(ulid.length()-5)));
+        variableService.incrementCounterRest("iCount",1+Integer.parseInt(ulidNext.substring(5,10)));
         master.setLinked(ulid);
         master.setStatus(StatusEnum.RECEIVED);
         masterService.updateMasterRest(master);
@@ -314,11 +317,12 @@ public class ReceivingStationService {
      */
     @Transactional
     public String confirmInvalidReceivingRest(String jsonString) throws JsonProcessingException{
+        //change due to ulid format
         Sample sample= sampleService.findBySampleIdRest((String) jsonService.fromJson(jsonString,"sampleId", String.class));
         String ulid = (String) jsonService.fromJson(jsonString,"ulid", String.class);
         String remark = (String) jsonService.fromJson(jsonString,"remark", String.class);
         //set iCount
-        variableService.incrementCounterRest("iCount", Integer.parseInt(ulid.substring(ulid.length()-5)));
+        variableService.incrementCounterRest("iCount", Integer.parseInt(ulid.substring(5,10)));
 
         //update sample and master
         Master master = sample.getMaster();
@@ -378,6 +382,7 @@ public class ReceivingStationService {
   */
     @Transactional
     public String receivingRest(String jsonString) throws JsonProcessingException {
+        //change due to ulid format
         String sampleId= (String) jsonService.fromJson(jsonString, "sampleId", String.class);
         String ulid= (String) jsonService.fromJson(jsonString,"ulid", String.class);
         String remark= (String) jsonService.fromJson(jsonString, "remark", String.class);
@@ -403,10 +408,10 @@ public class ReceivingStationService {
             System.out.println(payments);
             master.setPayments(payments);
             //setting ulid in master and incrementing the counter for internal and external appropriately
-            variableService.incrementCounterRest("xCount", Integer.parseInt(ulid.substring(ulid.length()-5)));
+            variableService.incrementCounterRest("xCount", Integer.parseInt(ulid.substring(5,10)));
         }
         else
-            variableService.incrementCounterRest("iCount", Integer.parseInt(ulid.substring(ulid.length()-5)));
+            variableService.incrementCounterRest("iCount", Integer.parseInt(ulid.substring(5,10)));
         master.setULID(ulid);
         master.setStatus(StatusEnum.RECEIVED);
 
