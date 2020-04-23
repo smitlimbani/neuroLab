@@ -51,7 +51,6 @@ public class ValidityListService {
         Sample sample= validityListRepository.getOne(id).getSample();
         sample.setValidityList(null);
         sampleService.updateSampleRest(sample); //changed it to update
-//        sampleRepository.save(sample);
         validityListRepository.deleteById(id);
         return true;
     }

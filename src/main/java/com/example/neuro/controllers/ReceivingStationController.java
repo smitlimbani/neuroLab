@@ -82,6 +82,11 @@ public class ReceivingStationController {
         return receivingStationService.getLinkingULIDListRest(uhid, sampleType);
     }
 
+    @PostMapping("/receiving")
+    public String receiving(@RequestBody String jsonString)throws JsonProcessingException{
+        return receivingStationService.receivingRest(jsonString);
+    }
+
     @PostMapping("/test")
     public String jsonServiceTestFunc(@RequestBody @Valid String jsonString) throws JsonProcessingException {
         List<Master> masters = (new JsonService<Master>()).fromJsonList(jsonString, "masters", Master.class);

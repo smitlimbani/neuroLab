@@ -29,7 +29,7 @@ public class Sample {
     private String sampleId;
 
     @Column
-    private Date recDate = Date.valueOf(LocalDate.now());
+    private Date recDate;
 
     public ValidityList getValidityList() {
         return validityList;

@@ -347,4 +347,97 @@ public class ReceivingStationService {
         }
         return jsonService.toJson(ulids, "ulids");
     }
+
+/* Below code is a general receiving for both internal and external receiving. This api shall be for internal in all scenario
+    and in external only when form is filled using a uhid or when payments need to be added.
+ prerequisite:   the ulid that is sent should be valid.
+ request:        "sampleId":scanned sampleId of invalid sample
+                 "remark" : remark if it is marked inValid, null otherwise
+                 "ulid":ulid that to be set for the sample
+                 "linked":linked ulid, null otherwise
+                 "payments": payment transactions for external patients
+ response:       "ok"
+ Example-
+         {
+            "sampleId":"7",
+            "ulid": "CXU20/00005",
+            "remark": "Sample insufficient",
+            "linked":"XAU20/00001",
+            "payments":
+            [{
+                "amount": 100,
+                "details": "neft"
+            },
+            {
+                "amount": 500,
+                "details": "gpay"
+            }
+                ]
+           }
+
+  */
+    @Transactional
+    public String receivingRest(String jsonString) throws JsonProcessingException {
+        String sampleId= (String) jsonService.fromJson(jsonString, "sampleId", String.class);
+        String ulid= (String) jsonService.fromJson(jsonString,"ulid", String.class);
+        String remark= (String) jsonService.fromJson(jsonString, "remark", String.class);
+        String linked= (String) jsonService.fromJson(jsonString, "linked", String.class);
+        Sample sample= sampleService.findBySampleIdRest(sampleId);
+        Master master= sample.getMaster();
+        if(ulid.charAt(2)=='X'){
+//            List<Payment> payments= master.getPayments();
+//            if(payments.size()!=0){
+//                paymentService.deletePaymentsRest(payments);
+//            }
+//            payments = (new JsonService<Payment>()).fromJsonList(jsonString,"payments", Payment.class);
+//
+//            for(Payment payment : payments){
+//                payment.setMaster(master);
+//            }
+//            payments = paymentService.addPaymentsRest(payments);
+            List<Payment> payments = (new JsonService<Payment>()).fromJsonList(jsonString,"payments", Payment.class);
+
+            for(Payment payment : payments){
+                payment.setMaster(master);
+            }
+            System.out.println(payments);
+            master.setPayments(payments);
+            //setting ulid in master and incrementing the counter for internal and external appropriately
+            variableService.incrementCounterRest("xCount", Integer.parseInt(ulid.substring(ulid.length()-5)));
+        }
+        else
+            variableService.incrementCounterRest("iCount", Integer.parseInt(ulid.substring(ulid.length()-5)));
+        master.setULID(ulid);
+        master.setStatus(StatusEnum.RECEIVED);
+
+        //making appropriate changes to master in case of invalid sample or linking
+        if(remark!=null){
+            master.setRemark(remark);
+            master.setIsValid(IsValidEnum.N);
+        }
+        if(linked!=null)
+            master.setLinked(linked);
+
+        //checking if there is any sample corresponding to this ulid that has been received to prevent duplicate entry in validation table.
+        boolean flag=false;
+        for(Sample sampleItr: master.getSamples())
+            if(sampleItr.getRecDate()!=null){
+                flag=true;
+                break;
+            }
+
+        //setting rec date of current sample.
+        sample.setRecDate(Date.valueOf(LocalDate.now()));
+        if(!flag){
+            for(Sample sampleItr: master.getSamples())
+                validityListService.addValidityListRest(sampleItr.getId());
+        }
+
+
+//        updating master and sample in the database
+        masterService.updateMasterRest(master);
+        sampleService.updateSampleRest(sample);
+        return "ok";
+    }
+
 }
