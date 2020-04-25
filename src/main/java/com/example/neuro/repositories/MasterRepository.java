@@ -22,5 +22,5 @@ public interface MasterRepository extends JpaRepository<Master, Integer> {
 
     Master getByULID(String ulid);
 
-    List<Master> findBySampleTypeAndPatientDemographicDetail_UHID(SampleTypeEnum sampleTypeEnum, String UHID);
+    List<Master> findBySampleTypeAndPatientDemographicDetail_UHIDAndStatusNot(SampleTypeEnum sampleTypeEnum, String UHID, StatusEnum statusEnum);
 }

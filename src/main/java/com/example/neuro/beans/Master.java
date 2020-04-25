@@ -97,6 +97,8 @@ public class Master implements Comparable{
 
     private String linked = "0";
     private String drName;
+    private String drEmailId;
+    private String drContactNo;
 
     @Column(nullable = false, updatable = false)
     @CreatedDate
@@ -318,6 +320,21 @@ public class Master implements Comparable{
         isActive = active;
     }
 
+    public String getDrEmailId() {
+        return drEmailId;
+    }
+
+    public void setDrEmailId(String drEmailId) {
+        this.drEmailId = drEmailId;
+    }
+
+    public String getDrContactNo() {
+        return drContactNo;
+    }
+
+    public void setDrContactNo(String drContactNo) {
+        this.drContactNo = drContactNo;
+    }
 
     @Override
     public String toString() {
@@ -325,6 +342,10 @@ public class Master implements Comparable{
                 "id=" + id +
                 ", patientDemographicDetail=" + patientDemographicDetail +
                 ", paymentCategory=" + paymentCategory +
+                ", samples=" + samples +
+                ", externalSample=" + externalSample +
+                ", payments=" + payments +
+                ", vials=" + vials +
                 ", ULID='" + ULID + '\'' +
                 ", nNo='" + nNo + '\'' +
                 ", ANCA=" + ANCA +
@@ -337,15 +358,16 @@ public class Master implements Comparable{
                 ", GANGIGM=" + GANGIGM +
                 ", totalAmount=" + totalAmount +
                 ", remainingAmount=" + remainingAmount +
+                ", isActive=" + isActive +
                 ", isValid=" + isValid +
-                ", remark=" + remark+
+                ", remark='" + remark + '\'' +
                 ", status=" + status +
-                ", sampleType='" + sampleType + '\'' +
+                ", sampleType=" + sampleType +
                 ", linked='" + linked + '\'' +
                 ", drName='" + drName + '\'' +
+                ", drEmailId='" + drEmailId + '\'' +
+                ", drContactNo='" + drContactNo + '\'' +
                 ", reqDate=" + reqDate +
-                ", isActive=" + isActive +
-                ", externalSample=" + externalSample +
                 '}';
     }
 

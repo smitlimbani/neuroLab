@@ -25,8 +25,8 @@ public class MasterService {
         return masterRepository.getOne(id);
     }
 
-    public List<Master> findBySampleTypeAndPatientDemographicDetail_UHID(SampleTypeEnum sampleTypeEnum,String uhid){
-        return masterRepository.findBySampleTypeAndPatientDemographicDetail_UHID(sampleTypeEnum, uhid);
+    public List<Master> findBySampleTypeAndPatientDemographicDetail_UHIDAndStatusNot(SampleTypeEnum sampleTypeEnum,String uhid, StatusEnum statusEnum){
+        return masterRepository.findBySampleTypeAndPatientDemographicDetail_UHIDAndStatusNot(sampleTypeEnum, uhid, statusEnum);
     }
 
 //    public Master addMasterRest(Master master, Integer pCatId, Integer pId) {
@@ -65,7 +65,8 @@ public class MasterService {
     }
 
     public boolean doesULIDExistBooleanRest(String ulid){
-        if (masterRepository.getByULID(ulid) != null) {
+        String ulid2= (ulid.charAt(0)=='S'?'C':'S') +ulid.substring(1);
+        if (masterRepository.getByULID(ulid) != null|| masterRepository.getByULID(ulid2)!=null) {
             return true;
         }
         return false;

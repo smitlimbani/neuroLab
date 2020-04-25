@@ -83,7 +83,7 @@ public class ReceivingStationService {
             "paymentCategoryCode" : "ABP100",
             "master" : {...},
             "payments" : [{},{}...],
-            "samples" : [{},{}...]
+            "sample" : {}
         }
 
         {
@@ -138,9 +138,10 @@ public class ReceivingStationService {
         }
         payments = paymentService.addPaymentsRest(payments);
 
-        //Adding received all the samples
-        Sample sample = (Sample)(new JsonService()).fromJsonList(jsonString,"sample", Sample.class);
+        //Adding received sample
+        Sample sample = (Sample)(new JsonService()).fromJson(jsonString,"sample",Sample.class);
         sample.setMaster(master);
+        sample.setRecDate(Date.valueOf(LocalDate.now()));
         sample = sampleService.addSampleRest(sample);
         return "ok";
     }
@@ -286,7 +287,6 @@ public class ReceivingStationService {
         Master master=  sampleService.findBySampleIdRest(sampleId).getMaster();
 
         master.setVials(null);
-        master.setPayments(null);
         master.setSamples(null);
 
         return jsonService.toJson(master, "master");
@@ -343,7 +343,7 @@ public class ReceivingStationService {
     public String getLinkingULIDListRest(String uhid, String sampleType) throws JsonProcessingException {
 //        System.out.println("service: "+ uhid+ sampleType);
 //        System.out.println(sampleType.equals("S")? SampleTypeEnum.S: SampleTypeEnum.C);
-        List<Master> masters = masterService.findBySampleTypeAndPatientDemographicDetail_UHID(sampleType.equals("S")? SampleTypeEnum.S: SampleTypeEnum.C, uhid);
+        List<Master> masters = masterService.findBySampleTypeAndPatientDemographicDetail_UHIDAndStatusNot(sampleType.equals("S")? SampleTypeEnum.S: SampleTypeEnum.C, uhid, StatusEnum.NOT_RECEIVED );
 //        System.out.println(masters.toString());
         List<String> ulids= new ArrayList<>();
         for(Master master: masters){
@@ -359,14 +359,14 @@ public class ReceivingStationService {
                  "remark" : remark if it is marked inValid, null otherwise
                  "ulid":ulid that to be set for the sample
                  "linked":linked ulid, null otherwise
-                 "payments": payment transactions for external patients
+                 "payments": payment transactions for external patients, [] if none exist
  response:       "ok"
  Example-
          {
             "sampleId":"7",
-            "ulid": "CXU20/00005",
-            "remark": "Sample insufficient",
-            "linked":"XAU20/00001",
+            "ulid": "C:XU-00005/20",
+            "remark": null,
+            "linked":"C:XU-00003/20",
             "payments":
             [{
                 "amount": 100,
@@ -375,74 +375,73 @@ public class ReceivingStationService {
             {
                 "amount": 500,
                 "details": "gpay"
-            }
-                ]
-           }
-
+            }]
+         }
+Example 2
+        {
+            "sampleId":"3",
+            "ulid": "C:XU-00005/20",
+            "remark": null,
+            "linked":"C:XU-00003/20",
+            "payments": []
+         }
   */
     @Transactional
     public String receivingRest(String jsonString) throws JsonProcessingException {
-        //change due to ulid format
-        String sampleId= (String) jsonService.fromJson(jsonString, "sampleId", String.class);
-        String ulid= (String) jsonService.fromJson(jsonString,"ulid", String.class);
-        String remark= (String) jsonService.fromJson(jsonString, "remark", String.class);
-        String linked= (String) jsonService.fromJson(jsonString, "linked", String.class);
-        Sample sample= sampleService.findBySampleIdRest(sampleId);
-        Master master= sample.getMaster();
-        if(ulid.charAt(2)=='X'){
-//            List<Payment> payments= master.getPayments();
-//            if(payments.size()!=0){
-//                paymentService.deletePaymentsRest(payments);
-//            }
-//            payments = (new JsonService<Payment>()).fromJsonList(jsonString,"payments", Payment.class);
-//
-//            for(Payment payment : payments){
-//                payment.setMaster(master);
-//            }
-//            payments = paymentService.addPaymentsRest(payments);
-            List<Payment> payments = (new JsonService<Payment>()).fromJsonList(jsonString,"payments", Payment.class);
+
+        String sampleId = (String) jsonService.fromJson(jsonString, "sampleId", String.class);
+        String ulid = (String) jsonService.fromJson(jsonString, "ulid", String.class);
+        String remark = (String) jsonService.fromJson(jsonString, "remark", String.class);
+        String linked = (String) jsonService.fromJson(jsonString, "linked", String.class);
+        Sample sample = sampleService.findBySampleIdRest(sampleId);
+        Master master = sample.getMaster();
+        List<Payment> payments = (new JsonService<Payment>()).fromJsonList(jsonString, "payments", Payment.class);
+
+        //External patients
+        if (ulid.charAt(2) == 'X') {
+           /*
+             Here we are supposed to delete old payments form the master
+
+            */
 
             for(Payment payment : payments){
                 payment.setMaster(master);
             }
-            System.out.println(payments);
             master.setPayments(payments);
             //setting ulid in master and incrementing the counter for internal and external appropriately
-            variableService.incrementCounterRest("xCount", Integer.parseInt(ulid.substring(5,10)));
+            variableService.incrementCounterRest("xCount", Integer.parseInt(ulid.substring(5, 10)));
         }
-        else
-            variableService.incrementCounterRest("iCount", Integer.parseInt(ulid.substring(5,10)));
+        else //internal patients
+            variableService.incrementCounterRest("iCount", Integer.parseInt(ulid.substring(5, 10)));
         master.setULID(ulid);
         master.setStatus(StatusEnum.RECEIVED);
 
         //making appropriate changes to master in case of invalid sample or linking
-        if(remark!=null){
+        if (remark != null) {
             master.setRemark(remark);
             master.setIsValid(IsValidEnum.N);
         }
-        if(linked!=null)
+        if (linked != null)
             master.setLinked(linked);
 
         //checking if there is any sample corresponding to this ulid that has been received to prevent duplicate entry in validation table.
-        boolean flag=false;
-        for(Sample sampleItr: master.getSamples())
-            if(sampleItr.getRecDate()!=null){
-                flag=true;
+        boolean flag = false;
+        for (Sample sampleItr : master.getSamples())
+            if (sampleItr.getRecDate() != null) {
+                flag = true;
                 break;
             }
 
         //setting rec date of current sample.
         sample.setRecDate(Date.valueOf(LocalDate.now()));
-        if(!flag){
-            for(Sample sampleItr: master.getSamples())
+        if (!flag) {
+            for (Sample sampleItr : master.getSamples())
                 validityListService.addValidityListRest(sampleItr.getId());
         }
 
-
-//        updating master and sample in the database
+        //updating master and sample in the database
         masterService.updateMasterRest(master);
         sampleService.updateSampleRest(sample);
         return "ok";
     }
-
 }

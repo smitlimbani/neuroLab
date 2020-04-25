@@ -30,6 +30,9 @@ public class PaymentController {
         return paymentService.addPaymentRest(payment);
     }
 
+    @PostMapping("/delete")
+    public void deletePayments(@Valid @RequestBody List<Payment> payments){
+        System.out.println("here");paymentService.deletePaymentsRest(payments);}
 //    @PostMapping("/insert")
 //    public Payment addPayment(@Valid @RequestBody Payment payment, @RequestParam Integer mId) {
 //        return paymentService.addPaymentRest(payment, mId);
