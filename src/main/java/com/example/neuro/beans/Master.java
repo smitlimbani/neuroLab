@@ -4,6 +4,7 @@ import com.example.neuro.utils.IsValidEnum;
 import com.example.neuro.utils.SampleTypeEnum;
 import com.example.neuro.utils.StatusEnum;
 import com.example.neuro.utils.TestStatusEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import org.springframework.data.annotation.CreatedDate;
@@ -102,6 +103,7 @@ public class Master implements Comparable{
 
     @Column(nullable = false, updatable = false)
     @CreatedDate
+    @JsonFormat(pattern="yyyy-MM-dd", timezone = "Asia/Kolkata")
     private Date reqDate = Date.valueOf(LocalDate.now());
 
     public String getRemark() {

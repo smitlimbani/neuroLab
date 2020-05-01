@@ -28,6 +28,15 @@ public class VialService {
         return vialRepository.save(vial);
     }
 
+    public void deleteVialByIdRest(Integer id){
+        vialRepository.deleteById(id);
+    }
+
+    public void deleteVial(Vial vial){
+        vial.setMaster(null);
+        vial.setTest(null);
+        vialRepository.delete(vial);}
+
     //    public Vial addVialRest(Vial vial, Integer mId, Integer tId) {
 //        vial.setMaster(masterRepository.getOne(mId));
 //        vial.setTest(testRepository.getOne(tId));

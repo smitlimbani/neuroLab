@@ -20,7 +20,7 @@ public class SegregationSeparationController {
     SegregationSeparationService segregationSeparationService;
 
     @PostMapping("/separateSample")
-    public List<Vial> separateSample(@RequestBody Master master) throws JsonProcessingException {
+    public String separateSample(@RequestBody Master master) throws JsonProcessingException {
         return segregationSeparationService.separateSampleRest(master);
     }
 

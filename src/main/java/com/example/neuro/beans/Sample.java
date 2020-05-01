@@ -1,6 +1,7 @@
 package com.example.neuro.beans;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
@@ -29,6 +30,7 @@ public class Sample {
     private String sampleId;
 
     @Column
+    @JsonFormat(pattern="yyyy-MM-dd", timezone = "Asia/Kolkata")
     private Date recDate;
 
     public ValidityList getValidityList() {

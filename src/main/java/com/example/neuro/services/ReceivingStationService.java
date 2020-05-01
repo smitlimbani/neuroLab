@@ -294,7 +294,7 @@ public class ReceivingStationService {
 
     /*The below function is use retrieve details of a single patient
   request:        "uhid":scanned uhid
-  response:       "pdd": pdd object
+  response:       "patientDemographicDetail": pdd object
    */
     @Transactional
     public String getPatientDetailByUHIDRest(String uhid)throws JsonProcessingException {
@@ -302,7 +302,7 @@ public class ReceivingStationService {
 
         patientDemographicDetail.setMasters(null);
 
-        return jsonService.toJson(patientDemographicDetail, "pdd");
+        return jsonService.toJson(patientDemographicDetail, "patientDemographicDetail");
     }
 
 
@@ -396,13 +396,11 @@ Example 2
         Sample sample = sampleService.findBySampleIdRest(sampleId);
         Master master = sample.getMaster();
         List<Payment> payments = (new JsonService<Payment>()).fromJsonList(jsonString, "payments", Payment.class);
+        System.out.println(payments);
 
         //External patients
         if (ulid.charAt(2) == 'X') {
-           /*
-             Here we are supposed to delete old payments form the master
-
-            */
+            paymentService.deletePaymentsRest(master.getPayments());
 
             for(Payment payment : payments){
                 payment.setMaster(master);

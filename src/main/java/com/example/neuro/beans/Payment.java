@@ -1,8 +1,10 @@
 package com.example.neuro.beans;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -17,7 +19,7 @@ public class Payment {
     @Column(unique = true, nullable = false)
     private Integer id;
 
-    @ManyToOne(optional = false, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "masterId")
     @JsonIgnoreProperties(value = {"payments", "hibernateLazyInitializer"}, allowSetters = true)
     private Master master;
@@ -26,8 +28,9 @@ public class Payment {
 
     private String details;
 
-
-    private Date transactionDate= Date.valueOf(LocalDate.now());
+    @JsonFormat(pattern="yyyy-MM-dd", timezone = "Asia/Kolkata")
+//    @DateTimeFormat(pattern = "yyyy.MM.dd")
+    private Date transactionDate;
 
     public Date getTransactionDate() {
         return transactionDate;

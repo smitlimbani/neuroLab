@@ -29,10 +29,13 @@ public class PaymentService {
     public List<Payment> addPaymentsRest(List<Payment> payments){return paymentRepository.saveAll(payments);}
 
     public void deletePaymentsRest(List<Payment> payments){
-        Master master= paymentRepository.getOne(payments.get(0).getId()).getMaster();
-        master.setPayments(null);
-        masterService.updateMasterRest(master);
-        paymentRepository.deleteAll(payments);
+        for(Payment payment: payments)
+            deletePaymentRest(payment);
+    }
+
+    public void deletePaymentRest(Payment payment){
+        payment.setMaster(null);
+        paymentRepository.delete(payment);
     }
 
 

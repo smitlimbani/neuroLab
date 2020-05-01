@@ -40,27 +40,28 @@ public class SegregationSeparationService {
     ExternalSampleService externalSampleService;
 
 
+    /*
+     request : Master object with updated test flag,status,isValid,remark
+     response: "ok" if successful, null otherwise
+     */
     @Transactional
-    public List<Vial> separateSampleRest(Master master){
-        /*
-        Input : Master object with updated test flag,status,isValid
-        */
+    public String separateSampleRest(Master master){
+        System.out.println(master.toString());
+
         Master masterDB = masterService.getMasterRest(master.getId());
-        if (masterDB.getStatus() != StatusEnum.RECEIVED){
-            //if it is re-printing
-            return null;
+        if (masterDB.getStatus() == StatusEnum.RECEIVED){
+            List<Sample> samples = masterDB.getSamples();
+            addToValidityListRest(samples);
         }
 
         masterDB.setIsValid(master.getIsValid());
-        List<Sample> samples = masterDB.getSamples();
-        addToValidityListRest(samples);     //entry into validity list for each sample
+        masterDB.setStatus(master.getStatus());
+        masterDB.setRemark(master.getRemark());
 
-        if(master.getIsValid() != IsValidEnum.N){
-            //if request is valid or  partially valid
-            //then generate vial for each valid test marked
-            return generateVialsRest(masterDB,master);
-        }
-        return null;
+        testWiseVialModification(masterDB, master);
+        masterDB.setVials(null);
+        masterService.updateMasterRest(masterDB);
+        return "ok";
     }
 
     @Transactional
@@ -72,59 +73,63 @@ public class SegregationSeparationService {
         return validityLists;
     }
 
-    public List<Vial> generateVialsRest(Master masterDB, Master master) {
-        masterDB.setStatus(StatusEnum.PROCESSING);
-        List<Vial> vials = new LinkedList<>();
-        if (masterDB.getANA() == TestStatusEnum.RAISED) {
+    public void testWiseVialModification(Master masterDB, Master master) {
+        if(masterDB.getANA()!=master.getANA()){
+            if(master.getANA()==TestStatusEnum.SEPARATED)
+                generateVialRest("ANA", masterDB);
+            else if(masterDB.getANA()==TestStatusEnum.SEPARATED && master.getANA()==TestStatusEnum.INVALID)
+                deleteVialRest("ANA", masterDB);
             masterDB.setANA(master.getANA());
-            if (master.getANA() == TestStatusEnum.SEPARATED) {
-                vials.add(generateVialRest("ANA", masterDB));
-            }
         }
-        if (masterDB.getANCA() == TestStatusEnum.RAISED) {
+        if(masterDB.getANCA()!=master.getANCA()){
+            if(master.getANCA()==TestStatusEnum.SEPARATED)
+                generateVialRest("ANCA", masterDB);
+            else if(masterDB.getANCA()==TestStatusEnum.SEPARATED && master.getANCA()==TestStatusEnum.INVALID)
+                deleteVialRest("ANCA", masterDB);
             masterDB.setANCA(master.getANCA());
-            if (master.getANCA() == TestStatusEnum.SEPARATED) {
-                vials.add(generateVialRest("ANCA", masterDB));
-            }
         }
-        if (masterDB.getMOG() == TestStatusEnum.RAISED) {
+        if(masterDB.getMOG()!=master.getMOG()){
+            if(master.getMOG()==TestStatusEnum.SEPARATED)
+                generateVialRest("MOG", masterDB);
+            else if(masterDB.getMOG()==TestStatusEnum.SEPARATED && master.getMOG()==TestStatusEnum.INVALID)
+                deleteVialRest("MOG", masterDB);
             masterDB.setMOG(master.getMOG());
-            if (master.getMOG() == TestStatusEnum.SEPARATED) {
-                vials.add(generateVialRest("MOG", masterDB));
-            }
         }
-        if (masterDB.getNMDA() == TestStatusEnum.RAISED) {
+        if(masterDB.getNMDA()!=master.getNMDA()){
+            if(master.getNMDA()==TestStatusEnum.SEPARATED)
+                generateVialRest("NMDA", masterDB);
+            else if(masterDB.getNMDA()==TestStatusEnum.SEPARATED && master.getNMDA()==TestStatusEnum.INVALID)
+                deleteVialRest("NMDA", masterDB);
             masterDB.setNMDA(master.getNMDA());
-            if (master.getNMDA() == TestStatusEnum.SEPARATED) {
-                vials.add(generateVialRest("NMDA", masterDB));
-            }
         }
-        if (masterDB.getPANA() == TestStatusEnum.RAISED) {
-            masterDB.setPANA(master.getPANA());
-            if (master.getPANA() == TestStatusEnum.SEPARATED) {
-                vials.add(generateVialRest("PANA", masterDB));
-            }
-        }
-        if (masterDB.getMYU() == TestStatusEnum.RAISED) {
+        if(masterDB.getMYU()!=master.getMYU()){
+            if(master.getMYU()==TestStatusEnum.SEPARATED)
+                generateVialRest("MYU", masterDB);
+            else if(masterDB.getANA()==TestStatusEnum.SEPARATED && master.getANA()==TestStatusEnum.INVALID)
+                deleteVialRest("MYU", masterDB);
             masterDB.setMYU(master.getMYU());
-            if (master.getMYU() == TestStatusEnum.SEPARATED) {
-                vials.add(generateVialRest("MYU", masterDB));
-            }
         }
-        if (masterDB.getGANGIGG() == TestStatusEnum.RAISED) {
+        if(masterDB.getPANA()!=master.getPANA()){
+            if(master.getPANA()==TestStatusEnum.SEPARATED)
+                generateVialRest("PANA", masterDB);
+            else if(masterDB.getPANA()==TestStatusEnum.SEPARATED && master.getPANA()==TestStatusEnum.INVALID)
+                deleteVialRest("PANA", masterDB);
+            masterDB.setPANA(master.getPANA());
+        }
+        if(masterDB.getGANGIGG()!=master.getGANGIGG()){
+            if(master.getGANGIGG()==TestStatusEnum.SEPARATED)
+                generateVialRest("GANGIGG", masterDB);
+            else if(masterDB.getGANGIGG()==TestStatusEnum.SEPARATED && master.getGANGIGG()==TestStatusEnum.INVALID)
+                deleteVialRest("GANGIGG", masterDB);
             masterDB.setGANGIGG(master.getGANGIGG());
-            if (master.getGANGIGG() == TestStatusEnum.SEPARATED) {
-                vials.add(generateVialRest("GANGIGG", masterDB));
-            }
         }
-        if (masterDB.getGANGIGM() == TestStatusEnum.RAISED) {
-            masterDB.setGANGIGM(master.getGANGIGM());
-            if (master.getGANGIGM() == TestStatusEnum.SEPARATED) {
-                vials.add(generateVialRest("GANGIGM", masterDB));
-            }
+        if(masterDB.getGANGIGM()!=master.getGANGIGM()){
+            if(master.getGANGIGM()==TestStatusEnum.SEPARATED)
+                generateVialRest("GANGIGM", masterDB);
+            else if(masterDB.getGANGIGM()==TestStatusEnum.SEPARATED && master.getGANGIGM()==TestStatusEnum.INVALID)
+                deleteVialRest("GANGIGM", masterDB);
+            masterDB.setGANGIGM(master.getGANGIGG());
         }
-        masterService.updateMasterRest(masterDB);   //updating master Object in DB with new status,isValid and test columns
-        return vials;
     }
 
     //Generating vial for given test and master entry, add it to the table
@@ -136,6 +141,26 @@ public class SegregationSeparationService {
         vial.setTest(test);
         vialService.addVialRest(vial);
         return vial;
+    }
+
+    public void deleteVialRest(String testName, Master masterDB){
+        for(Vial vial: masterDB.getVials()){
+            System.out.println("At"+ vial.getTest().getName());
+            if(testName.equalsIgnoreCase(vial.getTest().getName())) {
+                System.out.println("delete"+ vial.getTest().getName());
+                vialService.deleteVial(vial);
+                masterDB.getVials().remove(vial);
+                return;
+            }
+        }
+//        for(Vial vial: masterDB.getVials()){
+//            System.out.println("At"+ vial.getTest().getName());
+//            if(testName.equalsIgnoreCase(vial.getTest().getName())) {
+//                System.out.println("delete"+ vial.getTest().getName());
+//                vialService.deleteVial(vial);
+//            }
+//
+//        }
     }
 
     //Locked counter contains value till which list has been solidify

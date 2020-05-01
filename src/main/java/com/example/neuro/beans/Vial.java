@@ -1,5 +1,6 @@
 package com.example.neuro.beans;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import org.apache.tomcat.jni.Local;
@@ -17,12 +18,12 @@ public class Vial {
     @Column(unique = true, nullable = false)
     private Integer id;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade ={CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "masterId")
     @JsonIgnoreProperties(value = {"vials", "hibernateLazyInitializer"}, allowSetters = true)
     private Master master;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade ={CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "testId")
     @JsonIgnoreProperties(value = {"vials", "hibernateLazyInitializer"}, allowSetters = true)
     private Test test;
@@ -31,9 +32,12 @@ public class Vial {
     private String VLID;
     private Integer serialNo;
     private String fileName;
+
+    @JsonFormat(pattern="yyyy-MM-dd", timezone = "Asia/Kolkata")
     private Date reportingDate;
 
     @Column(nullable = false)
+    @JsonFormat(pattern="yyyy-MM-dd", timezone = "Asia/Kolkata")
     private Date creationDate = Date.valueOf(LocalDate.now());
 
     private Date testingDate;
