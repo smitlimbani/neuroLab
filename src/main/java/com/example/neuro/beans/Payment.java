@@ -28,7 +28,7 @@ public class Payment {
 
     private String details;
 
-    @JsonFormat(pattern="yyyy-MM-dd", timezone = "Asia/Kolkata")
+//    @JsonFormat(pattern="yyyy-MM-dd", timezone = "Asia/Kolkata")
 //    @DateTimeFormat(pattern = "yyyy.MM.dd")
     private Date transactionDate;
 

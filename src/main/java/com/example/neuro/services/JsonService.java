@@ -19,7 +19,7 @@ public class JsonService<T> {
     private ObjectMapper mapper = new ObjectMapper();
     public JsonService(){
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        mapper.setDateFormat(new SimpleDateFormat("dd-MM-yyyy"));
+        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
     }
 
     public List<T> fromJsonList(String jsonString, String key, Class<T> tClass) throws JsonProcessingException {
