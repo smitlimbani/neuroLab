@@ -3,6 +3,7 @@ package com.example.neuro.services;
 import com.example.neuro.beans.*;
 import com.example.neuro.utils.IsValidEnum;
 import com.example.neuro.utils.StatusEnum;
+import com.example.neuro.utils.TestCategoryEnum;
 import com.example.neuro.utils.TestStatusEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -187,9 +188,10 @@ public class SegregationSeparationService {
                 "date": date
     Response-   "vials":list of vials
      */
-    public List<Vial> getCurrentTestListRest(String jsonString) throws JsonProcessingException {
-        String testCode= (String) jsonService.fromJson(jsonString,"testCode", String.class);
-        String date=(String) jsonService.fromJson(jsonString, "date", String.class);
+    public List<Vial> getTestListByCodeAndDateRest(String testCode, String date) {
+//        String testCode= (String) jsonService.fromJson(jsonString,"testCode", String.class);
+//        String date=(String) jsonService.fromJson(jsonString, "date", String.class);
+        System.out.println("getCurrentTestListRest service started");
         Test test = testService.getTestByCodeRest(testCode);
         List<Vial> vials =  vialService.getVialsByTestAndTestingDateOrderBySerialNoRest(test,Date.valueOf(date));
         for(Vial vial:vials){
@@ -199,7 +201,27 @@ public class SegregationSeparationService {
             vial.getMaster().setPaymentCategory(null);
             vial.getMaster().setExternalSample(null);
         }
+        System.out.println("getCurrentTestListRest service ended");
         return vials;
+    }
+
+    @Transactional
+    public String getTestListByCategoryAndDateRest(TestCategoryEnum testCategory, String date) throws JsonProcessingException {
+        List<Test> tests = testService.getTestsByCategory(testCategory);
+        List<Vial> vials;
+        String listData="";
+        for (Test test : tests){
+            vials = vialService.getVialsByTestAndTestingDateOrderBySerialNoRest(testService.getTestByCodeRest(test.getCode()), Date.valueOf(date));
+//            vials = getCurrentTestListRest(test.getCode(),date); // why the fuck this one is not working
+            if(listData.length() == 0){
+                listData = jsonService.toJson(vials,test.getCode());
+            }
+            else{
+                listData = jsonService.toJson(vials,test.getCode(),listData);
+            }
+
+        }
+        return listData;
     }
 
 

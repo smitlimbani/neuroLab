@@ -3,6 +3,7 @@ package com.example.neuro.controllers;
 import com.example.neuro.beans.Test;
 import com.example.neuro.services.TestService;
 import com.example.neuro.utils.TestCategoryEnum;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,4 +37,10 @@ public class TestController {
     public List<Test> getActiveTests(@RequestParam TestCategoryEnum testCategoryEnum){
         return testService.getActiveTestsRest(testCategoryEnum);
     }
+
+    @GetMapping("/getTestsList")
+    public String getTestsList() throws JsonProcessingException {
+        return testService.getTestsListRest();
+    }
+
 }

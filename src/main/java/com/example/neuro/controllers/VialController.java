@@ -45,6 +45,11 @@ public class VialController {
     @PostMapping("/delete")
     public void deleteVial(@RequestBody @Valid Integer id){vialService.deleteVialByIdRest(id);}
 
+    @GetMapping("/getPendingVials")
+    public List<Vial> getPendingVials(){
+        return vialService.getPendingVialsRest();
+    }
+
 //    @PostMapping("/updateVials")
 //    public String updateVials(@RequestBody @Valid String jsonString) throws JsonProcessingException {
 //        return vialService.updateVialsRest(jsonString);

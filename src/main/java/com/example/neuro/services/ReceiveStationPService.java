@@ -4,6 +4,7 @@ import com.example.neuro.beans.*;
 import com.example.neuro.repositories.MasterRepository;
 import com.example.neuro.utils.IsValidEnum;
 import com.example.neuro.utils.StatusEnum;
+import com.example.neuro.utils.TestCategoryEnum;
 import com.example.neuro.utils.TestStatusEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -41,6 +43,8 @@ public class ReceiveStationPService {
     VialService vialService;
     @Autowired
     ValidityListService validityListService;
+    @Autowired
+    SegregationSeparationService segregationSeparationService;
 
     public String getNextXULIDRest(String sampleType){
         //change due to ulid format
@@ -265,4 +269,8 @@ public class ReceiveStationPService {
         return updateLockedCounterRest(code,lockedCounter);
     }
 
+    @Transactional
+    public List<Master> test(Date startDate, Date endDate) {
+        return masterRepository.findByReqDateBetweenAndIsActiveTrue(startDate,endDate);
+    }
 }

@@ -4,6 +4,7 @@ import com.example.neuro.beans.Master;
 import com.example.neuro.beans.Test;
 import com.example.neuro.beans.Vial;
 import com.example.neuro.services.SegregationSeparationService;
+import com.example.neuro.utils.TestCategoryEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,13 +35,18 @@ public class SegregationSeparationController {
         return segregationSeparationService.updateLockedCounterRest(code,lockedCounter,vials);
     }
 
-    @PostMapping("/mvn")
-    public List<Vial> getCurrentTestList(@RequestBody @Valid String jsonString) throws JsonProcessingException {
-        return segregationSeparationService.getCurrentTestListRest(jsonString);
+    @GetMapping("/getTestListByCodeAndDate")
+    public List<Vial> getTestListByCodeAndDate(@RequestParam String testCode, @RequestParam String date) {
+        return segregationSeparationService.getTestListByCodeAndDateRest(testCode,date);
     }
 
     @GetMapping("/getPatientDetailByVLID")
     public Vial getPatientDetailByVLID(@RequestParam String vlid) throws JsonProcessingException {
         return segregationSeparationService.getPatientDetailByVLIDRest(vlid);
+    }
+
+    @GetMapping("/getTestListByCategoryAndDate")
+    public String getTestListByCategoryAndDate(@RequestParam TestCategoryEnum testCategory,@RequestParam String date) throws JsonProcessingException {
+        return segregationSeparationService.getTestListByCategoryAndDateRest(testCategory,date);
     }
 }

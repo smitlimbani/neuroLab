@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -15,8 +16,6 @@ public class MasterController {
 
     @Autowired
     private MasterService masterService;
-    @Autowired
-    private MasterRepository masterRepository;
 
     @GetMapping("/getAll")
     public List<Master> getMasters() {
@@ -41,6 +40,11 @@ public class MasterController {
     @GetMapping("/doesULIDExistBoolean")
     public boolean doesULIDExistBoolean(String ulid){
         return masterService.doesULIDExistBooleanRest(ulid);
+    }
+
+    @GetMapping("/getMastersByReqDateBetween")
+    public List<Master> getMastersByReqDateBetween(@RequestParam Date startDate,@RequestParam Date endDate){
+        return masterService.getMastersByReqDateBetweenRest(startDate,endDate);
     }
 
 //    @PostMapping("/insert")

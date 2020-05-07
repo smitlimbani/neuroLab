@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface MasterRepository extends JpaRepository<Master, Integer> {
     Master getByULID(String ulid);
 
     List<Master> findBySampleTypeAndPatientDemographicDetail_UHIDAndStatusNot(SampleTypeEnum sampleTypeEnum, String UHID, StatusEnum statusEnum);
+
+    List<Master> findByReqDateBetweenAndIsActiveTrue(Date startDate,Date endDate);
 }

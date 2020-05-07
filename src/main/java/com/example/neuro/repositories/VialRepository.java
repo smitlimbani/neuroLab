@@ -15,4 +15,6 @@ public interface VialRepository extends JpaRepository<Vial, Integer> {
     Vial findByVLID(String VLID);
 
     List<Vial> findByTestAndTestingDateOrderBySerialNo(Test test, Date testingDate);
+
+    List<Vial> findBySerialNoAndTestingDate(Integer serialNo,Date testingDate);
 }

@@ -344,10 +344,6 @@ public class Master implements Comparable{
                 "id=" + id +
                 ", patientDemographicDetail=" + patientDemographicDetail +
                 ", paymentCategory=" + paymentCategory +
-                ", samples=" + samples +
-                ", externalSample=" + externalSample +
-                ", payments=" + payments +
-                ", vials=" + vials +
                 ", ULID='" + ULID + '\'' +
                 ", nNo='" + nNo + '\'' +
                 ", ANCA=" + ANCA +

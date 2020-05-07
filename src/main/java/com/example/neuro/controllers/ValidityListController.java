@@ -37,7 +37,7 @@ public class ValidityListController {
     }
 
     @GetMapping("/delete")
-    public boolean test(@RequestParam Integer id){
+    public boolean delete(@RequestParam Integer id){
         return validityListService.deleteValidityListRest(id);
     }
 }

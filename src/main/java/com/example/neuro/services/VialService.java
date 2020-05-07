@@ -66,4 +66,8 @@ public class VialService {
     public Vial findByVLIDRest(String VLID){
         return vialRepository.findByVLID(VLID);
     }
+
+    public List<Vial> getPendingVialsRest(){
+        return vialRepository.findBySerialNoAndTestingDate(null,null);
+    }
 }

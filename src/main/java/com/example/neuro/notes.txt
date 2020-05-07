@@ -12,6 +12,8 @@ Remaining :
     -> storeXPatient method changed;
     ->
 - Updated beans, added two fields into PDD
+- json objectMapper dateformat testing with toJson and fromJson
+- change MYU -> MYO everywhere
 1	0	0	0	0	0	0	0
 1	1	1	1	0	1	1	0
 0	0	0	1	1	0	0	0

@@ -4,16 +4,15 @@ import com.example.neuro.beans.Master;
 import com.example.neuro.beans.Vial;
 import com.example.neuro.repositories.MasterRepository;
 import com.example.neuro.repositories.VariableRepository;
-import com.example.neuro.services.JsonService;
-import com.example.neuro.services.MasterService;
-import com.example.neuro.services.ReceiveStationPService;
-import com.example.neuro.services.VialService;
+import com.example.neuro.services.*;
+import com.example.neuro.utils.TestCategoryEnum;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,6 +32,8 @@ public class recieveStationPController {
     MasterRepository masterRepository;
     @Autowired
     VariableRepository variableRepository;
+    @Autowired
+    SegregationSeparationService segregationSeparationService;
 
     @GetMapping("/getNextXULID")
     public String getNextXULID(@RequestParam String sampleType){
@@ -57,12 +58,11 @@ public class recieveStationPController {
         return receiveStationPService.separateSampleRest(master);
     }
 
-    @PostMapping("/test")
-    public boolean test(@RequestBody String jsonStr) throws JsonProcessingException {
-        System.out.println(jsonStr);
-        System.out.print((Integer) jsonService.fromJson(jsonStr,"mId1",Integer.class));
-        System.out.print((Integer) jsonService.fromJson(jsonStr,"mId2",Integer.class));
-        return true;
+    @GetMapping("/test")
+    public List<Master> test(@RequestParam Date startDate, @RequestParam Date endDate) {
+//        segregationSeparationService.getCurrentTestListByCategoryRest(TestCategoryEnum.BLOT,"2020-04-23");
+        return receiveStationPService.test(startDate,endDate);
+//        return true;
 //        return jsonService.toJson(master,"master");
     }
 }

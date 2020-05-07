@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import javax.persistence.*;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -38,6 +40,16 @@ public class Test {
 
     @Column(nullable = false)
     private boolean isActive;
+
+    private Date lastActivDate;
+
+    public Date getLastActivDate() {
+        return lastActivDate;
+    }
+
+    public void setLastActivDate(Date lastActivDate) {
+        this.lastActivDate = lastActivDate;
+    }
 
     public List<Vial> getVials() {
         return vials;
@@ -118,10 +130,11 @@ public class Test {
                 ", code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", rate=" + rate +
-                ", testCategory='" + testCategory + '\'' +
+                ", testCategory=" + testCategory +
                 ", groupSize=" + groupSize +
                 ", lockedCounter=" + lockedCounter +
                 ", isActive=" + isActive +
+                ", lastActivDate=" + lastActivDate +
                 '}';
     }
 

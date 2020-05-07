@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -84,5 +85,9 @@ public class MasterService {
         master.setVials(null);
         master.setSamples(null);
         return master;
+    }
+
+    public List<Master> getMastersByReqDateBetweenRest(Date startDate,Date endDate){
+        return masterRepository.findByReqDateBetweenAndIsActiveTrue(startDate,endDate);
     }
 }

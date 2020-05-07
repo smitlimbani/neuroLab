@@ -14,4 +14,5 @@ public interface TestRepository extends JpaRepository<Test, Integer> {
     Test findByCode(String code);
 
     List<Test> findByTestCategory(TestCategoryEnum testCategoryEnum);
+
 }

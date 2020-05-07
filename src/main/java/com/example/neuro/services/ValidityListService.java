@@ -54,4 +54,19 @@ public class ValidityListService {
         validityListRepository.deleteById(id);
         return true;
     }
+    // why the fuck this one is not working!!
+//    @Transactional
+//    public List<ValidityList> deleteValidityListRest(Integer id){
+//        Sample sample= validityListRepository.getOne(id).getSample();
+//        sample.setValidityList(null);
+//        sampleService.updateSampleRest(sample); //changed it to update
+//        validityListRepository.deleteById(id);
+//        List<ValidityList> validityLists =  validityListRepository.findAll(Sort.by(Sort.Direction.ASC,"sample.master.id"));
+//        for(ValidityList validityList : validityLists){
+//            validityList.getSample().getMaster().setVials(null);
+//            validityList.getSample().getMaster().setPayments(null);
+//            validityList.getSample().getMaster().setPaymentCategory(null);
+//        }
+//        return validityLists;
+//    }
 }
