@@ -103,19 +103,19 @@ public class SegregationSeparationService {
                 deleteVialRest("NMDA", masterDB);
             masterDB.setNMDA(master.getNMDA());
         }
-        if(masterDB.getMYU()!=master.getMYU()){
-            if(master.getMYU()==TestStatusEnum.SEPARATED)
-                generateVialRest("MYU", masterDB);
+        if(masterDB.getMYO()!=master.getMYO()){
+            if(master.getMYO()==TestStatusEnum.SEPARATED)
+                generateVialRest("MYO", masterDB);
             else if(masterDB.getANA()==TestStatusEnum.SEPARATED && master.getANA()==TestStatusEnum.INVALID)
-                deleteVialRest("MYU", masterDB);
-            masterDB.setMYU(master.getMYU());
+                deleteVialRest("MYO", masterDB);
+            masterDB.setMYO(master.getMYO());
         }
-        if(masterDB.getPANA()!=master.getPANA()){
-            if(master.getPANA()==TestStatusEnum.SEPARATED)
-                generateVialRest("PANA", masterDB);
-            else if(masterDB.getPANA()==TestStatusEnum.SEPARATED && master.getPANA()==TestStatusEnum.INVALID)
-                deleteVialRest("PANA", masterDB);
-            masterDB.setPANA(master.getPANA());
+        if(masterDB.getPARA()!=master.getPARA()){
+            if(master.getPARA()==TestStatusEnum.SEPARATED)
+                generateVialRest("PARA", masterDB);
+            else if(masterDB.getPARA()==TestStatusEnum.SEPARATED && master.getPARA()==TestStatusEnum.INVALID)
+                deleteVialRest("PARA", masterDB);
+            masterDB.setPARA(master.getPARA());
         }
         if(masterDB.getGANGIGG()!=master.getGANGIGG()){
             if(master.getGANGIGG()==TestStatusEnum.SEPARATED)

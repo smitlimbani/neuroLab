@@ -66,10 +66,10 @@ public class Master implements Comparable{
     private TestStatusEnum ANA = TestStatusEnum.NOT_RAISED;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private TestStatusEnum PANA = TestStatusEnum.NOT_RAISED;
+    private TestStatusEnum PARA = TestStatusEnum.NOT_RAISED;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private TestStatusEnum MYU = TestStatusEnum.NOT_RAISED;
+    private TestStatusEnum MYO = TestStatusEnum.NOT_RAISED;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TestStatusEnum GANGIGG = TestStatusEnum.NOT_RAISED;
@@ -210,20 +210,20 @@ public class Master implements Comparable{
         this.ANA = ANA;
     }
 
-    public TestStatusEnum getPANA() {
-        return PANA;
+    public TestStatusEnum getPARA() {
+        return PARA;
     }
 
-    public void setPANA(TestStatusEnum PANA) {
-        this.PANA = PANA;
+    public void setPARA(TestStatusEnum PARA) {
+        this.PARA = PARA;
     }
 
-    public TestStatusEnum getMYU() {
-        return MYU;
+    public TestStatusEnum getMYO() {
+        return MYO;
     }
 
-    public void setMYU(TestStatusEnum MYU) {
-        this.MYU = MYU;
+    public void setMYO(TestStatusEnum MYO) {
+        this.MYO = MYO;
     }
 
     public TestStatusEnum getGANGIGG() {
@@ -350,8 +350,8 @@ public class Master implements Comparable{
                 ", MOG=" + MOG +
                 ", NMDA=" + NMDA +
                 ", ANA=" + ANA +
-                ", PANA=" + PANA +
-                ", MYU=" + MYU +
+                ", PARA=" + PARA +
+                ", MYO=" + MYO +
                 ", GANGIGG=" + GANGIGG +
                 ", GANGIGM=" + GANGIGM +
                 ", totalAmount=" + totalAmount +

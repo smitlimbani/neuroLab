@@ -248,9 +248,9 @@ public class ReceivingStationService {
         master1.setGANGIGG(selectTestStatus(master1.getGANGIGG(), master2.getGANGIGG()));
         master1.setGANGIGM(selectTestStatus(master1.getGANGIGM(),master2.getGANGIGM()));
         master1.setMOG(selectTestStatus(master1.getMOG(),master2.getMOG()));
-        master1.setMYU(selectTestStatus(master1.getMYU(),master2.getMYU()));
+        master1.setMYO(selectTestStatus(master1.getMYO(),master2.getMYO()));
         master1.setNMDA(selectTestStatus(master1.getNMDA(),master2.getNMDA()));
-        master1.setPANA(selectTestStatus(master1.getPANA(), master2.getPANA()));
+        master1.setPARA(selectTestStatus(master1.getPARA(), master2.getPARA()));
 
         master1.setRemainingAmount(master1.getRemainingAmount()+ master2.getRemainingAmount());
         master1.setTotalAmount(master1.getTotalAmount()+ master2.getTotalAmount());

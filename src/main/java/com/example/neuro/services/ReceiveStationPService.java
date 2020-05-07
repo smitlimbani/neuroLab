@@ -213,16 +213,16 @@ public class ReceiveStationPService {
                 vials.add(generateVialRest("NMDA", masterDB));
             }
         }
-        if (masterDB.getPANA() == TestStatusEnum.RAISED) {
-            masterDB.setPANA(master.getPANA());
-            if (master.getPANA() == TestStatusEnum.SEPARATED) {
-                vials.add(generateVialRest("PANA", masterDB));
+        if (masterDB.getPARA() == TestStatusEnum.RAISED) {
+            masterDB.setPARA(master.getPARA());
+            if (master.getPARA() == TestStatusEnum.SEPARATED) {
+                vials.add(generateVialRest("PARA", masterDB));
             }
         }
-        if (masterDB.getMYU() == TestStatusEnum.RAISED) {
-            masterDB.setMYU(master.getMYU());
-            if (master.getMYU() == TestStatusEnum.SEPARATED) {
-                vials.add(generateVialRest("MYU", masterDB));
+        if (masterDB.getMYO() == TestStatusEnum.RAISED) {
+            masterDB.setMYO(master.getMYO());
+            if (master.getMYO() == TestStatusEnum.SEPARATED) {
+                vials.add(generateVialRest("MYO", masterDB));
             }
         }
         if (masterDB.getGANGIGG() == TestStatusEnum.RAISED) {

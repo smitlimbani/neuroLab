@@ -1,0 +1,2 @@
+INSERT INTO neuroLab.patient_demographic_detail (id, uhid, age, contact_no, email_id, first_name, hospital_name, last_name, sex, address, name) VALUES (6, 'UHID1', 23, null, null, 'Vaibhav', 'Nimhans', 'Dodiya', 'MALE', null, 'Vaibhav Dodiya');
+INSERT INTO neuroLab.patient_demographic_detail (id, uhid, age, contact_no, email_id, first_name, hospital_name, last_name, sex, address, name) VALUES (8, 'UHID2', 50, null, null, 'Vaibhav', 'Kiran', 'Dodiya', 'MALE', null, 'Gauri Rawat');
