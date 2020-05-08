@@ -37,6 +37,11 @@ public class ReceivingStationController {
         return receivingStationService.mapExternalRest(ulid,uhid,sampleId);
     }
 
+    @PostMapping("/preReceiving")
+    public String preReceiving(@RequestBody String jsonString) throws JsonProcessingException {
+        return receivingStationService.preReceivingRest(jsonString);
+    }
+
     @PostMapping("/storeXPatientDetail")
     public String storeXPatientDetail(@RequestBody String jsonString) throws JsonProcessingException {
         return receivingStationService.storeXPatientDetailRest(jsonString);

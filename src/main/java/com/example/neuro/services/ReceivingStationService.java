@@ -72,49 +72,140 @@ public class ReceivingStationService {
         return "ok";
     }
 
-    @Transactional
-    public String storeXPatientDetailRest(String jsonString) throws JsonProcessingException {
-        //change due to ulid format
-        /*
-        Submitting External Patient Details
-        remaining amount will be pre-populated from front end;
+    /*
+   Sample Id shall be entered at the time of pre receiving. An API call shall be made to some intermediate service
+   that will call the below function in order to insert the patient data into the database.
+   The format of the json string that has to be passed to this function for successful insertion of patient data is as follows:
+
         jsonString = {
             "patientDemographicDetail" : {...},
-            "paymentCategoryCode" : "ABP100",
+            "paymentCategoryCode" : "...",
             "master" : {...},
             "payments" : [{},{}...],
             "sample" : {}
         }
 
         {
-            "patientDemographicDetail":{
-                "uhid" : "UHID143",
-                "firstName" : "Vaibhav",
-                "lastName" : "Dodiya",
-                "sex" : "MALE"
-            },
-            "paymentCategoryCode" : "ABP100",
-            "master" : {
-                "ulid" : "CXU2040/00003",
-                "nNo" : "n123456",
-                "sampleType" : "S",
-                "ANCA" : "RAISED",
-                "ANA": "RAISED"
-            },
-            "payments" : [{
-                "amount" : "1000",
-                "details" : "from CXU2020/00001"
-            },
-            {
-                "amount" : "200",
-                "details" : "from CXU2020/00001"
-            }],
+            "patientDemographicDetail":
+                {
+                   "uhid" : "UHID143",
+                   "name" : "Gauri Rawat",
+                   "sex" : "FEMALE",
+                   "age" : "21",
+                   "contactNo" : "9999999999",
+                   "emailId" : "abc@gmail.com",
+                   "address": "address12345",
+                   "hospitalName": "NIMHANS"
+                },
+
+            "paymentCategoryCode" : "ABP100",   //Patient can belong to ABP100, ABP50, BPL, XP100
+
+            "master" :
+                {
+                    "nNo" : "n123456",
+                    "sampleType" : "S",
+                    "drName" : "Dr. Anita",
+                    "ANCA" : "RAISED",          //There is one entry for every test that the doctor has raised
+                    "ANA": "RAISED",
+                    "reqDate":"2020-05-31",     //date format is yyyy-MM-dd
+                    "totalAmount": "1000",      //total payment that has been made at the time of registration at e-hospital.
+                    "remainingAmount": "500"    //any amount that is still due. "0"(zero) otherwise.
+                },
+
+            "payments" :
+            [
+                {
+                    "amount" : "1000",                  //required
+                    "details" : "using cash",            //Not mandatory
+                    "transactionDate": "2020-12-31"      //Not mandatory
+                },
+                {
+                    "amount" : "200",
+                    "details" : "from CXU2020/00001"
+                }
+            ],
+
             "sample" :
                 {
-                    "sampleId" :listgeneration "sid1"
+                    "sampleId" : "NMA-200110001"
                 }
         }
         */
+
+    @Transactional
+    public String preReceivingRest(String jsonString)throws JsonProcessingException{
+
+        PatientDemographicDetail patientDemographicDetail = (PatientDemographicDetail) (new JsonService()).fromJson(jsonString,"patientDemographicDetail", PatientDemographicDetail.class);
+        PatientDemographicDetail temp =patientDemographicDetailsService.findByUHIDRest(patientDemographicDetail.getUHID());
+        System.out.println(temp);
+        if(temp==null)
+            patientDemographicDetail = patientDemographicDetailsService.addPatientDemographicDetailRest(patientDemographicDetail);
+        else
+            patientDemographicDetail=temp;
+
+        //add Master entry, before that set PDD and PaymentCategory
+        Master master = (Master) (new JsonService()).fromJson(jsonString,"master",Master.class);
+        String paymentCategoryCode = (String) (new JsonService()).fromJson(jsonString,"paymentCategoryCode",String.class);
+        master.setPaymentCategory(paymentCategoryService.getPaymentCategoryByCodeRest(paymentCategoryCode));
+        master.setPatientDemographicDetail(patientDemographicDetail);
+        master = masterService.addMasterRest(master);
+
+        //Add payment details of that transaction
+        List<Payment> payments = (new JsonService<Payment>()).fromJsonList(jsonString,"payments", Payment.class);
+        for(Payment payment : payments){
+            payment.setMaster(master);
+        }
+        payments = paymentService.addPaymentsRest(payments);
+
+        //Adding received sample
+        Sample sample = (Sample)(new JsonService()).fromJson(jsonString,"sample",Sample.class);
+        sample.setMaster(master);
+        sample.setRecDate(Date.valueOf(LocalDate.now()));
+        sample = sampleService.addSampleRest(sample);
+        return "ok";
+    }
+
+
+    @Transactional
+    public String storeXPatientDetailRest(String jsonString) throws JsonProcessingException {
+        //change due to ulid format
+        /* jsonString = {
+       "patientDemographicDetail" : {...},
+       "paymentCategoryCode" : "ABP100",
+       "master" : {...},
+       "payments" : [{},{}...],
+       "sample" : {}
+   }
+
+   {
+       "patientDemographicDetail":{
+           "uhid" : "UHID143",
+           "name" : "Vaibhav Dodiya",
+           "sex" : "MALE",
+           "age" : "21",
+           "contact_no" : "9999999999",
+           "email_id" : "abc@gmail.com",
+       },
+       "paymentCategoryCode" : "ABP100",
+       "master" : {
+           "nNo" : "n123456",
+           "sampleType" : "S",
+           "anca" : "RAISED",
+           "ana": "RAISED"
+       },
+       "payments" : [{
+           "amount" : "1000",
+           "details" : "from CXU2020/00001"
+       },
+       {
+           "amount" : "200",
+           "details" : "from CXU2020/00001"
+       }],
+       "sample" :
+           {
+               "sampleId" :listgeneration "sid1"
+           }
+   }*/
         //add patient demoGraphic Details
         PatientDemographicDetail patientDemographicDetail = (PatientDemographicDetail) (new JsonService()).fromJson(jsonString,"patientDemographicDetail", PatientDemographicDetail.class);
         patientDemographicDetail = patientDemographicDetailsService.addPatientDemographicDetailRest(patientDemographicDetail);
