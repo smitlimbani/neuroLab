@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -208,6 +209,25 @@ public class SegregationSeparationService {
     }
 
     @Transactional
+    public List<Vial> swapVialSerialRest(String jsonString) throws JsonProcessingException {
+        Vial oldVial = (Vial) jsonService.fromJson(jsonString,"oldVial",Vial.class);
+        Vial newVial = (Vial) jsonService.fromJson(jsonString,"newVial",Vial.class);
+        String testCode = (String) jsonService.fromJson(jsonString,"testCode",String.class);
+
+        //swapping serial number and updating them
+        Integer tmp = oldVial.getSerialNo();
+        oldVial.setSerialNo(newVial.getSerialNo());
+        newVial.setSerialNo(tmp);
+
+        vialService.updateVialRest(oldVial);
+        vialService.updateVialRest(newVial);
+
+        Date today = Date.valueOf(LocalDate.now());
+        List<Vial> testList = vialService.getVialsByTestAndTestingDateOrderBySerialNoRest(testService.getTestByCodeRest(testCode),today);
+        return  testList;
+    }
+
+    @Transactional
     public String getTestListByCategoryAndDateRest(TestCategoryEnum testCategory, String date) throws JsonProcessingException {
         List<Test> tests = testService.getTestsByCategory(testCategory);
         List<Vial> vials;
@@ -216,10 +236,10 @@ public class SegregationSeparationService {
             vials = vialService.getVialsByTestAndTestingDateOrderBySerialNoRest(testService.getTestByCodeRest(test.getCode()), Date.valueOf(date));
 //            vials = getCurrentTestListRest(test.getCode(),date); // why the fuck this one is not working
             if(listData.length() == 0){
-                listData = jsonService.toJson(vials,test.getCode());
+                listData = jsonService.toJson(vials,test.getCode().toUpperCase());
             }
             else{
-                listData = jsonService.toJson(vials,test.getCode(),listData);
+                listData = jsonService.toJson(vials,test.getCode().toUpperCase(),listData);
             }
 
         }

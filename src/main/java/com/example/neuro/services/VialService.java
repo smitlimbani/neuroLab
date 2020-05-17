@@ -59,8 +59,8 @@ public class VialService {
         return "ok";
     }
 
-    public List<Vial> getVialsByTestAndTestingDateOrderBySerialNoRest(Test test, Date creationDate){
-        return vialRepository.findByTestAndTestingDateOrderBySerialNo(test,creationDate);
+    public List<Vial> getVialsByTestAndTestingDateOrderBySerialNoRest(Test test, Date testingDate){
+        return vialRepository.findByTestAndTestingDateOrderBySerialNo(test,testingDate);
     }
 
     public Vial findByVLIDRest(String VLID){

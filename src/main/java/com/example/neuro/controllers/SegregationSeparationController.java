@@ -49,4 +49,9 @@ public class SegregationSeparationController {
     public String getTestListByCategoryAndDate(@RequestParam TestCategoryEnum testCategory,@RequestParam String date) throws JsonProcessingException {
         return segregationSeparationService.getTestListByCategoryAndDateRest(testCategory,date);
     }
+
+    @PostMapping("/swapVialSerial")
+    public List<Vial> swapVialSerial(@RequestBody String jsonString) throws JsonProcessingException {
+        return segregationSeparationService.swapVialSerialRest(jsonString);
+    }
 }
