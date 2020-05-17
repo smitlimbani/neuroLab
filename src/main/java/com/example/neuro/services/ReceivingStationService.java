@@ -312,8 +312,8 @@ public class ReceivingStationService {
 
 
 
-    /*The below function is use for merging two samples. Data of second sample is copied into the first one after
-    which second one is deactivated. The returning obj can be use for generating large sticker in cases one of the
+    /*The below function is used for merging two samples. Data of second sample is copied into the first one after
+    which second one is deactivated. The returning obj can be used for generating large sticker in cases one of the
     samples was in RECEIVED state.
     prerequisite:   Both sample should be RECEIVED/NOT_RECEIVED, active and have the same uhid.
     request:        "mId1":masterId of sample1
@@ -377,7 +377,6 @@ public class ReceivingStationService {
     public String getPatientDetailRest(String sampleId)throws JsonProcessingException {
         Master master=  sampleService.findBySampleIdRest(sampleId).getMaster();
 
-        master.setVials(null);
         master.setSamples(null);
 
         return jsonService.toJson(master, "master");
@@ -458,6 +457,7 @@ public class ReceivingStationService {
             "ulid": "C:XU-00005/20",
             "remark": null,
             "linked":"C:XU-00003/20",
+            "remainingAmount": "100"
             "payments":
             [{
                 "amount": 100,
@@ -488,7 +488,7 @@ Example 2
         Master master = sample.getMaster();
         List<Payment> payments = (new JsonService<Payment>()).fromJsonList(jsonString, "payments", Payment.class);
         System.out.println(payments);
-
+        master.setRemainingAmount((Double) jsonService.fromJson(jsonString, "remainingAmount", Double.class));
         //External patients
         if (ulid.charAt(2) == 'X') {
             paymentService.deletePaymentsRest(master.getPayments());

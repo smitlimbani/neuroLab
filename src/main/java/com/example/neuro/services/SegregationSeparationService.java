@@ -42,6 +42,8 @@ public class SegregationSeparationService {
 
 
     /*
+            Receives the master object with the changes status of individual tests and performs other updations on the
+             object before updating it in the database
      request : Master object with updated test flag,status,isValid,remark
      response: "ok" if successful, null otherwise
      */
@@ -223,8 +225,6 @@ public class SegregationSeparationService {
         }
         return listData;
     }
-
-
 
     /*The below function is use retrieve details of a single patient
      request:        "vlid":scanned vlid
