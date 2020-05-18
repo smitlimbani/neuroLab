@@ -28,7 +28,8 @@ public class VariableService {
     public String incrementCounterRest(String counterName, Integer counterVal){
         Variable variable = variableRepository.findByVarName(counterName);
         System.out.println(variable);
-        variable.setVarVal(counterVal.toString());
+        if(Integer.parseInt(variable.getVarVal())< counterVal)
+            variable.setVarVal(counterVal.toString());
         variableRepository.save(variable);
         return variable.getVarVal();
     }

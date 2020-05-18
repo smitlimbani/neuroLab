@@ -505,13 +505,21 @@ Example 2
         master.setULID(ulid);
         master.setStatus(StatusEnum.RECEIVED);
 
-        //making appropriate changes to master in case of invalid sample or linking
+        //making appropriate changes to master in case of invalid sample
         if (remark != null) {
             master.setRemark(remark);
             master.setIsValid(IsValidEnum.N);
         }
-        if (linked != null)
+        else{
+            master.setRemark("Ok");
+            master.setIsValid(IsValidEnum.Y);
+        }
+
+        //making appropriate changes to master in case of linking
+        if (linked!=null)
             master.setLinked(linked);
+        else
+            master.setLinked("0");
 
         //checking if there is any sample corresponding to this ulid that has been received to prevent duplicate entry in validation table.
         boolean flag = false;
