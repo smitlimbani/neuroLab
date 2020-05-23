@@ -1,7 +1,7 @@
 pipeline {
   environment {
     registry = "smitlimbani/neurolabb"
-    registryCredential = 'docker-hub-cred'
+    registryCredential = 'db-new-cred'
     dockerImage = ''
     dockerImageLatest = ''
   }
