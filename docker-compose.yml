@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+
+    mysqldb:
+        image: "mysql"
+        container_name: mysqldb
+        volumes:
+            - neuroLabData:/var/lib/mysql
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: neuroLab
+            MYSQL_USER: root
+            MYSQL_PASSWORD: root
+
+        networks:
+            - backendNetwork
+
+    neurolabapi:
+        image: openjdk:10-jre-slim
+        container_name: neurolabapi
+        ports:
+            - 8010:8010
+        depends_on:
+            - mysqldb
+        volumes:
+            - ./neuroLab/target/neuro-0.0.1-SNAPSHOT.jar:/application.jar
+        command: ["java", "-jar", "application.jar"]
+        networks:
+            - backendNetwork
+
+volumes:
+    neuroLabData:
+
+networks:
+    backendNetwork:
