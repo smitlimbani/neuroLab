@@ -21,26 +21,8 @@ pipeline {
     stage('Building image') {
        steps{
          script {
-            dockerImage =
-            step([$class: 'DockerComposeBuilder',
-                dockerComposeFile: 'docker-compose.yml',
-                option: [$class: 'ExecuteCommandInsideContainer',
-                command: 'build',
-                index: 1,
-                privilegedMode: false,
-                service: 'zookeeper',
-                workDir: ''],
-                useCustomDockerComposeFile: true]) registry + ":$BUILD_NUMBER"
-            dockerImageLatest =
-            step([$class: 'DockerComposeBuilder',
-                dockerComposeFile: 'docker-compose.yml',
-                option: [$class: 'ExecuteCommandInsideContainer',
-                command: 'build',
-                index: 1,
-                privilegedMode: false,
-                service: 'zookeeper',
-                workDir: ''],
-                useCustomDockerComposeFile: true]) registry + ":latest"
+           dockerImage = docker.build registry + ":$BUILD_NUMBER"
+           dockerImageLatest = docker.build registry + ":latest"
          }
        }
     }
