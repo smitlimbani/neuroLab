@@ -20,6 +20,7 @@ public class NeuroApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**").allowedOrigins("http://139.59.13.108");
+                registry.addMapping("/**").allowedOrigins("http://testnode");
             }
         };
     }
