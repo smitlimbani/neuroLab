@@ -44,7 +44,7 @@ public class TestController {
 
     @GetMapping("/getTestsList")
     public String getTestsList() throws JsonProcessingException {
-        logger.warn("...AAAaaAAH!!  He is getting all the tests..!");
+        logger.error("Testing github hook..!");
         return testService.getTestsListRest();
     }
 
