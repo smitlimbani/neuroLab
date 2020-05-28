@@ -39,12 +39,13 @@ public class TestController {
 
     @GetMapping("/getActiveTests")
     public List<Test> getActiveTests(@RequestParam TestCategoryEnum testCategoryEnum){
+        logger.info("getActiveTests called with testCategoryEnum : "+testCategoryEnum);
         return testService.getActiveTestsRest(testCategoryEnum);
     }
 
     @GetMapping("/getTestsList")
     public String getTestsList() throws JsonProcessingException {
-        logger.error("Testing github hook..!");
+        logger.error("getTestsList called");
         return testService.getTestsListRest();
     }
 

@@ -24,28 +24,30 @@ public class DashboardController {
 
     @GetMapping("/getCompleteDetailByUHID")
     public PatientDemographicDetail getCompleteDetailByUHID(@RequestParam String uhid){
-        System.out.println(uhid);
-        logger.info("!!..Logger working..!! .. 1 - getCompleteDetailByUHID");
+//        System.out.println(uhid);
+        logger.info("PatientDemographicDetail called with uhid : "+uhid);
         return dashboardService.getCompleteDetailByUHIDRest(uhid);
     }
 
     @GetMapping("/getCompleteDetailByULID")
     public Master getCompleteDetailByULID(@RequestParam String ulid){
-        System.out.println(ulid);
+//        System.out.println(ulid);
 
-        logger.info("!!..Logger working..!! .. 2 - getCompleteDetailByULID");
+        logger.info("getCompleteDetailByULID called with ulid : "+ulid);
         return dashboardService.getCompleteDetailByULIDRest(ulid);
     }
 
     @GetMapping("/getCompleteDetailBySampleId")
     public Sample getCompleteDetailBySampleId(@RequestParam String sampleId){
-        System.out.println(sampleId);
+//        System.out.println(sampleId);
+        logger.info("getCompleteDetailBySampleId called with sampleId : "+sampleId);
         return dashboardService.getCompleteDetailBySampleIdRest(sampleId);
     }
 
     @GetMapping("/getCompleteDetailByVLID")
     public Vial getCompleteDetailByVLID(@RequestParam String vlid){
-        System.out.println(vlid);
+//        System.out.println(vlid);
+        logger.info("getCompleteDetailByVLID called with vlid : "+vlid);
         return dashboardService.getCompleteDetailByVLIDRest(vlid);
     }
 }
