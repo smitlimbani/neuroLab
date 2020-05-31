@@ -274,6 +274,7 @@ public class ReceivingStationService {
         Master master =masterService.getMasterRest(mId);
         master.setIsValid(IsValidEnum.N);
         master.setRemark("Not Received");
+        master.setActive(false);
         masterService.updateMasterRest(master);
         List<Sample> sampleList= master.getSamples();
         for(Sample sample: sampleList)
@@ -326,11 +327,25 @@ public class ReceivingStationService {
         Master master2=masterService.getMasterRest ((Integer) jsonService.fromJson(jsonString, "mId2", Integer.class));
 
         //Making master1 as the received sample(if any) so that ulid(is exists) is not lost and same status is carried forward..
-        if(master1.getULID().isEmpty()) {
+        if(master1.getULID() == null) {
             Master masterTemp = master1;
             master1 = master2;
             master2 = masterTemp;
         }
+
+        // To change ownership of payments of second to first master
+        List<Payment> payments2 = master2.getPayments();
+        for (Payment payment : payments2 ){
+            payment.setMaster(master1);
+        }
+        paymentService.updatePaymentsWithMasterRest(payments2);
+
+        //changing association of samples to new master
+        List<Sample> samples = master2.getSamples();
+        for(Sample sample: samples){
+            sample.setMaster(master1);
+        }
+        sampleService.updateSamplesWithMasterRest(samples);
 
         master2.setActive(false);
 

@@ -37,6 +37,9 @@ public class SampleService {
         return sampleRepository.save(sample);
     }
 
+    public List<Sample> updateSamplesWithMasterRest(List<Sample> samples){
+        return sampleRepository.saveAll(samples);
+    }
     public Sample findBySampleIdRest(String sampleId){return sampleRepository.findBySampleId(sampleId);}
 
     public List<Sample> findByMasterRest(Master master){ return sampleRepository.findByMaster(master);}
