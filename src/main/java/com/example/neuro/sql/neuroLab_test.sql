@@ -1,0 +1,8 @@
+INSERT INTO neuroLab.test (id, code, group_size, is_active, last_activ_date, locked_counter, name, rate, test_category) VALUES (1, 'ANC', 2, true, '2020-05-19', 0, 'ANCA', 1000, 'BLOT');
+INSERT INTO neuroLab.test (id, code, group_size, is_active, last_activ_date, locked_counter, name, rate, test_category) VALUES (2, 'ANA', 2, true, '2020-05-19', 2, 'ANA', 100, 'BLOT');
+INSERT INTO neuroLab.test (id, code, group_size, is_active, last_activ_date, locked_counter, name, rate, test_category) VALUES (3, 'MOG', 2, true, '2020-05-19', 4, 'MOG', 150, 'BLOT');
+INSERT INTO neuroLab.test (id, code, group_size, is_active, last_activ_date, locked_counter, name, rate, test_category) VALUES (4, 'NMD', 2, false, '2020-05-19', 0, 'NMDA', 1500, 'IF');
+INSERT INTO neuroLab.test (id, code, group_size, is_active, last_activ_date, locked_counter, name, rate, test_category) VALUES (5, 'PAR', 2, false, '2020-05-19', 1, 'PARA', 1550, 'IF');
+INSERT INTO neuroLab.test (id, code, group_size, is_active, last_activ_date, locked_counter, name, rate, test_category) VALUES (6, 'MYO', 2, true, '2020-05-19', 2, 'MYO', 1550, 'BLOT');
+INSERT INTO neuroLab.test (id, code, group_size, is_active, last_activ_date, locked_counter, name, rate, test_category) VALUES (7, 'GAG', 2, false, null, 0, 'GANGIGG', 1550, 'OTHER');
+INSERT INTO neuroLab.test (id, code, group_size, is_active, last_activ_date, locked_counter, name, rate, test_category) VALUES (8, 'GAM', 2, false, null, 0, 'GANGIGM', 1550, 'OTHER');

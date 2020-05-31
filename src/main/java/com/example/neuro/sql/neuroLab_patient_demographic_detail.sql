@@ -1,0 +1,4 @@
+INSERT INTO neuroLab.patient_demographic_detail (id, uhid, address, age, contact_no, email_id, hospital_name, name, sex) VALUES (6, '1', 'address1', 23, '9999999999', 'abc@gmail.com', 'IGIMS, PATNA', 'Vaibhav Dodiya', 'MALE');
+INSERT INTO neuroLab.patient_demographic_detail (id, uhid, address, age, contact_no, email_id, hospital_name, name, sex) VALUES (8, 'x1', 'address2', 50, '8888888888', 'abc@gmail.com', 'Kiran', 'Gauri Rawat', 'FEMALE');
+INSERT INTO neuroLab.patient_demographic_detail (id, uhid, address, age, contact_no, email_id, hospital_name, name, sex) VALUES (21, 'x2', 'Mg road ghitorni near taalab Karam veer pradhan house no -78', 22, '7895295509', 'gaurirawat97@gmail.com', 'NARAYANA HRUDYALAYA, BANGALORE', 'rachna', 'FEMALE');
+INSERT INTO neuroLab.patient_demographic_detail (id, uhid, address, age, contact_no, email_id, hospital_name, name, sex) VALUES (22, '2', 'address2', 23, '8888888888', 'abc@gmail.com', 'NIMHANS', 'aditya badoni', 'MALE');

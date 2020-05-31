@@ -1,0 +1,9 @@
+INSERT INTO neuroLab.validity_list (id, sample_id) VALUES (31, 1);
+INSERT INTO neuroLab.validity_list (id, sample_id) VALUES (32, 2);
+INSERT INTO neuroLab.validity_list (id, sample_id) VALUES (33, 3);
+INSERT INTO neuroLab.validity_list (id, sample_id) VALUES (36, 4);
+INSERT INTO neuroLab.validity_list (id, sample_id) VALUES (37, 5);
+INSERT INTO neuroLab.validity_list (id, sample_id) VALUES (39, 13);
+INSERT INTO neuroLab.validity_list (id, sample_id) VALUES (40, 14);
+INSERT INTO neuroLab.validity_list (id, sample_id) VALUES (38, 15);
+INSERT INTO neuroLab.validity_list (id, sample_id) VALUES (41, 16);
