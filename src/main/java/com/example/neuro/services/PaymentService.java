@@ -38,6 +38,9 @@ public class PaymentService {
         paymentRepository.delete(payment);
     }
 
+    public List<Payment> updatePaymentsWithMasterRest(List<Payment> payments){
+        return paymentRepository.saveAll(payments);
+    }
 
     public Payment updatePaymentRest(Payment payment) {
         payment.setMaster(paymentRepository.getOne(payment.getId()).getMaster());
