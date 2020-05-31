@@ -1,0 +1,10 @@
+INSERT INTO neuroLab.sample (id, rec_date, sample_id, master_id) VALUES (1, '2020-05-18', '1', 1);
+INSERT INTO neuroLab.sample (id, rec_date, sample_id, master_id) VALUES (2, '2020-05-18', '2', 3);
+INSERT INTO neuroLab.sample (id, rec_date, sample_id, master_id) VALUES (3, '2020-05-18', '3', 3);
+INSERT INTO neuroLab.sample (id, rec_date, sample_id, master_id) VALUES (4, '2020-05-18', '4', 4);
+INSERT INTO neuroLab.sample (id, rec_date, sample_id, master_id) VALUES (5, '2020-05-18', '5', 5);
+INSERT INTO neuroLab.sample (id, rec_date, sample_id, master_id) VALUES (13, '2020-05-18', 'C:XU-00010/20:1', 13);
+INSERT INTO neuroLab.sample (id, rec_date, sample_id, master_id) VALUES (14, '2020-05-18', 'C:XU-00020/20:1', 14);
+INSERT INTO neuroLab.sample (id, rec_date, sample_id, master_id) VALUES (15, null, '6', 15);
+INSERT INTO neuroLab.sample (id, rec_date, sample_id, master_id) VALUES (16, '2020-05-24', '7', 16);
+INSERT INTO neuroLab.sample (id, rec_date, sample_id, master_id) VALUES (17, '2020-05-29', 'S:XU-00021/20:1', 17);
